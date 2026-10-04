@@ -1,0 +1,303 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  Changelog Forge design tokens.
+  Paper and graphite, with three colours that mean something in a changelog:
+    release green  = features
+    signal amber   = fixes and performance
+    breaking red   = breaking changes
+  Everything else (docs, internal, chrome) stays graphite.
+  Headings in Archivo, body in Public Sans, SHAs / PR numbers / counts in Red Hat Mono.
+*/
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-archivo), var(--font-public-sans), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-red-hat-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-graphite: var(--graphite);
+  --color-pencil: var(--pencil);
+  --color-rule: var(--rule);
+
+  --color-release: var(--release);
+  --color-release-ink: var(--release-ink);
+  --color-release-wash: var(--release-wash);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+  --color-signal-wash: var(--signal-wash);
+  --color-breaking: var(--breaking);
+  --color-breaking-ink: var(--breaking-ink);
+  --color-breaking-wash: var(--breaking-wash);
+
+  --color-term: var(--term);
+  --color-term-fg: var(--term-fg);
+  --color-term-dim: var(--term-dim);
+  --color-term-rule: var(--term-rule);
+  --color-term-green: var(--term-green);
+  --color-term-amber: var(--term-amber);
+  --color-term-red: var(--term-red);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-sheet: 0 1px 0 var(--rule), 0 14px 30px -24px oklch(0.2 0.01 260 / 40%);
+}
+
+:root {
+  /* Paper and graphite */
+  --paper: oklch(0.972 0.007 85);
+  --sheet: oklch(0.993 0.004 85);
+  --graphite: oklch(0.24 0.012 260);
+  /* Secondary text: about 6.4:1 on paper. */
+  --pencil: oklch(0.47 0.012 260);
+  --rule: oklch(0.885 0.008 85);
+
+  /* Semantic. *-ink is for text and chip labels (>= 4.5:1 on paper and on its wash). */
+  --release: oklch(0.62 0.14 152);
+  --release-ink: oklch(0.45 0.11 152);
+  --release-wash: oklch(0.945 0.035 152);
+  --signal: oklch(0.78 0.15 76);
+  --signal-ink: oklch(0.48 0.1 65);
+  --signal-wash: oklch(0.95 0.045 85);
+  --breaking: oklch(0.58 0.19 27);
+  --breaking-ink: oklch(0.48 0.17 27);
+  --breaking-wash: oklch(0.95 0.03 25);
+
+  /* Terminal panel: graphite in both themes. */
+  --term: oklch(0.225 0.01 260);
+  --term-fg: oklch(0.93 0.008 85);
+  --term-dim: oklch(0.72 0.012 260);
+  --term-rule: oklch(1 0 0 / 9%);
+  --term-green: oklch(0.8 0.14 152);
+  --term-amber: oklch(0.84 0.13 80);
+  --term-red: oklch(0.75 0.15 27);
+
+  --background: var(--paper);
+  --foreground: var(--graphite);
+  --card: var(--sheet);
+  --card-foreground: var(--graphite);
+  --popover: var(--sheet);
+  --popover-foreground: var(--graphite);
+  --primary: var(--graphite);
+  --primary-foreground: var(--sheet);
+  --secondary: oklch(0.935 0.008 85);
+  --secondary-foreground: var(--graphite);
+  --muted: oklch(0.945 0.007 85);
+  --muted-foreground: var(--pencil);
+  --accent: oklch(0.935 0.008 85);
+  --accent-foreground: var(--graphite);
+  --destructive: var(--breaking-ink);
+  --border: var(--rule);
+  --input: oklch(0.8 0.01 85);
+  --ring: var(--graphite);
+  --chart-1: var(--release);
+  --chart-2: var(--signal);
+  --chart-3: var(--breaking);
+  --chart-4: var(--pencil);
+  --chart-5: var(--graphite);
+  --radius: 0.4rem;
+  --sidebar: var(--sheet);
+  --sidebar-foreground: var(--graphite);
+  --sidebar-primary: var(--graphite);
+  --sidebar-primary-foreground: var(--sheet);
+  --sidebar-accent: var(--muted);
+  --sidebar-accent-foreground: var(--graphite);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--graphite);
+}
+
+.dark {
+  --paper: oklch(0.185 0.008 260);
+  --sheet: oklch(0.215 0.009 260);
+  --graphite: oklch(0.93 0.008 85);
+  --pencil: oklch(0.74 0.012 260);
+  --rule: oklch(1 0 0 / 12%);
+
+  --release: oklch(0.72 0.14 152);
+  --release-ink: oklch(0.82 0.13 152);
+  --release-wash: oklch(0.3 0.05 152);
+  --signal: oklch(0.8 0.14 78);
+  --signal-ink: oklch(0.86 0.12 80);
+  --signal-wash: oklch(0.31 0.05 75);
+  --breaking: oklch(0.68 0.17 27);
+  --breaking-ink: oklch(0.8 0.12 27);
+  --breaking-wash: oklch(0.3 0.06 27);
+
+  --term: oklch(0.145 0.008 260);
+  --term-rule: oklch(1 0 0 / 8%);
+
+  --background: var(--paper);
+  --foreground: var(--graphite);
+  --card: var(--sheet);
+  --card-foreground: var(--graphite);
+  --popover: var(--sheet);
+  --popover-foreground: var(--graphite);
+  --primary: var(--graphite);
+  --primary-foreground: oklch(0.2 0.008 260);
+  --secondary: oklch(0.26 0.009 260);
+  --secondary-foreground: var(--graphite);
+  --muted: oklch(0.245 0.009 260);
+  --muted-foreground: var(--pencil);
+  --accent: oklch(0.27 0.009 260);
+  --accent-foreground: var(--graphite);
+  --destructive: var(--breaking-ink);
+  --border: var(--rule);
+  --input: oklch(1 0 0 / 22%);
+  --ring: var(--graphite);
+  --sidebar: var(--sheet);
+  --sidebar-foreground: var(--graphite);
+  --sidebar-primary: var(--graphite);
+  --sidebar-primary-foreground: oklch(0.2 0.008 260);
+  --sidebar-accent: var(--muted);
+  --sidebar-accent-foreground: var(--graphite);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--graphite);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-archivo), var(--font-public-sans), ui-sans-serif, sans-serif;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--release) 28%, transparent);
+  }
+  /* One solid, high-contrast focus outline for links, summaries and native checkboxes. */
+  a:focus-visible,
+  summary:focus-visible,
+  input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Numbers that line up: counts, tokens, dollars. */
+@utility tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Mono figures: SHAs, PR numbers, counts. */
+@utility figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Section kicker styled like a diff hunk header: @@ how it works @@ */
+@utility hunk {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--pencil);
+}
+
+/* Faint ruled-paper lines behind documents. */
+@utility ruled {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    color-mix(in oklch, var(--rule) 55%, transparent) 31px,
+    color-mix(in oklch, var(--rule) 55%, transparent) 32px
+  );
+}
+
+/* Block cursor for the terminal log; blinks only when motion is allowed. */
+@utility caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  vertical-align: text-bottom;
+  background: currentColor;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: caret-blink 1.1s steps(1, end) infinite;
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
