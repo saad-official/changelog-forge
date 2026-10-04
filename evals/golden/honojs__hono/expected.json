@@ -1,0 +1,42 @@
+{
+  "repo": "honojs/hono",
+  "base": "v4.13.10",
+  "head": "v4.13.13",
+  "must_mention": [
+    "8b05c77",
+    "#5468",
+    "#5485",
+    "#5475",
+    "#5487",
+    "#5391",
+    "#5476",
+    "#5221"
+  ],
+  "must_flag_breaking": [],
+  "may_flag_breaking": [
+    "8b05c77",
+    "#5221"
+  ],
+  "forbidden_claims": [
+    "app\\.mount\\(?\\)?`? (has been|is|was) removed"
+  ],
+  "categories": {
+    "#5468": "feature",
+    "#5221": "feature",
+    "#5485": "fix",
+    "#5475": "fix",
+    "#5487": "fix",
+    "#5391": "fix",
+    "#5476": "fix",
+    "#5445": "docs",
+    "#5469": "internal",
+    "#5479": "internal",
+    "#5486": "internal",
+    "#5464": "internal",
+    "#5439": "internal",
+    "37ce069": "internal",
+    "6abd35b": "internal",
+    "08a023c": "internal"
+  },
+  "notes": "8b05c77 is a security fix merged from a fork (no PR): rejects percent signs in routed paths, with allowPercentInPath to opt out - a behaviour change. #5221 deprecates app.mount (deprecation, not removal)."
+}

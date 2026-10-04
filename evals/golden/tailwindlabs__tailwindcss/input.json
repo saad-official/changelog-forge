@@ -1,0 +1,691 @@
+{
+  "repo": "tailwindlabs/tailwindcss",
+  "base": "v4.2.4",
+  "head": "v4.3.0",
+  "compare_url": "https://github.com/tailwindlabs/tailwindcss/compare/v4.2.4...v4.3.0",
+  "default_branch": "main",
+  "private": false,
+  "total_commits": 33,
+  "commits": [
+    {
+      "sha": "f3fdda2a5cb9de50c897c79003aa58182cd9269b",
+      "message": "fix(vite): avoid resolving JS plugins to browser CSS entries (#19949)\n\nEdit: some edits by @RobinMalfait \n\n---\n\n## Summary\n\nFix a regression in `@tailwindcss/vite` introduced by `#19803` where JS\nplugin resolution could incorrectly resolve a package to its `browser`\nCSS entry.\n\nIn cases like `daisyui`, Vite can resolve `@plugin \"daisyui\"` to\n`daisyui.css` instead of the package's JS entry, which causes Tailwind\nto try to load a CSS file as a JS plugin and fail with:\n\n```txt\nUnknown file extension \".css\"\n```\n\nThis change keeps the `aliasOnly: false` behavior from `#19803` so\ntsconfig path resolution still works, but adds a JS-entry guard to\n`customJsResolver` in `@tailwindcss/vite`. If Vite resolves a plugin\nrequest to a non-JS file like `.css`, the custom resolver now returns\n`undefined` so Tailwind's internal fallback resolver can resolve the\npackage as a JS plugin entry instead.\n\nI also added integration coverage for a package whose `main`/`module`\npoints to JS while `browser` points to CSS, and verified that `@plugin\n\"pkg\"` still resolves to the JS entry in both build and dev mode.\n\n## Test plan\n\nAdded new integration tests in `integrations/vite/resolvers.test.ts`\ncovering a package with:\n\n- `main` / `module` -> JS\n- `browser` -> CSS\n- `@plugin \"pkg\"` -> should resolve to JS, not CSS\n\nVerified with:\n\n```sh\npnpm test:integrations vite/resolvers.test.ts -t \"browser points to CSS\"\npnpm test:integrations vite/resolvers.test.ts -t \"resolves tsconfig paths\"\n```\n\nThese verify that:\n\n- `@plugin` no longer resolves to a CSS browser entry\n- the original tsconfig paths fix from `#19803` still works in both\nbuild and dev mode\n\n---\n\nMaintainer edits:\n\nInstead of hardcoding file extensions, first try to resolve aliases and\nthen fallback to the default resolving system we had before. We still\ncheck for a `.css` extension, even in the JS resolver because some\ndependencies (like `daisyUI`) put the CSS file there instead of in an\n`exports.style`. If we detect that, we still fallback to the default\nresolving logic.\n\nThis should be compatible with the original issue we were trying to fix\nwhere we wanted to make Vite aliases work.\n\nFixes: #19950\n\n[ci-all]\n\n---------\n\nCo-authored-by: Robin Malfait <malfait.robin@gmail.com>",
+      "author": "ArcherGu",
+      "date": "2026-04-22T15:25:01Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/f3fdda2a5cb9de50c897c79003aa58182cd9269b",
+      "pr_number": 19949,
+      "pr_title": "fix(vite): avoid resolving JS plugins to browser CSS entries",
+      "pr_body": "Edit: some edits by @RobinMalfait \r\n\r\n---\r\n\r\n## Summary\r\n\r\nFix a regression in `@tailwindcss/vite` introduced by `#19803` where JS plugin resolution could incorrectly resolve a package to its `browser` CSS entry.\r\n\r\nIn cases like `daisyui`, Vite can resolve `@plugin \"daisyui\"` to `daisyui.css` instead of the package's JS entry, which causes Tailwind to try to load a CSS file as a JS plugin and fail with:\r\n\r\n```txt\r\nUnknown file extension \".css\"\r\n```\r\n\r\nThis change keeps the `aliasOnly: false` behavior from `#19803` so tsconfig path resolution still works, but adds a JS-entry guard to `customJsResolver` in `@tailwindcss/vite`. If Vite resolves a plugin request to a non-JS file like `.css`, the custom resolver now returns `undefined` so Tailwind's internal fallback resolver can resolve the package as a JS plugin entry instead.\r\n\r\nI also added integration coverage for a package whose `main`/`module` points to JS while `browser` points to CSS, and verified that `@plugin \"pkg\"` still resolves to the JS entry in both build and dev mode.\r\n\r\n## Test plan\r\n\r\nAdded new integration tests in `integrations/vite/resolvers.test.ts` covering a package with:\r\n\r\n- `main` / `module` -> JS\r\n- `browser` -> CSS\r\n- `@plugin \"pkg\"` -> should resolve to JS, not CSS\r\n\r\nVerified with:\r\n\r\n```sh\r\npnpm test:integrations vite/resolvers.test.ts -t \"browser points to CSS\"\r\npnpm test:integrations vite/resolvers.test.ts -t \"resolves tsconfig paths\"\r\n```\r\n\r\nThese verify that:\r\n\r\n- `@plugin` no longer resolves to a CSS browser entry\r\n- the original tsconfig paths fix from `#19803` still works in both build and dev mode\r\n\r\n---\r\n\r\nMaintainer edits:\r\n\r\nInstead of hardcoding file extensions, first try to resolve aliases and then fallback to the default resolving system we had before. We still check for a `.css` extension, even in the JS resolver because some dependencies (like `daisyUI`) put the CSS file there instead of in an `exports.style`. If we detect that, we still fallback to the default resolving l",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19949",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "integrations/vite/resolvers.test.ts",
+        "packages/@tailwindcss-vite/src/index.ts"
+      ]
+    },
+    {
+      "sha": "f62597a82c75abaca47d38b7979160f78b0da60f",
+      "message": "Bump dependencies in playgrounds (#19954)\n\nThis PR bumps dependencies in our playgrounds.\n\nCloses: https://github.com/tailwindlabs/tailwindcss/pull/19952\nCloses: https://github.com/tailwindlabs/tailwindcss/pull/19945\n\n### Test plan\n\nRan each playground separately to make sure they are still working",
+      "author": "RobinMalfait",
+      "date": "2026-04-23T10:51:20Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/f62597a82c75abaca47d38b7979160f78b0da60f",
+      "pr_number": 19954,
+      "pr_title": "Bump dependencies in playgrounds",
+      "pr_body": "This PR bumps dependencies in our playgrounds.\n\nCloses: https://github.com/tailwindlabs/tailwindcss/pull/19952\nCloses: https://github.com/tailwindlabs/tailwindcss/pull/19945\n\n### Test plan\n\nRan each playground separately to make sure they are still working\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19954",
+      "labels": [],
+      "files": [
+        "playgrounds/nextjs/package.json",
+        "playgrounds/v3/package.json",
+        "playgrounds/vite/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "5a799900d4b43ca4902398a38c6f0a5b37a98ed9",
+      "message": "Always resolve relative files, relative to the current .css file (#19965)\n\nThis PR fixes an issue where resolving of certain CSS or JS files\nresults in the wrong paths. The issue happens if you have a setup where\na relative file path _also_ exists in the parent folder:\n\n```css\n/* src/foo.css */\n.foo-in-root {}\n\n/* src/theme/a.css */\n@import \"./foo.css\"; /* This resolved to the file above, instead of the file below */\n\n/* src/theme/foo.css */\n.foo-in-theme {}\n```\n\nThis happened because we resolved relative to a `base` folder, but Vite\nexpects an `importer` instead. The difference is subtle, but they expect\na file. On that file they use `let base = path.dirname(importer)` to get\na base path out themselves.\n\nThis in turn means that if you pass in a folder, you get this:\n```js\npath.dirname('/path/to/my-project') // /path/to\n```\n\nIf we gave it a proper file, then we get the proper base path\n```js\npath.dirname('/path/to/my-project/index.css') // /path/to/my-project\n```\n\nI'm actually surprised that this didn't cause issues earlier... but it\ndid result in error since we recently started resolving files using\nVite's `aliasOnly: true` feature such taht Vite aliases work as well.\n\nWith this change, we now make sure that:\n\n1. We use a proper `importer` instead of the `base` path\n2. We refactor the resolving logic such that we try with `aliasOnly:\ntrue` first, then `aliasOnly: false`\n\nWe also still ensure that in the CSS resolver we expect a `.css` file,\nand in the JS resolver we _don't_ expect a `.css` file (which can happen\nif a `\"browser\": \"./dist/index.css\"` field in package.json points to a\nCSS file, daisyUI does this for example).\n\nFixes: #19956\n\n## Test plan\n\n1. Added additional (failing) integration tests to reproduce the linked\nissue\n2. Existing integration tests pass\n\nWhile the build still worked, the linked issue resulted in a much bigger\nfile size because the wrong .css files were included. With this fix, the\nnumber is correct again:\n<img width=\"1234\" height=\"1037\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/fdff803c-0db2-4066-92fa-064c2816b35c\"\n/>\n\nSince this is touching code related to previous PRs, I wanted to\nmanually make sure that these still work as expected:\n\n- https://github.com/tailwindlabs/tailwindcss/issues/19950: This one is\nabout daisyUI and the `.css` file referenced in the package.json's\n`\"browser\"` field: <img width=\"782\" height=\"1229\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/fb7b9d3b-527b-414b-94b0-2be7e96056f1\"\n/>\n\n- https://github.com/tailwindlabs/tailwindcss/issues/19946: This one is\nabout the Vite alias being just a single `@` causing issues with\n`@plugin \"@tailwindcss/typography\";` for example: <img width=\"1694\"\nheight=\"1856\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/d1935ecf-e80a-4945-a69a-ec3c5223efab\"\n/>\n\n\n[ci-all]",
+      "author": "RobinMalfait",
+      "date": "2026-04-24T13:07:56Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/5a799900d4b43ca4902398a38c6f0a5b37a98ed9",
+      "pr_number": 19965,
+      "pr_title": "Always resolve relative files, relative to the current .css file",
+      "pr_body": "This PR fixes an issue where resolving of certain CSS or JS files results in the wrong paths. The issue happens if you have a setup where a relative file path _also_ exists in the parent folder:\r\n\r\n```css\r\n/* src/foo.css */\r\n.foo-in-root {}\r\n\r\n/* src/theme/a.css */\r\n@import \"./foo.css\"; /* This resolved to the file above, instead of the file below */\r\n\r\n/* src/theme/foo.css */\r\n.foo-in-theme {}\r\n```\r\n\r\nThis happened because we resolved relative to a `base` folder, but Vite expects an `importer` instead. The difference is subtle, but they expect a file. On that file they use `let base = path.dirname(importer)` to get a base path out themselves.\r\n\r\nThis in turn means that if you pass in a folder, you get this:\r\n```js\r\npath.dirname('/path/to/my-project') // /path/to\r\n```\r\n\r\nIf we gave it a proper file, then we get the proper base path\r\n```js\r\npath.dirname('/path/to/my-project/index.css') // /path/to/my-project\r\n```\r\n\r\nI'm actually surprised that this didn't cause issues earlier... but it did result in error since we recently started resolving files using Vite's `aliasOnly: true` feature such taht Vite aliases work as well.\r\n\r\nWith this change, we now make sure that:\r\n\r\n1. We use a proper `importer` instead of the `base` path\r\n2. We refactor the resolving logic such that we try with `aliasOnly: true` first, then `aliasOnly: false`\r\n\r\nWe also still ensure that in the CSS resolver we expect a `.css` file, and in the JS resolver we _don't_ expect a `.css` file (which can happen if a `\"browser\": \"./dist/index.css\"` field in package.json points to a CSS file, daisyUI does this for example).\r\n\r\nFixes: #19956\r\n\r\n## Test plan\r\n\r\n1. Added additional (failing) integration tests to reproduce the linked issue\r\n2. Existing integration tests pass\r\n\r\nWhile the build still worked, the linked issue resulted in a much bigger file size because the wrong .css files were included. With this fix, the number is correct again:\r\n<img width=\"1234\" height=\"1037\" alt=\"image\" src=\"https://github.co",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19965",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "integrations/vite/resolvers.test.ts",
+        "packages/@tailwindcss-vite/src/index.ts"
+      ]
+    },
+    {
+      "sha": "db27049caaae08978995f25b61f8336f543a4640",
+      "message": "fix(@tailwindcss/vite): include @variant in feature detection (#19966)\n\nFixes #19964\n\nCSS files imported via JS that only use `@variant` (no `@apply`,\n`theme()`, or utility classes) are silently skipped by the Vite plugin.\nThe `@variant` directive gets passed through raw to the browser, which\ndrops it as an unknown at-rule.\n\n**Root cause** — `Features.Variants` is missing from the [feature\ndetection\nbitmask](https://github.com/tailwindlabs/tailwindcss/blob/v4.2.4/packages/%40tailwindcss-vite/src/index.ts#L526):\n\n```ts\n// before\nFeatures.AtApply | Features.JsPluginCompat | Features.ThemeFunction | Features.Utilities\n\n// after\nFeatures.AtApply | Features.JsPluginCompat | Features.ThemeFunction | Features.Utilities | Features.Variants\n```\n\n**Reproduction** — https://github.com/remorses/tailwind-variant-bug\n\n---------\n\nCo-authored-by: Robin Malfait <malfait.robin@gmail.com>",
+      "author": "remorses",
+      "date": "2026-04-24T14:11:48Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/db27049caaae08978995f25b61f8336f543a4640",
+      "pr_number": 19966,
+      "pr_title": "fix(@tailwindcss/vite): include @variant in feature detection",
+      "pr_body": "Fixes #19964\n\nCSS files imported via JS that only use `@variant` (no `@apply`, `theme()`, or utility classes) are silently skipped by the Vite plugin. The `@variant` directive gets passed through raw to the browser, which drops it as an unknown at-rule.\n\n**Root cause** — `Features.Variants` is missing from the [feature detection bitmask](https://github.com/tailwindlabs/tailwindcss/blob/v4.2.4/packages/%40tailwindcss-vite/src/index.ts#L526):\n\n```ts\n// before\nFeatures.AtApply | Features.JsPluginCompat | Features.ThemeFunction | Features.Utilities\n\n// after\nFeatures.AtApply | Features.JsPluginCompat | Features.ThemeFunction | Features.Utilities | Features.Variants\n```\n\n**Reproduction** — https://github.com/remorses/tailwind-variant-bug",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19966",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/@tailwindcss-vite/src/index.ts"
+      ]
+    },
+    {
+      "sha": "3a890c35727fe0630c59b72dbec799d02e3c4800",
+      "message": "Bump dependencies (#19957)\n\nThis PR bumps dependencies in all the packages, typically just bumping\nto the latest patch release.\n\n\nCloses: #19936\nCloses: #19917\nCloses: #19899\nCloses: #19897\nCloses: #19845\nCloses: #19832\nCloses: #19967\nCloses: #19968 \n\n## Test plan\n\n1. All tests still pass\n2. All integration tests still pass\n\n[ci-all] to verify Linux, Windows and macOS",
+      "author": "RobinMalfait",
+      "date": "2026-04-24T19:21:12Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/3a890c35727fe0630c59b72dbec799d02e3c4800",
+      "pr_number": 19957,
+      "pr_title": "Bump dependencies",
+      "pr_body": "This PR bumps dependencies in all the packages, typically just bumping to the latest patch release.\r\n\r\n\r\nCloses: #19936\r\nCloses: #19917\r\nCloses: #19899\r\nCloses: #19897\r\nCloses: #19845\r\nCloses: #19832\r\nCloses: #19967\r\nCloses: #19968 \r\n\r\n## Test plan\r\n\r\n1. All tests still pass\r\n2. All integration tests still pass\r\n\r\n[ci-all] to verify Linux, Windows and macOS\r\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19957",
+      "labels": [],
+      "files": [
+        "package.json",
+        "packages/@tailwindcss-browser/package.json",
+        "packages/@tailwindcss-cli/package.json",
+        "packages/@tailwindcss-node/package.json",
+        "packages/@tailwindcss-node/tsconfig.json",
+        "packages/@tailwindcss-postcss/package.json",
+        "packages/@tailwindcss-postcss/tsconfig.json",
+        "packages/@tailwindcss-standalone/package.json",
+        "packages/@tailwindcss-upgrade/package.json",
+        "packages/@tailwindcss-upgrade/src/index.ts",
+        "packages/@tailwindcss-upgrade/src/stylesheet.ts",
+        "packages/@tailwindcss-webpack/tsconfig.json",
+        "packages/tailwindcss/package.json",
+        "packages/tailwindcss/tsconfig.json",
+        "pnpm-lock.yaml",
+        "pnpm-workspace.yaml"
+      ]
+    },
+    {
+      "sha": "bfb5732b0b948d89c6803cb537bca168ec8e0a46",
+      "message": "Fall back to the plugin `base` when PostCSS has no `from` option (#19980)\n\n## Summary\n\n`@tailwindcss/postcss` derives `inputBasePath` from `result.opts.from`:\n\n```ts\nlet inputFile = result.opts.from ?? ''\nlet inputBasePath = path.dirname(path.resolve(inputFile))\n```\n\nWhen PostCSS calls the plugin without `from` (some bundlers, including\nTurbopack, do this for certain CSS inputs), `inputFile` is `''`,\n`path.resolve('')` returns `process.cwd()`, and `path.dirname(...)`\ntherefore returns the **parent of CWD**. The downstream `compileAst({\nbase: inputBasePath })` call then asks the resolver to find\n`tailwindcss` from one level above the project root, which fails with:\n\n```\nCan't resolve 'tailwindcss' in '<parent of CWD>'\n```\n\nThe plugin already computes `base = opts.base ?? process.cwd()` near the\ntop. Reusing that as the fallback gives a sensible default (CWD) and\nrespects an explicit `opts.base` when set.\n\n```diff\n-let inputBasePath = path.dirname(path.resolve(inputFile))\n+let inputBasePath = inputFile\n+  ? path.dirname(path.resolve(inputFile))\n+  : base\n```\n\n## Test plan\n\nAdded a test in `packages/@tailwindcss-postcss/src/index.test.ts` that\nprocesses `@import 'tailwindcss'` via `processor.process(input)` with no\n`from` option. Before the fix, this throws `Error: Can't resolve\n'tailwindcss' in '<parent of CWD>'`; after the fix, the import resolves\nand the processor returns non-empty CSS.\n\nI wasn't able to run the suite locally — `pnpm build` requires `cargo`\nfor `@tailwindcss/oxide` and I don't have a Rust toolchain set up — so\nthe test has been written to match existing conventions in\n`index.test.ts` (vitest, plain\n`postcss([tailwindcss({...})]).process(...)`), and I'm relying on CI to\nverify.\n\n---------\n\nCo-authored-by: rebasecase <rebasecase@localhost>\nCo-authored-by: Robin Malfait <malfait.robin@gmail.com>",
+      "author": "rebasecase",
+      "date": "2026-04-26T13:45:39Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/bfb5732b0b948d89c6803cb537bca168ec8e0a46",
+      "pr_number": 19980,
+      "pr_title": "Fall back to the plugin `base` when PostCSS has no `from` option",
+      "pr_body": "## Summary\n\n`@tailwindcss/postcss` derives `inputBasePath` from `result.opts.from`:\n\n```ts\nlet inputFile = result.opts.from ?? ''\nlet inputBasePath = path.dirname(path.resolve(inputFile))\n```\n\nWhen PostCSS calls the plugin without `from` (some bundlers, including Turbopack, do this for certain CSS inputs), `inputFile` is `''`, `path.resolve('')` returns `process.cwd()`, and `path.dirname(...)` therefore returns the **parent of CWD**. The downstream `compileAst({ base: inputBasePath })` call then asks the resolver to find `tailwindcss` from one level above the project root, which fails with:\n\n```\nCan't resolve 'tailwindcss' in '<parent of CWD>'\n```\n\nThe plugin already computes `base = opts.base ?? process.cwd()` near the top. Reusing that as the fallback gives a sensible default (CWD) and respects an explicit `opts.base` when set.\n\n```diff\n-let inputBasePath = path.dirname(path.resolve(inputFile))\n+let inputBasePath = inputFile\n+  ? path.dirname(path.resolve(inputFile))\n+  : base\n```\n\n## Test plan\n\nAdded a test in `packages/@tailwindcss-postcss/src/index.test.ts` that processes `@import 'tailwindcss'` via `processor.process(input)` with no `from` option. Before the fix, this throws `Error: Can't resolve 'tailwindcss' in '<parent of CWD>'`; after the fix, the import resolves and the processor returns non-empty CSS.\n\nI wasn't able to run the suite locally — `pnpm build` requires `cargo` for `@tailwindcss/oxide` and I don't have a Rust toolchain set up — so the test has been written to match existing conventions in `index.test.ts` (vitest, plain `postcss([tailwindcss({...})]).process(...)`), and I'm relying on CI to verify.",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19980",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/@tailwindcss-postcss/src/index.test.ts",
+        "packages/@tailwindcss-postcss/src/index.ts"
+      ]
+    },
+    {
+      "sha": "615835d1f5fa2aad71e9b0b77ce2ab542f55bdc7",
+      "message": "Bump NAPI related dependencies (#19982)\n\nThis PR bumps all the NAPI related dependencies\n\nCloses: #19977\nCloses: #19976\nCloses: #19973\nCloses: #19972\nCloses: #19971\nCloses: #19970\n\n## Test plan\n\n1. All tests still pass\n\n[ci-all] to verify on Windows and macOS as well",
+      "author": "RobinMalfait",
+      "date": "2026-04-26T15:49:06Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/615835d1f5fa2aad71e9b0b77ce2ab542f55bdc7",
+      "pr_number": 19982,
+      "pr_title": "Bump NAPI related dependencies",
+      "pr_body": "This PR bumps all the NAPI related dependencies\n\nCloses: #19977\nCloses: #19976\nCloses: #19973\nCloses: #19972\nCloses: #19971\nCloses: #19970\n\n## Test plan\n\n1. All tests still pass\n\n[ci-all] to verify on Windows and macOS as well\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19982",
+      "labels": [],
+      "files": [
+        "Cargo.lock",
+        "crates/node/Cargo.toml",
+        "crates/node/npm/wasm32-wasi/package.json",
+        "crates/node/package.json",
+        "pnpm-lock.yaml",
+        "rust-toolchain.toml"
+      ]
+    },
+    {
+      "sha": "107e451e37d2f5753ab668fa150aa55ccf2df3d1",
+      "message": "Improve CI for NAPI-RS (#19983)\n\nThis PR updates the CI workflows related to NAPI-RS. So far, we've been\nusing a custom ghcr.io based image, but these run on Node v18.\n\nWith this PR, I created a new project using `napi new`, with GitHub\nActions workflow setup. Then essentially ported the changes from that\nnew project to this project (as minimal as possible).\n\nThe main goal was to be able to bump NAPI-RS related dependencies _and_\nget an insiders release out. The images used in these CI jobs were\nblockers to get an actual (insiders) release out.\n\n## Test plan\n\n1. CI still passes\n2. Added a dry-run on the prepare release workflow to test that we got\nthrough the entire workflow without issues",
+      "author": "RobinMalfait",
+      "date": "2026-04-26T17:37:28Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/107e451e37d2f5753ab668fa150aa55ccf2df3d1",
+      "pr_number": 19983,
+      "pr_title": "Improve CI for NAPI-RS",
+      "pr_body": "This PR updates the CI workflows related to NAPI-RS. So far, we've been using a custom ghcr.io based image, but these run on Node v18. \r\n\r\nWith this PR, I created a new project using `napi new`, with GitHub Actions workflow setup. Then essentially ported the changes from that new project to this project (as minimal as possible).\r\n\r\nThe main goal was to be able to bump NAPI-RS related dependencies _and_ get an insiders release out. The images used in these CI jobs were blockers to get an actual (insiders) release out.\r\n\r\n## Test plan\r\n\r\n1. CI still passes\r\n2. Added a dry-run on the prepare release workflow to test that we got through the entire workflow without issues\r\n\r\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19983",
+      "labels": [],
+      "files": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/integration-tests.yml",
+        ".github/workflows/prepare-release.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "sha": "3aac5dafe8cf26a96f29f95edf82f309ca4a1436",
+      "message": "Improve whitespace handling during canonicalization (#19986)\n\nThis PR fixes a printing bug during canonicalization where it converts:\n```\n[&:has(~_*_*:checked)]:text-green-500\n```\n\ninto:\n```\n[&:has(~**:checked)]:text-green-500\n```\n\nThis is because the `_` was marked as insignificant and therefore\nremoved. This PR fixes that and maintains the whitespace (`_`)\ncharacters when needed.\n\nAdditionally, in the comments of the linked issue somebody mentioned\nthat:\n```\nw-[calc(100%_-_--spacing(60))]\n```\n\nwas turned into:\n```\nw-[calc(100%---spacing(60))]\n```\n\n...and while that's still correct and parseable, it's not the prettiest.\n\nThis PR will still get rid of the whitespace, but introduce wrapping\nparens `(…)` instead, in case readability is not ideal.\n\nIn this case, we will turn it into:\n```diff\n- w-[calc(100%_-_--spacing(60))]\n- w-[calc(100%---spacing(60))]\n+ w-[calc(100%-(--spacing(60)))]\n```\n\nOf course there are some cases where we don't need to introduce `(…)`\nunnecessarily:\n\n- `shadow-[inset_0px_1px_--theme(--color-white/15%)]` would not be\nturned into `shadow-[inset_0px_1px_(--theme(--color-white/15%))]`\nbecause no readability is gained when it's part of a normal space\nseparated list\n- `m-[--spacing(12.34)]` would not be turned into\n`m-[(--spacing(12.34))]` because there is nothing else it can conflict\nwith\n- `m-[calc(--spacing(12.34)*2)]` would not be turned into\n`m-[calc((--spacing(12.34))*2)]` because it's the first argument and\ndoesn't conflict with the `*`\n- `m-[min(100%,--spacing(12.34))]` would not be turned into\n`m-[min(100%,(--spacing(12.34)))]` because a `,` doesn't cause\nreadability issues\n\n\nFixes:\nhttps://github.com/tailwindlabs/tailwindcss-intellisense/issues/1544\n\n## Test plan\n\n1. Added new tests to ensure the bug is fixed\n2. Added new tests to ensure readability is improved (and not degraged)\nwhen whitespace was used to improve readability",
+      "author": "RobinMalfait",
+      "date": "2026-04-26T22:20:53Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/3aac5dafe8cf26a96f29f95edf82f309ca4a1436",
+      "pr_number": 19986,
+      "pr_title": "Improve whitespace handling during canonicalization",
+      "pr_body": "This PR fixes a printing bug during canonicalization where it converts:\n```\n[&:has(~_*_*:checked)]:text-green-500\n```\n\ninto:\n```\n[&:has(~**:checked)]:text-green-500\n```\n\nThis is because the `_` was marked as insignificant and therefore removed. This PR fixes that and maintains the whitespace (`_`) characters when needed.\n\nAdditionally, in the comments of the linked issue somebody mentioned that:\n```\nw-[calc(100%_-_--spacing(60))]\n```\n\nwas turned into:\n```\nw-[calc(100%---spacing(60))]\n```\n\n...and while that's still correct and parseable, it's not the prettiest.\n\nThis PR will still get rid of the whitespace, but introduce wrapping parens `(…)` instead, in case readability is not ideal.\n\nIn this case, we will turn it into:\n```diff\n- w-[calc(100%_-_--spacing(60))]\n- w-[calc(100%---spacing(60))]\n+ w-[calc(100%-(--spacing(60)))]\n```\n\nOf course there are some cases where we don't need to introduce `(…)` unnecessarily:\n\n- `shadow-[inset_0px_1px_--theme(--color-white/15%)]` would not be turned into `shadow-[inset_0px_1px_(--theme(--color-white/15%))]` because no readability is gained when it's part of a normal space separated list\n- `m-[--spacing(12.34)]` would not be turned into `m-[(--spacing(12.34))]` because there is nothing else it can conflict with\n- `m-[calc(--spacing(12.34)*2)]` would not be turned into `m-[calc((--spacing(12.34))*2)]` because it's the first argument and doesn't conflict with the `*`\n- `m-[min(100%,--spacing(12.34))]` would not be turned into `m-[min(100%,(--spacing(12.34)))]` because a `,` doesn't cause readability issues\n\n\nFixes: https://github.com/tailwindlabs/tailwindcss-intellisense/issues/1544\n\n## Test plan\n\n1. Added new tests to ensure the bug is fixed\n2. Added new tests to ensure readability is improved (and not degraged) when whitespace was used to improve readability\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19986",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/candidate.ts",
+        "packages/tailwindcss/src/canonicalize-candidates.test.ts"
+      ]
+    },
+    {
+      "sha": "b9449612baada9b086f6a36b527f811f80f25e58",
+      "message": "Canonicalization: do not canonicalize units in arbitrary values (#19988)\n\nThis PR improves the canonicalization when dealing with arbitrary\nvalues.\n\nAs part of the canonicalization process we compute a signature for a\ngiven utility. This way we can ensure that when we canonicalize a\ncandidate into a simpler candidate that it's still equivalent if the\nsignatures match.\n\nOne thing we do during signature computation is normalizing dimensions\n(value + unit) into the same unit to make comparisons easier.\n\nFor example:\n```css\n.foo { margin-top: 20in; }\n.bar { margin-top: 1920px; }\n```\n\nWill both get converted to `1920px` and therefore `foo` and `bar` will\nhave the same signature.\n\nUp until this part, everything is fine. However, this normalization also\nleaks when we try to canonicalize arbitrary values. One of the things we\ndo is try to move the `-` into the arbitrary value:\n```diff\n- -mt-[20in]\n+ mt-[calc(20in_*_-1)]\n```\n\nThis is obviously not cleaner, but we can perform some canonicalization\nof the arbitrary value. As part of that we do constant folding _and_ the\nnormalization of base units. That means that we would see this:\n```diff\n- -mt-[20in]\n- mt-[calc(20in_*_-1)]\n+ mt-[-1920px]\n```\n\nBut this might be very confusing because it might not make sense where\nthe `1920px` even came from... the only thing we should have done here\nis constant fold that calc expression.\n\nThat's what this PR does, it only does the constant folding but without\nthe unit normalization:\n```diff\n- -mt-[20in]\n- mt-[calc(20in_*_-1)]\n+ mt-[-20in]\n```\n\nWhich is exactly what we want!\n\nFixes:\nhttps://github.com/tailwindlabs/tailwindcss-intellisense/issues/1573\n\n## Test plan\n\n1. Added a regression test based on the linked issue\n2. All other tests still pass",
+      "author": "RobinMalfait",
+      "date": "2026-04-28T14:42:02Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/b9449612baada9b086f6a36b527f811f80f25e58",
+      "pr_number": 19988,
+      "pr_title": "Canonicalization: do not canonicalize units in arbitrary values",
+      "pr_body": "This PR improves the canonicalization when dealing with arbitrary values.\r\n\r\nAs part of the canonicalization process we compute a signature for a given utility. This way we can ensure that when we canonicalize a candidate into a simpler candidate that it's still equivalent if the signatures match.\r\n\r\nOne thing we do during signature computation is normalizing dimensions (value + unit) into the same unit to make comparisons easier.\r\n\r\nFor example:\r\n```css\r\n.foo { margin-top: 20in; }\r\n.bar { margin-top: 1920px; }\r\n```\r\n\r\nWill both get converted to `1920px` and therefore `foo` and `bar` will have the same signature.\r\n\r\nUp until this part, everything is fine. However, this normalization also leaks when we try to canonicalize arbitrary values. One of the things we do is try to move the `-` into the arbitrary value:\r\n```diff\r\n- -mt-[20in]\r\n+ mt-[calc(20in_*_-1)]\r\n```\r\n\r\nThis is obviously not cleaner, but we can perform some canonicalization of the arbitrary value. As part of that we do constant folding _and_ the normalization of base units. That means that we would see this:\r\n```diff\r\n- -mt-[20in]\r\n- mt-[calc(20in_*_-1)]\r\n+ mt-[-1920px]\r\n```\r\n\r\nBut this might be very confusing because it might not make sense where the `1920px` even came from... the only thing we should have done here is constant fold that calc expression.\r\n\r\nThat's what this PR does, it only does the constant folding but without the unit normalization:\r\n```diff\r\n- -mt-[20in]\r\n- mt-[calc(20in_*_-1)]\r\n+ mt-[-20in]\r\n```\r\n\r\nWhich is exactly what we want!\r\n\r\nFixes: https://github.com/tailwindlabs/tailwindcss-intellisense/issues/1573\r\n\r\n## Test plan\r\n\r\n1. Added a regression test based on the linked issue\r\n2. All other tests still pass\r\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19988",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/canonicalize-candidates.test.ts",
+        "packages/tailwindcss/src/canonicalize-candidates.ts",
+        "packages/tailwindcss/src/constant-fold-declaration.ts"
+      ]
+    },
+    {
+      "sha": "73f3a6a74336b5d74ff69cae5465714650f1d2e3",
+      "message": "Canonicalization: migrate `[&:has(…)]` to `has-[…]` variant (#19991)\n\nThis PR improves the canonicalization around arbitrary variants\ncontaining `[&:has(…)]`, by converting them to `has-[…]`.\n\nEssentially when you have a variant, with `&:has(…)`, we will convert\nit:\n\n```diff\n- [&:has([role=checkbox])]:flex\n+ has-[[role=checkbox]]:flex\n```\n\nThis also means that if the arbitrary selector inside of the `&:has(…)`\ncan be converted to something that aligns with known variants, then we\nwill do that as well:\n\n```diff\n  // `data-*` can be hoisted outside of the arbitrary value\n- [&:has([data-slot=description])]:flex\n+ has-data-[slot=description]:flex\n\n  // `aria-visible=\"true\"` can be entirely replaced by `aria-visible`\n- [&:has([aria-visible=\"true\"])]:flex\n+ has-aria-visible:flex\n```\n\nNoticed this while looking into:\nhttps://github.com/tailwindlabs/tailwindcss-intellisense/issues/1562\n\n## Test plan\n\n1. Added additional tests for this use case\n2. Existing tests still pass",
+      "author": "RobinMalfait",
+      "date": "2026-04-29T12:20:11Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/73f3a6a74336b5d74ff69cae5465714650f1d2e3",
+      "pr_number": 19991,
+      "pr_title": "Canonicalization: migrate `[&:has(…)]` to `has-[…]` variant",
+      "pr_body": "This PR improves the canonicalization around arbitrary variants containing `[&:has(…)]`, by converting them to `has-[…]`.\n\nEssentially when you have a variant, with `&:has(…)`, we will convert it:\n\n```diff\n- [&:has([role=checkbox])]:flex\n+ has-[[role=checkbox]]:flex\n```\n\nThis also means that if the arbitrary selector inside of the `&:has(…)` can be converted to something that aligns with known variants, then we will do that as well:\n\n```diff\n  // `data-*` can be hoisted outside of the arbitrary value\n- [&:has([data-slot=description])]:flex\n+ has-data-[slot=description]:flex\n\n  // `aria-visible=\"true\"` can be entirely replaced by `aria-visible`\n- [&:has([aria-visible=\"true\"])]:flex\n+ has-aria-visible:flex\n```\n\nNoticed this while looking into: https://github.com/tailwindlabs/tailwindcss-intellisense/issues/1562\n\n## Test plan\n\n1. Added additional tests for this use case\n2. Existing tests still pass\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19991",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/canonicalize-candidates.test.ts",
+        "packages/tailwindcss/src/canonicalize-candidates.ts"
+      ]
+    },
+    {
+      "sha": "ba667400e81246444beb2f0d4351fe99e06e4de8",
+      "message": "[@tailwindcss/upgrade] Don’t migrate inline style properties (#19918)\n\nPrevent the upgrade tool from rewriting CSS properties inside inline\n`style` attributes.\n\nThis fixes cases like `style=\"flex-grow: 1\"` being changed to\n`style=\"grow: 1\"` and adds regression tests.\n\n---------\n\nCo-authored-by: Robin Malfait <malfait.robin@gmail.com>",
+      "author": "dbpolito",
+      "date": "2026-04-29T13:18:02Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/ba667400e81246444beb2f0d4351fe99e06e4de8",
+      "pr_number": 19918,
+      "pr_title": "[@tailwindcss/upgrade] Don’t migrate inline style properties",
+      "pr_body": "Prevent the upgrade tool from rewriting CSS properties inside inline `style` attributes.\r\n\r\nThis fixes cases like `style=\"flex-grow: 1\"` being changed to `style=\"grow: 1\"` and adds regression tests.",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19918",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/@tailwindcss-upgrade/src/codemods/template/is-safe-migration.test.ts",
+        "packages/@tailwindcss-upgrade/src/codemods/template/is-safe-migration.ts"
+      ]
+    },
+    {
+      "sha": "d194d4c3e656313421f1cfa1954db8f58eec0fcd",
+      "message": "docs: fix various typos in comments and documentation (#19878)\n\nFixes a few minor typos across the codebase (e.g. 'overriden' ->\n'overridden', 're-use' -> 'reuse').\n\n---------\n\nCo-authored-by: Robin Malfait <malfait.robin@gmail.com>",
+      "author": "Abhi3975",
+      "date": "2026-04-29T13:28:39Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/d194d4c3e656313421f1cfa1954db8f58eec0fcd",
+      "pr_number": 19878,
+      "pr_title": "docs: fix various typos in comments and documentation",
+      "pr_body": "Fixes a few minor typos across the codebase (e.g. 'overriden' -> 'overridden', 're-use' -> 'reuse').",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19878",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "crates/oxide/src/extractor/pre_processors/test-fixtures/haml/dst-17051.haml",
+        "crates/oxide/src/extractor/pre_processors/test-fixtures/haml/src-17051.haml",
+        "packages/@tailwindcss-postcss/src/index.ts",
+        "packages/@tailwindcss-vite/src/index.ts"
+      ]
+    },
+    {
+      "sha": "f036f80195d5d19594f467991f7b89abe0e0137e",
+      "message": "Allow multiple @utility definitions with same name but different value types (#19777)\n\n## Summary\n\nFixes #16948\n\nWhen defining multiple CSS `@utility foo-*` with different value types\n(e.g., one for colors, one for numbers), only the first handler was\ntried. If it returned `null` (value didn't match), the compile loop\nstopped, preventing subsequent handlers from being attempted.\n\n```css\n@utility foo-* {\n  color: --value(--color-*);\n}\n@utility foo-* {\n  font-size: --spacing(--value(number));\n}\n```\n\nPreviously, `foo-red-500` worked but `foo-123` did not (or vice versa\ndepending on definition order).\n\nThe fix distinguishes between CSS `@utility` handlers and JS plugin\n`matchUtilities` handlers:\n- **CSS `@utility`** (no typed options): `null` means \"try the next\nhandler\" - allows multiple definitions with different value types to\ncoexist\n- **JS `matchUtilities`** (with explicit types): `null` means \"the value\nwas invalid for this type, stop\" - preserves existing behavior where\ntyped utilities prevent invalid values from falling through\n\n## Test plan\n\n- Added test: two `@utility foo-*` definitions with different value\ntypes - verifies both `foo-red-500` (color) and `foo-123` (number)\nproduce correct CSS\n- All 4621 existing tests pass (including the `matchUtilities`\ntype-safety tests)\n- `pnpm build && pnpm test` passes\n\nThis contribution was developed with AI assistance (Claude Code).\n\n---------\n\nCo-authored-by: Claude Opus 4.6 <noreply@anthropic.com>\nCo-authored-by: Robin Malfait <malfait.robin@gmail.com>",
+      "author": "mvanhorn",
+      "date": "2026-04-29T14:56:17Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/f036f80195d5d19594f467991f7b89abe0e0137e",
+      "pr_number": 19777,
+      "pr_title": "Allow multiple @utility definitions with same name but different value types",
+      "pr_body": "## Summary\n\nFixes #16948\n\nWhen defining multiple CSS `@utility foo-*` with different value types (e.g., one for colors, one for numbers), only the first handler was tried. If it returned `null` (value didn't match), the compile loop stopped, preventing subsequent handlers from being attempted.\n\n```css\n@utility foo-* {\n  color: --value(--color-*);\n}\n@utility foo-* {\n  font-size: --spacing(--value(number));\n}\n```\n\nPreviously, `foo-red-500` worked but `foo-123` did not (or vice versa depending on definition order).\n\nThe fix distinguishes between CSS `@utility` handlers and JS plugin `matchUtilities` handlers:\n- **CSS `@utility`** (no typed options): `null` means \"try the next handler\" - allows multiple definitions with different value types to coexist\n- **JS `matchUtilities`** (with explicit types): `null` means \"the value was invalid for this type, stop\" - preserves existing behavior where typed utilities prevent invalid values from falling through\n\n## Test plan\n\n- Added test: two `@utility foo-*` definitions with different value types - verifies both `foo-red-500` (color) and `foo-123` (number) produce correct CSS\n- All 4621 existing tests pass (including the `matchUtilities` type-safety tests)\n- `pnpm build && pnpm test` passes\n\nThis contribution was developed with AI assistance (Claude Code).",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19777",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/compile.ts",
+        "packages/tailwindcss/src/utilities.test.ts"
+      ]
+    },
+    {
+      "sha": "6cf1af26b39f6ddf64bbab92812649e971492f55",
+      "message": "Fix TS2742 error when inferring exported Config type (#19707)\n\nType aliases get resolved through to `UserConfig` during declaration\nemit, which lives in a hashed internal DTS chunk with no stable import\npath, causing TS2742. This is 100% backwards-compatible because type\naliases and interfaces are structurally comparable.\n\nFixes: https://github.com/tailwindlabs/tailwindcss/issues/15844\nFixes: https://github.com/tailwindlabs/tailwindcss/issues/19706\nFixes: https://github.com/tailwindlabs/tailwindcss/discussions/15458\n\n---------\n\nCo-authored-by: Claude Opus 4.6 <noreply@anthropic.com>\nCo-authored-by: Robin Malfait <malfait.robin@gmail.com>",
+      "author": "silverwind",
+      "date": "2026-04-29T18:48:08Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/6cf1af26b39f6ddf64bbab92812649e971492f55",
+      "pr_number": 19707,
+      "pr_title": "Fix TS2742 error when inferring exported Config type",
+      "pr_body": "Type aliases get resolved through to `UserConfig` during declaration emit, which lives in a hashed internal DTS chunk with no stable import path, causing TS2742. This is 100% backwards-compatible because type aliases and interfaces are structurally comparable.\r\n\r\nFixes: https://github.com/tailwindlabs/tailwindcss/issues/15844\r\nFixes: https://github.com/tailwindlabs/tailwindcss/issues/19706\r\nFixes: https://github.com/tailwindlabs/tailwindcss/discussions/15458",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19707",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "integrations/cli/config.test.ts",
+        "integrations/cli/plugins.test.ts",
+        "packages/tailwindcss/src/index.ts",
+        "packages/tailwindcss/src/plugin.ts"
+      ]
+    },
+    {
+      "sha": "e1201bc6e3f663e9769ebb74e68889a26c587da8",
+      "message": "Simplify `@variant` usage, allow compound and stacked variants (#19996)\n\nThis PR improves and simplifies the `@variant` usage. \n\nWhen we originally added support for `@variant`, we wanted to keep\nthings simple, where we could only use a single variant at a time. The\noriginal PR did have a more complex system with all these features\nenabled, but we wanted to make sure that we only introduced the\nadditional complexity when the community felt like it was needed.\n\nBut of course we still wanted to make sure that you could do compound\nand stacked variants, it just required some additional code.\n\nFor compound variants, where you want to use variant `a` and variant\n`b`, you could duplicate the rules as siblings:\n```css\n.foo {\n  @variant a {\n    display: flex;\n  }\n\n  @variant b {\n    display: flex;\n  }\n}\n```\n\nBut with this PR, you can comma separate each variant to get the same\neffect:\n```css\n.foo {\n  @variant a, b {\n    display: flex;\n  }\n}\n```\nYou can think of this as-if we are expanding this syntax into the\naforementioned syntax. In other words, we would do the duplication for\nyou.\n\nAdditionally, you also want to be able to stack variants. For that you\nhad to nest your `@variant` rules:\n```css\n.foo {\n  @variant a {\n    @variant b {\n      display: flex;\n    }\n  }\n}\n```\n\nNot the end of the world, but it can get pretty nested if you want to\nuse multiple variants. Luckily we already have a syntax for this in\nnormal Tailwind CSS classes: `a:b:flex`. Which is exactly what we can\nuse here as well:\n```css\n.foo {\n  @variant a:b {\n    display: flex;\n  }\n}\n```\nAgain, conceptually you can think of this syntax being expanded into the\nsyntax from above.\n\nLast but not least, we can also combine these:\n```css\n.foo {\n  background: black;\n\n  @variant a, b:c {\n    background: red;\n\n    @variant d, e:f {\n      background: blue;\n    }\n  }\n}\n```\nThis conceptually translates into the much more verbose version today:\n```css\n.foo {\n  background: black;\n\n  @variant a {\n    background: red;\n\n    @variant d {\n      background: blue;\n    }\n\n    @variant e {\n      @variant f {\n        background: blue;\n      }\n    }\n  }\n\n  @variant b {\n    @variant c {\n      background: red;\n\n      @variant d {\n        background: blue;\n      }\n\n      @variant e {\n        @variant f {\n          background: blue;\n        }\n      }\n    }\n  }\n}\n```\n\nThe biggest downside is that this could potentially easily balloon your\nCSS file size if you're not careful. Because with this, it's pretty easy\nto add one more variant that introduces a lot of duplicated CSS.\n\nThis feature is completely backwards compatible, you can still nest your\n`@variant` calls yourself if you want, and combine them with these\nfeatures if you want.\n\nThis is also a continuation of #19526 and #19884, but for some reason I\ndon't have push rights, so I'm creating this new PR instead. I did keep\nthe original commits of those PRs so these contributors are still\nproperly marked as contributors.\n<img width=\"808\" height=\"135\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/bee334ab-39d7-4d4d-a48f-afa2253cf17b\"\n/>\n<img width=\"349\" height=\"75\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/fb68906c-db74-43f7-83e4-918ad3d4a036\"\n/>\n\n\nCloses: #19526\nCloses: #19884\n\n## Test plan\n\n1. Added a bunch of new tests to verify this new behavior\n2. Added tests that compare the short (new) version, and the long (old)\nversion\n3. Added a sourcemap related test to ensure that the src and dst\nlocations are correct\n4. Existing tests still pass\n\n---------\n\nCo-authored-by: orteth01 <tortega128@gmail.com>\nCo-authored-by: Ray Knight <array.knight+github@gmail.com>",
+      "author": "RobinMalfait",
+      "date": "2026-04-30T10:19:44Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/e1201bc6e3f663e9769ebb74e68889a26c587da8",
+      "pr_number": 19996,
+      "pr_title": "Simplify `@variant` usage, allow compound and stacked variants",
+      "pr_body": "This PR improves and simplifies the `@variant` usage. \r\n\r\nWhen we originally added support for `@variant`, we wanted to keep things simple, where we could only use a single variant at a time. The original PR did have a more complex system with all these features enabled, but we wanted to make sure that we only introduced the additional complexity when the community felt like it was needed.\r\n\r\nBut of course we still wanted to make sure that you could do compound and stacked variants, it just required some additional code.\r\n\r\nFor compound variants, where you want to use variant `a` and variant `b`, you could duplicate the rules as siblings:\r\n```css\r\n.foo {\r\n  @variant a {\r\n    display: flex;\r\n  }\r\n\r\n  @variant b {\r\n    display: flex;\r\n  }\r\n}\r\n```\r\n\r\nBut with this PR, you can comma separate each variant to get the same effect:\r\n```css\r\n.foo {\r\n  @variant a, b {\r\n    display: flex;\r\n  }\r\n}\r\n```\r\nYou can think of this as-if we are expanding this syntax into the aforementioned syntax. In other words, we would do the duplication for you.\r\n\r\nAdditionally, you also want to be able to stack variants. For that you had to nest your `@variant` rules:\r\n```css\r\n.foo {\r\n  @variant a {\r\n    @variant b {\r\n      display: flex;\r\n    }\r\n  }\r\n}\r\n```\r\n\r\nNot the end of the world, but it can get pretty nested if you want to use multiple variants. Luckily we already have a syntax for this in normal Tailwind CSS classes: `a:b:flex`. Which is exactly what we can use here as well:\r\n```css\r\n.foo {\r\n  @variant a:b {\r\n    display: flex;\r\n  }\r\n}\r\n```\r\nAgain, conceptually you can think of this syntax being expanded into the syntax from above.\r\n\r\nLast but not least, we can also combine these:\r\n```css\r\n.foo {\r\n  background: black;\r\n\r\n  @variant a, b:c {\r\n    background: red;\r\n\r\n    @variant d, e:f {\r\n      background: blue;\r\n    }\r\n  }\r\n}\r\n```\r\nThis conceptually translates into the much more verbose version today:\r\n```css\r\n.foo {\r\n  background: black;\r\n\r\n  @variant a {\r\n    background: red;\r\n\r\n    @va",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19996",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/index.test.ts",
+        "packages/tailwindcss/src/source-maps/source-map.test.ts",
+        "packages/tailwindcss/src/variants.ts"
+      ]
+    },
+    {
+      "sha": "1ca0aacdaec67a481279a4d5e27f0fd93f0c1262",
+      "message": "Add source map visualization for tests (#19997)\n\nThis PR is an internal change only related to how we visualize source\nmaps.\n\nAs part of this PR\n(https://github.com/tailwindlabs/tailwindcss/pull/19996) I added a test\nfor source maps related to how `@variant` is processed. And while the\nresult was correct, I had a hard time verifying if this was _actually_\ncorrect. I did the mental mapping of comparing locations from the output\nto the input.\n<img width=\"495\" height=\"495\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/2b1c12cd-43ee-461a-b93b-bafe6ce1cce5\"\n/>\n\nWith this PR, I want to make that more visual by actually printing the\ninput source(s) and output file and highlight the necessary parts:\n<img width=\"1101\" height=\"1085\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/14390026-f211-4cfc-8c6c-3293105f6403\"\n/>\n\nI didn't want to get too clever here. But printing line numbers also\nhelps in case we point to different spots on the same line:\n<img width=\"1200\" height=\"981\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/e75f7622-eb51-49ee-928e-fdc8672d2c3f\"\n/>\n\nAnd if we point to different files, then we visualize these as well:\n<img width=\"851\" height=\"957\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/77e65801-b46b-4579-8659-d919a8750f60\"\n/>\n\n\nIf you combine this with snapshot tests, then it's very easy to verify\nthat locations match up correctly. Each source map location is\nhighlighted and references a symbol starting at `A`, `B`, etc.\n\nA change to the source maps _can_ result in a big diff, and even this PR\nintroduces a big diff because of the preflight diffs. But at least you\ncan see how things line up.\n\n## Test plan\n\n1. All tests still pass\n2. Added tests for the source map visualizer that is only used in tests\n3. No actual source code was touched",
+      "author": "RobinMalfait",
+      "date": "2026-04-30T12:52:09Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/1ca0aacdaec67a481279a4d5e27f0fd93f0c1262",
+      "pr_number": 19997,
+      "pr_title": "Add source map visualization for tests",
+      "pr_body": "This PR is an internal change only related to how we visualize source maps. \r\n\r\nAs part of this PR (https://github.com/tailwindlabs/tailwindcss/pull/19996) I added a test for source maps related to how `@variant` is processed. And while the result was correct, I had a hard time verifying if this was _actually_ correct. I did the mental mapping of comparing locations from the output to the input.\r\n<img width=\"495\" height=\"495\" alt=\"image\" src=\"https://github.com/user-attachments/assets/2b1c12cd-43ee-461a-b93b-bafe6ce1cce5\" />\r\n\r\nWith this PR, I want to make that more visual by actually printing the input source(s) and output file and highlight the necessary parts:\r\n<img width=\"1101\" height=\"1085\" alt=\"image\" src=\"https://github.com/user-attachments/assets/14390026-f211-4cfc-8c6c-3293105f6403\" />\r\n\r\nI didn't want to get too clever here. But printing line numbers also helps in case we point to different spots on the same line:\r\n<img width=\"1200\" height=\"981\" alt=\"image\" src=\"https://github.com/user-attachments/assets/e75f7622-eb51-49ee-928e-fdc8672d2c3f\" />\r\n\r\nAnd if we point to different files, then we visualize these as well:\r\n<img width=\"851\" height=\"957\" alt=\"image\" src=\"https://github.com/user-attachments/assets/77e65801-b46b-4579-8659-d919a8750f60\" />\r\n\r\n\r\nIf you combine this with snapshot tests, then it's very easy to verify that locations match up correctly. Each source map location is highlighted and references a symbol starting at `A`, `B`, etc.\r\n\r\nA change to the source maps _can_ result in a big diff, and even this PR introduces a big diff because of the preflight diffs. But at least you can see how things line up.\r\n\r\n## Test plan\r\n\r\n1. All tests still pass\r\n2. Added tests for the source map visualizer that is only used in tests\r\n3. No actual source code was touched\r\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19997",
+      "labels": [],
+      "files": [
+        "packages/tailwindcss/src/source-maps/source-map.test.ts",
+        "packages/tailwindcss/src/source-maps/translation-map.test.ts",
+        "packages/tailwindcss/src/source-maps/visualize-source-map.test.ts",
+        "packages/tailwindcss/src/source-maps/visualize-source-map.ts"
+      ]
+    },
+    {
+      "sha": "0db856f3deab913d9bc75b6495fa2cc8eac983de",
+      "message": "Make integration tests more stable in CI (#19995)\n\nThis PR is an attempt to make CI more stable related to integration\ntests.\n\n[ci-all]",
+      "author": "RobinMalfait",
+      "date": "2026-04-30T21:23:36Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/0db856f3deab913d9bc75b6495fa2cc8eac983de",
+      "pr_number": 19995,
+      "pr_title": "Make integration tests more stable in CI",
+      "pr_body": "This PR is an attempt to make CI more stable related to integration tests.\n\n[ci-all]\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19995",
+      "labels": [],
+      "files": [
+        "integrations/utils.ts",
+        "integrations/vite/nuxt.test.ts"
+      ]
+    },
+    {
+      "sha": "52f94c74bb491e9c3641ce322a0ef90fb3c45de6",
+      "message": "Improve codebase quality (#19999)\n\nSmall PR that improves the overall quality of the codebase. It's a bit\nof everything:\n\n1. Using correct variants for the variants we are testing\n2. Use `@reference` instead of `@import` in a test, testing the\n`@reference` according to the test name\n3. Use `using` for Vitest related mocks. They have a `Symbol.dispose`\nimplemented, so we can don't have to restore mocks ourselves (right now,\nsome of them are not cleaned up at all).\n4. Updated deprecated `.toThrowError` with `.toThrow` APIs\n\n## Test plan\n\nEverything still passes.\n\n[ci-all]",
+      "author": "RobinMalfait",
+      "date": "2026-04-30T21:32:37Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/52f94c74bb491e9c3641ce322a0ef90fb3c45de6",
+      "pr_number": 19999,
+      "pr_title": "Improve codebase quality",
+      "pr_body": "Small PR that improves the overall quality of the codebase. It's a bit of everything:\n\n1. Using correct variants for the variants we are testing\n2. Use `@reference` instead of `@import` in a test, testing the `@reference` according to the test name\n3. Use `using` for Vitest related mocks. They have a `Symbol.dispose` implemented, so we can don't have to restore mocks ourselves (right now, some of them are not cleaned up at all).\n4. Updated deprecated `.toThrowError` with `.toThrow` APIs\n\n## Test plan\n\nEverything still passes.\n\n[ci-all]\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19999",
+      "labels": [],
+      "files": [
+        "integrations/postcss/core-as-postcss-plugin.test.ts",
+        "integrations/vite/index.test.ts",
+        "packages/@tailwindcss-postcss/src/index.test.ts",
+        "packages/tailwindcss/src/at-import.test.ts",
+        "packages/tailwindcss/src/compat/config.test.ts",
+        "packages/tailwindcss/src/compat/plugin-api.test.ts",
+        "packages/tailwindcss/src/index.test.ts",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/variants.test.ts"
+      ]
+    },
+    {
+      "sha": "4b5d6a594305b2914a018d52392e099468922430",
+      "message": "Update enhanced-resolve 5.20.1 → 5.21.0 (minor) (#19998)\n\nHere is everything you need to know about this update. Please take a\ngood look at what changed and the test results before merging this pull\nrequest.\n\n### What changed?\n\n\n\n\n#### ✳️ enhanced-resolve (5.20.1 → 5.21.0) ·\n[Repo](https://github.com/webpack/enhanced-resolve) ·\n[Changelog](https://github.com/webpack/enhanced-resolve/blob/main/CHANGELOG.md)\n\n\n\n<details>\n<summary>Release Notes</summary>\n<h4><a\nhref=\"https://github.com/webpack/enhanced-resolve/releases/tag/v5.21.0\">5.21.0</a></h4>\n\n<blockquote><h3 dir=\"auto\">Minor Changes</h3>\n<ul dir=\"auto\">\n<li>\n<p dir=\"auto\">Added promise API and support to resolve without <code\nclass=\"notranslate\">context</code> and <code\nclass=\"notranslate\">resolveContext</code>. (by <a\nhref=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait</a>\nin <a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/520\">#520</a>)</p>\n</li>\n<li>\n<p dir=\"auto\">Add <code\nclass=\"notranslate\">extensionAliasForExports</code> option. When <code\nclass=\"notranslate\">true</code>, <code\nclass=\"notranslate\">extensionAlias</code> also applies to paths resolved\nthrough the <code class=\"notranslate\">package.json</code> <code\nclass=\"notranslate\">exports</code> field. Off by default to match\nNode.js; opt in for full TypeScript-resolver parity with packages that\nship <code class=\"notranslate\">.ts</code> sources alongside the compiled\n<code class=\"notranslate\">.js</code> they declare in <code\nclass=\"notranslate\">exports</code>. (by <a\nhref=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait</a>\nin <a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/554\">#554</a>)</p>\n</li>\n</ul>\n<h3 dir=\"auto\">Patch Changes</h3>\n<ul dir=\"auto\">\n<li>\n<p dir=\"auto\">Properly handle DOS device paths (<code\nclass=\"notranslate\">\\\\?\\…</code> and <code\nclass=\"notranslate\">\\\\.\\…</code>). (by <a\nhref=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait</a>\nin <a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/551\">#551</a>)</p>\n</li>\n<li>\n<p dir=\"auto\">Prevent fallback to parent node_modules when the <code\nclass=\"notranslate\">exports</code> field target file is not found. (by\n<a href=\"https://bounce.depfu.com/github.com/xiaoxiaojx\">@xiaoxiaojx</a>\nin <a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/495\">#495</a>)</p>\n</li>\n<li>\n<p dir=\"auto\">Imports field spec deviation: non-relative targets (e.g.\n<code class=\"notranslate\">\"#a\": \"#b\"</code>) no longer re-enter imports\nresolution, aligning with the Node.js ESM spec where <code\nclass=\"notranslate\">PACKAGE_IMPORTS_RESOLVE</code> does not recursively\nresolve <code class=\"notranslate\">#</code> specifiers. (by <a\nhref=\"https://bounce.depfu.com/github.com/xiaoxiaojx\">@xiaoxiaojx</a> in\n<a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/503\">#503</a>)</p>\n<p dir=\"auto\">Previously <code class=\"notranslate\">{ \"#a\": \"#b\", \"#b\":\n\"./the.js\" }</code> would chain-resolve <code\nclass=\"notranslate\">#a</code> to <code\nclass=\"notranslate\">./the.js</code>; now it correctly fails, matching\nNode.js behavior.</p>\n</li>\n<li>\n<p dir=\"auto\">Move <code class=\"notranslate\">cachedJoin</code>/<code\nclass=\"notranslate\">cachedDirname</code>/<code\nclass=\"notranslate\">createCachedBasename</code> caches from module-level\nglobals to per-Resolver instances. This prevents unbounded memory growth\nin long-running processes — when a Resolver is garbage collected, its\njoin/dirname/basename caches are released with it. (by <a\nhref=\"https://bounce.depfu.com/github.com/xiaoxiaojx\">@xiaoxiaojx</a> in\n<a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/507\">#507</a>)</p>\n</li>\n<li>\n<p dir=\"auto\">Fixed when <code class=\"notranslate\">tsconfig: true</code>\nis used (default config file) and no <code\nclass=\"notranslate\">tsconfig.json</code> exists. (by <a\nhref=\"https://bounce.depfu.com/github.com/xiaoxiaojx\">@xiaoxiaojx</a> in\n<a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/502\">#502</a>)</p>\n</li>\n<li>\n<p dir=\"auto\">Apply the <code class=\"notranslate\">extensionAlias</code>\noption to the <code class=\"notranslate\">imports</code> field to be align\nwith typescript resolution. (by <a\nhref=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait</a>\nin <a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/549\">#549</a>)</p>\n</li>\n<li>\n<p dir=\"auto\">Improved performance of the many plugins. (by <a\nhref=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait</a>\nin <a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/529\">#529</a>)</p>\n</li>\n<li>\n<p dir=\"auto\">Replace the <code\nclass=\"notranslate\">Set&lt;string&gt;</code>-based resolver stack with a\nsingly-linked <code class=\"notranslate\">StackEntry</code> class that\nexposes a Set-compatible API. (by <a\nhref=\"https://bounce.depfu.com/github.com/xiaoxiaojx\">@xiaoxiaojx</a> in\n<a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/526\">#526</a>)</p>\n<p dir=\"auto\">Each <code class=\"notranslate\">doResolve</code> call now\nprepends a single linked-list node instead of cloning the entire Set,\nmaking stack push O(1) in time and memory. Recursion detection walks the\nlinked list (O(n)), but because the stack is typically shallow this is\nmuch cheaper than cloning a Set per call.</p>\n</li>\n<li>\n<p dir=\"auto\">Cache the result of <code\nclass=\"notranslate\">stripJsonComments</code> + <code\nclass=\"notranslate\">JSON.parse</code> in <code\nclass=\"notranslate\">readJson</code> using a <code\nclass=\"notranslate\">WeakMap</code> keyed by the raw file buffer. This\navoids redundant comment-stripping and JSON parsing on every resolve\ncall that reads tsconfig.json files (via <code\nclass=\"notranslate\">stripComments: true</code>), improving\nTsconfigPathsPlugin warm performance by ~20-35% depending on the depth\nof the <code class=\"notranslate\">extends</code> chain. (by <a\nhref=\"https://bounce.depfu.com/github.com/xiaoxiaojx\">@xiaoxiaojx</a> in\n<a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/524\">#524</a>)</p>\n</li>\n<li>\n<p dir=\"auto\">Avoid OOM in CachedInputFileSystem when duration is\nInfinity. (by <a\nhref=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait</a>\nin <a\nhref=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/527\">#527</a>)</p>\n</li>\n</ul></blockquote>\n<p><em>Does any of this look wrong? <a\nhref=\"https://depfu.com/packages/npm/enhanced-resolve/feedback\">Please\nlet us know.</a></em></p>\n</details>\n\n<details>\n<summary>Commits</summary>\n<p><a\nhref=\"https://github.com/webpack/enhanced-resolve/compare/ebc67d38969e8abe6789a51968380fa721fea778...35035ca158f1c8ada86fcf1653f319cbce669200\">See\nthe full diff on Github</a>. The new version differs by more commits\nthan we can show here.</p>\n</details>\n\n\n\n\n\n\n\n\n\n\n\n\n---\n![Depfu\nStatus](https://depfu.com/badges/edd6acd35d74c8d41cbb540c30442adf/stats.svg)\n\n[Depfu](https://depfu.com) will automatically keep this PR\nconflict-free, as long as you don't add any commits to this branch\nyourself. You can also trigger a rebase manually by commenting with\n`@depfu rebase`.\n\n<details><summary>All Depfu comment commands</summary>\n<blockquote><dl>\n<dt>@​depfu rebase</dt><dd>Rebases against your default branch and\nredoes this update</dd>\n<dt>@​depfu recreate</dt><dd>Recreates this PR, overwriting any edits\nthat you've made to it</dd>\n<dt>@​depfu merge</dt><dd>Merges this PR once your tests are passing and\nconflicts are resolved</dd>\n<dt>@​depfu cancel merge</dt><dd>Cancels automatic merging of this\nPR</dd>\n<dt>@​depfu close</dt><dd>Closes this PR and deletes the branch</dd>\n<dt>@​depfu reopen</dt><dd>Restores the branch and reopens this PR (if\nit's closed)</dd>\n<dt>@​depfu pause</dt><dd>Ignores all future updates for this dependency\nand closes this PR</dd>\n<dt>@​depfu pause [minor|major]</dt><dd>Ignores all future minor/major\nupdates for this dependency and closes this PR</dd>\n<dt>@​depfu resume</dt><dd>Future versions of this dependency will\ncreate PRs again (leaves this PR as is)</dd>\n</dl></blockquote>\n</details>\n\nCo-authored-by: depfu[bot] <23717796+depfu[bot]@users.noreply.github.com>",
+      "author": "depfu[bot]",
+      "date": "2026-05-01T11:29:19Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/4b5d6a594305b2914a018d52392e099468922430",
+      "pr_number": 19998,
+      "pr_title": "Update enhanced-resolve 5.20.1 → 5.21.0 (minor)",
+      "pr_body": "[ci-all]\r\n\r\n\r\n\r\n\r\nHere is everything you need to know about this update. Please take a good look at what changed and the test results before merging this pull request.\r\n\r\n### What changed?\r\n\r\n\r\n\r\n\r\n#### ✳️ enhanced-resolve (5.20.1 → 5.21.0) · [Repo](https://github.com/webpack/enhanced-resolve) · [Changelog](https://github.com/webpack/enhanced-resolve/blob/main/CHANGELOG.md)\r\n\r\n\r\n\r\n<details>\r\n<summary>Release Notes</summary>\r\n<h4><a href=\"https://github.com/webpack/enhanced-resolve/releases/tag/v5.21.0\">5.21.0</a></h4>\r\n\r\n<blockquote><h3 dir=\"auto\">Minor Changes</h3>\r\n<ul dir=\"auto\">\r\n<li>\r\n<p dir=\"auto\">Added promise API and support to resolve without <code class=\"notranslate\">context</code> and <code class=\"notranslate\">resolveContext</code>. (by <a href=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait</a> in <a href=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/520\">#520</a>)</p>\r\n</li>\r\n<li>\r\n<p dir=\"auto\">Add <code class=\"notranslate\">extensionAliasForExports</code> option. When <code class=\"notranslate\">true</code>, <code class=\"notranslate\">extensionAlias</code> also applies to paths resolved through the <code class=\"notranslate\">package.json</code> <code class=\"notranslate\">exports</code> field. Off by default to match Node.js; opt in for full TypeScript-resolver parity with packages that ship <code class=\"notranslate\">.ts</code> sources alongside the compiled <code class=\"notranslate\">.js</code> they declare in <code class=\"notranslate\">exports</code>. (by <a href=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait</a> in <a href=\"https://bounce.depfu.com/github.com/webpack/enhanced-resolve/pull/554\">#554</a>)</p>\r\n</li>\r\n</ul>\r\n<h3 dir=\"auto\">Patch Changes</h3>\r\n<ul dir=\"auto\">\r\n<li>\r\n<p dir=\"auto\">Properly handle DOS device paths (<code class=\"notranslate\">\\\\?\\…</code> and <code class=\"notranslate\">\\\\.\\…</code>). (by <a href=\"https://bounce.depfu.com/github.com/alexander-akait\">@alexander-akait<",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19998",
+      "labels": [
+        "depfu"
+      ],
+      "files": [
+        "packages/@tailwindcss-cli/package.json",
+        "packages/@tailwindcss-node/package.json",
+        "packages/@tailwindcss-standalone/package.json",
+        "packages/@tailwindcss-upgrade/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "6e2b60e84a6054bb1397259e7c01fa11aa381621",
+      "message": "Do not generate CSS for `start` and `end` (#20003)\n\nThis PR fixes a bug where CSS was generated for `start` and `end`. This\nwas accidentally introduced when we moved the `start-*` and `end-*`\nutilities to the legacy utilities. But this meant that we now generate\nCSS for `start` and `end` even if no value is provided.\n\nFixes: #20002\n\n## Test plan\n\n1. Updated the tests to make sure of `--spacing: 0.25rem` which made the\ntests fail, and are fixed again by applying the fix.\n2. Other tests are still passing",
+      "author": "RobinMalfait",
+      "date": "2026-05-02T23:00:56Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/6e2b60e84a6054bb1397259e7c01fa11aa381621",
+      "pr_number": 20003,
+      "pr_title": "Do not generate CSS for `start` and `end`",
+      "pr_body": "This PR fixes a bug where CSS was generated for `start` and `end`. This was accidentally introduced when we moved the `start-*` and `end-*` utilities to the legacy utilities. But this meant that we now generate CSS for `start` and `end` even if no value is provided.\n\nFixes: #20002\n\n## Test plan\n\n1. Updated the tests to make sure of `--spacing: 0.25rem` which made the tests fail, and are fixed again by applying the fix.\n2. Other tests are still passing\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20003",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/compat/legacy-utilities.test.ts",
+        "packages/tailwindcss/src/compat/legacy-utilities.ts"
+      ]
+    },
+    {
+      "sha": "0f6f7d480f8217b7eb17daaec28d3af07009c15f",
+      "message": "Ensure `--value(…)` is required in functional `@utility` definitions (#20005)\n\nWhile working on #19989, I noticed that `--value(…)` inside functional\n`@utility` definitions is not required right now.\n\nThat means that the following CSS is valid:\n```css\n@utility foo-* {\n  color: red;\n}\n```\n\nBut this doesn't really makes sense, because this now accepts a value\nand `foo-a`, `foo-b` and `foo-c` would generate the following CSS:\n```css\n.foo-a {\n  color: red;\n}\n.foo-b {\n  color: red;\n}\n.foo-c {\n  color: red;\n}\n```\nThe `a`, `b`, and `c` are not doing anything here apart from making your\nCSS bigger. So this is very likely an actual bug that you forgot to use\n`--value(…)`.\n\nAdditionally, if a `--value(…)` was used, but it didn't resolve\nanything, then we already properly discared the candidate.\n\n## Test plan\n\n1. Add test to ensure `--value(…)` is required in functional `@utility`\ndefinitions\n2. Existing tests pass",
+      "author": "RobinMalfait",
+      "date": "2026-05-04T14:44:28Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/0f6f7d480f8217b7eb17daaec28d3af07009c15f",
+      "pr_number": 20005,
+      "pr_title": "Ensure `--value(…)` is required in functional `@utility` definitions",
+      "pr_body": "While working on #19989, I noticed that `--value(…)` inside functional `@utility` definitions is not required right now.\r\n\r\nThat means that the following CSS is valid:\r\n```css\r\n@utility foo-* {\r\n  color: red;\r\n}\r\n```\r\n\r\nBut this doesn't really makes sense, because this now accepts a value and `foo-a`, `foo-b` and `foo-c` would generate the following CSS:\r\n```css\r\n.foo-a {\r\n  color: red;\r\n}\r\n.foo-b {\r\n  color: red;\r\n}\r\n.foo-c {\r\n  color: red;\r\n}\r\n```\r\nThe `a`, `b`, and `c` are not doing anything here apart from making your CSS bigger. So this is very likely an actual bug that you forgot to use `--value(…)`.\r\n\r\nAdditionally, if a `--value(…)` was used, but it didn't resolve anything, then we already properly discared the candidate.\r\n\r\n## Test plan\r\n\r\n1. Add test to ensure `--value(…)` is required in functional `@utility` definitions\r\n2. Existing tests pass\r\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20005",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/utilities.ts"
+      ]
+    },
+    {
+      "sha": "08cad84bbe2002398655d7f981eae47379e07fc3",
+      "message": "Support `--default(…)` in `--value(…)` and `--modifier(…)` to support fallback values (#19989)\n\nThis PR adds a new `--default(…)` option that can be used inside\n`--value(…)` or `--modifier(…)` such that functional utilities without\nan explicit value/modifier can still be defined as a functional utility.\nIt would also allow you to use a functional utility without a value and\n_with_ a modifier, e.g.: `shadow/50`.\n\n---\n\nThis allows us to re-implement functional utilities with a default value\nin CSS using `@utility`.\n\nUsed the explicit `--default(…)` argument of `--value(…)` for a few\nreasons.\n\n1. It's explicit about being a falllback value. If you have `@utility\nfoo-*`, then you want to be able to use `foo`, but `foo-bad` should not\ncompile.\n2. When `--value(…)` is used in (complex) property values (think a bunch\nof `calc(…)` expressions), then we don't need a separate property for\nthis.\n\nOne of the ideas was to have a literal fallback:\n```css\n@utility tab-* {\n  tab-size: 4;\n  tab-size: --value(number);\n}\n```\n\nFor `tab`, this would compile to:\n```css\n.tab {\n  tab-size: 4;\n}\n```\n\nFor `tab-123`, this would compile to:\n```css\n.tab {\n  tab-size: 4;\n  tab-size: 123;\n}\n```\nGetting rid of the `tab-size: 4` would be an option, but it's a common\npattern in real CSS for fallback values (think hex background color,\nover a more modern `oklch` color).\n\nFor `tab-foo`, this would compile to:\n```css\n.tab {\n  tab-size: 4;\n}\n```\n\nWhich means that we have an infinite amount classes that would result in\nthe same class, which is bad. We could special case this one because the\ninternal `value` would still be `null`, but it might be too confusing.\n\nThis syntax without the `--default(…)` also means repetition of certain\nproperties. Add `--modifier(…)` to the mix, and there is even more\nrepetition going on.\n\nAnother option to consider is that the default fallback is just another\noption in the `--value(…, 4)`, but if a default fallback is a keyword,\nthen there is a chance that this might conflict with actual keywords we\ninterpret.\n\nMain motivation is to be able to re-implement utilities such as\n`shadow/50` purely in CSS. It's also something we support in the JS\nbased APIs, but not in the CSS based one, so while it's a \"new\" feature,\nit's more like a missing feature right now, and often a reason for\npeople to use the JS based APIs instead.\n\nFor consistency reasons, this is also implemented for `--modifier(…)`\nsuch that you can use a default value there. E.g. when re-implementing\n`text-sm` where a default `line-height` is set without the explicit use\nof a modifier.\n\nFixes: https://github.com/tailwindlabs/tailwindcss/issues/16824\n\n## Test plan\n\n1. Added a handful of new tests to make sure this functionality works\n2. Existing tests still pass",
+      "author": "RobinMalfait",
+      "date": "2026-05-04T15:03:00Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/08cad84bbe2002398655d7f981eae47379e07fc3",
+      "pr_number": 19989,
+      "pr_title": "Support `--default(…)` in `--value(…)` and `--modifier(…)` to support fallback values",
+      "pr_body": "This PR adds a new `--default(…)` option that can be used inside `--value(…)` or `--modifier(…)` such that functional utilities without an explicit value/modifier can still be defined as a functional utility.\r\n\r\nFor example, let's say you have a `tab-*` utility:\r\n```css\r\n@utility tab-* {\r\n  tab-size: --value(number, --default(4));\r\n}\r\n```\r\nThis allows us to use `tab-1`, `tab-2`, `tab-4` and so on. But it also allows us to use just `tab`. In this case the `tab-size` would use a default value of `4`:\r\n```css\r\n.tab {\r\n  tab-size: 4;\r\n}\r\n```\r\n\r\nMain motivation is to be able to re-implement utilities such as `shadow/50` purely in CSS. It's also something we support in the JS based APIs, but not in the CSS based one, so while it's a \"new\" feature, it's more like a missing feature right now, and often a reason for people to use the JS based APIs instead.\r\n\r\nFor consistency reasons, this is also implemented for `--modifier(…)` such that you can use a default value there. E.g. when re-implementing `text-sm` where a default `line-height` is set without the explicit use of a modifier.\r\n\r\n<details>\r\n\r\n<summary>Other approaches I considered</summary>\r\n\r\nUsed the explicit `--default(…)` argument of `--value(…)` for a few reasons.\r\n\r\n1. It's explicit about being a fallback value. If you have `@utility foo-*`, then you want to be able to use `foo`, but `foo-bad` should not compile.\r\n2. When `--value(…)` is used in (complex) property values (think a bunch of `calc(…)` expressions), then we don't need a separate property for this.\r\n\r\nOne of the ideas was to have a literal fallback:\r\n```css\r\n@utility tab-* {\r\n  tab-size: 4;\r\n  tab-size: --value(number);\r\n}\r\n```\r\n\r\nFor `tab`, this would compile to:\r\n```css\r\n.tab {\r\n  tab-size: 4;\r\n}\r\n```\r\n\r\nFor `tab-123`, this would compile to:\r\n```css\r\n.tab {\r\n  tab-size: 4;\r\n  tab-size: 123;\r\n}\r\n```\r\nGetting rid of the `tab-size: 4` would be an option, but it's a common pattern in real CSS for fallback values (think hex background color, over a more ",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19989",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/utilities.ts"
+      ]
+    },
+    {
+      "sha": "b4db3b99d1bc6209a936df34914e0fc34b3e5095",
+      "message": "Add scrollbar-width and scrollbar-color utilities (#19981)\n\n## Summary\n\nAdds utilities for the\n[`scrollbar-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scrollbar-width)\nand\n[`scrollbar-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scrollbar-color)\nCSS properties.\n\n### `scrollbar-width`\n\nThree static utilities mirroring the spec keywords:\n\n| Class | CSS |\n| --- | --- |\n| `scrollbar-auto` | `scrollbar-width: auto;` |\n| `scrollbar-thin` | `scrollbar-width: thin;` |\n| `scrollbar-none` | `scrollbar-width: none;` |\n\n### `scrollbar-color`\n\nThe `scrollbar-color` property takes two colors (thumb and track). To\nallow them to be set independently, two color utilities are added that\nshare a pair of CSS variables (`--tw-scrollbar-thumb` and\n`--tw-scrollbar-track`), following the same pattern as the gradient stop\nutilities (`from-*` / `via-*` / `to-*`):\n\n| Class | CSS |\n| --- | --- |\n| `scrollbar-thumb-<color>` | `--tw-scrollbar-thumb: <color>;\nscrollbar-color: var(--tw-scrollbar-thumb) var(--tw-scrollbar-track);` |\n| `scrollbar-track-<color>` | `--tw-scrollbar-track: <color>;\nscrollbar-color: var(--tw-scrollbar-thumb) var(--tw-scrollbar-track);` |\n\nBoth go through `colorUtility`, so they automatically support the\nstandard color palette, theme keys (`--scrollbar-thumb-color` /\n`--scrollbar-track-color` with `--color` as a fallback), arbitrary\nvalues, and the `/<alpha>` opacity modifier. The variables are\nregistered with `@property` (initial value `#0000`), matching the\ngradient-stop convention so an unset side falls back to transparent.\n\n```html\n<div class=\"scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-zinc-200\">…</div>\n```\n\n## Test plan\n\n- [x] `pnpm test` (all 4480 tests pass)\n- [x] New `scrollbar-width`, `scrollbar-thumb`, and `scrollbar-track`\ntest cases in `utilities.test.ts` covering palette colors, theme-key\ncolors, `current` / `inherit` / `transparent`, arbitrary colors,\n`/<alpha>` modifiers, and invalid candidates\n- [x] `intellisense.test.ts` snapshot updated to include the new class\nnames\n\n\n---\n_Generated by [Claude\nCode](https://claude.ai/code/session_014ajg5maQ4gUHKmqBs5o7vD)_\n\n---------\n\nCo-authored-by: Claude <noreply@anthropic.com>\nCo-authored-by: Robin Malfait <malfait.robin@gmail.com>\nCo-authored-by: greptile-apps[bot] <165735046+greptile-apps[bot]@users.noreply.github.com>",
+      "author": "adamwathan",
+      "date": "2026-05-04T15:16:50Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/b4db3b99d1bc6209a936df34914e0fc34b3e5095",
+      "pr_number": 19981,
+      "pr_title": "Add scrollbar-width and scrollbar-color utilities",
+      "pr_body": "## Summary\n\nAdds utilities for the [`scrollbar-width`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scrollbar-width) and [`scrollbar-color`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scrollbar-color) CSS properties.\n\n### `scrollbar-width`\n\nThree static utilities mirroring the spec keywords:\n\n| Class | CSS |\n| --- | --- |\n| `scrollbar-auto` | `scrollbar-width: auto;` |\n| `scrollbar-thin` | `scrollbar-width: thin;` |\n| `scrollbar-none` | `scrollbar-width: none;` |\n\n### `scrollbar-color`\n\nThe `scrollbar-color` property takes two colors (thumb and track). To allow them to be set independently, two color utilities are added that share a pair of CSS variables (`--tw-scrollbar-thumb` and `--tw-scrollbar-track`), following the same pattern as the gradient stop utilities (`from-*` / `via-*` / `to-*`):\n\n| Class | CSS |\n| --- | --- |\n| `scrollbar-thumb-<color>` | `--tw-scrollbar-thumb: <color>; scrollbar-color: var(--tw-scrollbar-thumb) var(--tw-scrollbar-track);` |\n| `scrollbar-track-<color>` | `--tw-scrollbar-track: <color>; scrollbar-color: var(--tw-scrollbar-thumb) var(--tw-scrollbar-track);` |\n\nBoth go through `colorUtility`, so they automatically support the standard color palette, theme keys (`--scrollbar-thumb-color` / `--scrollbar-track-color` with `--color` as a fallback), arbitrary values, and the `/<alpha>` opacity modifier. The variables are registered with `@property` (initial value `#0000`), matching the gradient-stop convention so an unset side falls back to transparent.\n\n```html\n<div class=\"scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-zinc-200\">…</div>\n```\n\n## Test plan\n\n- [x] `pnpm test` (all 4480 tests pass)\n- [x] New `scrollbar-width`, `scrollbar-thumb`, and `scrollbar-track` test cases in `utilities.test.ts` covering palette colors, theme-key colors, `current` / `inherit` / `transparent`, arbitrary colors, `/<alpha>` modifiers, and invalid candidates\n- [x] `intellisense.test.ts` snapshot update",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/19981",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/__snapshots__/intellisense.test.ts.snap",
+        "packages/tailwindcss/src/feature-flags.ts",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/utilities.ts"
+      ]
+    },
+    {
+      "sha": "8c779899bbc94f9f642db47cafdd363dd094984a",
+      "message": "Ensure math operators are surrounded by whitespace in arbitrary values (#20011)\n\nThis PR fixes an issue where some `calc(…)` expressions become invalid\nafter we canonicalize them to a different syntax.\n\nLet's say you start with:\n`left-[calc(-1*(var(--my-var1)+var(--my-var2)))]`, then the produced AST\nfor this candidate looks like this:\n```js\n[\n  {\n    \"kind\": \"functional\",\n    \"root\": \"left\",\n    \"modifier\": null,\n    \"value\": {\n      \"kind\": \"arbitrary\",\n      \"dataType\": null,\n      \"value\": \"calc(-1 * (var(--my-var1) + var(--my-var2)))\"\n    },\n    \"variants\": [],\n    \"important\": false,\n    \"raw\": \"left-[calc(-1*(var(--my-var1)+var(--my-var2)))]\"\n  }\n]\n```\nNotice that the `+` in between the vars already contain spaces.\n\nAnd the generated CSS looks like this:\n```css\n.left-\\[calc\\(-1\\*\\(var\\(--my-var1\\)\\+var\\(--my-var2\\)\\)\\)\\] {\n  left: calc(-1 * (var(--my-var1) + var(--my-var2)));\n}\n```\nAgain, the `+` has spaces aroudn it.\n\nHowever, we canoncialize this syntax where we remove the `calc(-1 *\n<value>)` and move the `-` in front:\n`-left-[(var(--my-var1)+var(--my-var2))]`, which should behave the same,\nbut it did not. The parsed value for this looks like:\n```js\n[\n  {\n    \"kind\": \"functional\",\n    \"root\": \"-left\",\n    \"modifier\": null,\n    \"value\": {\n      \"kind\": \"arbitrary\",\n      \"dataType\": null,\n      \"value\": \"(var(--my-var1)+var(--my-var2))\"\n    },\n    \"variants\": [],\n    \"important\": false,\n    \"raw\": \"-left-[(var(--my-var1)+var(--my-var2))]\"\n  }\n]\n```\nNotice that the `+` does not contain spaces around it. That's because we\nadd them when we parse arbitrary values and when we are in a `calc(…)`\nexpression. But the `calc(<value> * -1)` is added later, so at this\npoint, no spaces are added yet.\nThis also means that the generated CSS currently looks like:\n```css\n.-left-\\[\\(var\\(--my-var1\\)\\+var\\(--my-var2\\)\\)\\] {\n  left: calc((var(--my-var1)+var(--my-var2)) * -1);\n}\n```\nWhich is invalid.\n\nTo solve this, we will make sure to add the whitespace around operators\nwhen we re-insert the `calc(<value> * -1)`. With this fix, the CSS looks\nlike this:\n```css\n.-left-\\[\\(var\\(--my-var1\\)\\+var\\(--my-var2\\)\\)\\] {\n  left: calc((var(--my-var1) + var(--my-var2)) * -1);\n}\n```\nWhich is correct again.\n\n---\n\nThere are a few other issues that need a bit more work, but are not\nrequired for this fix.\n1. Can we get rid of the additional `(` and `)` parens? E.g.:\n   ```diff\n   - left-[calc(-1*(var(--my-var1)+var(--my-var2)))]\n   - -left-[(var(--my-var1)+var(--my-var2))]\n   + -left-[var(--my-var1)+var(--my-var2)]\n   ```\nRight now this means that we should use `calc((<value>) * -1)` instead\nof\n`calc(<value> * -1)` since `<value>` can be an expression on its own.\nThis\ncould lead to unwanted behavior, but this will be a follow up PR _if_\nit's\n   worth it.\n2. Why did we even allow this canoncialization from A to B if it's not\nthe same result?\n\nThis last question is a bit more scary, but it has to do with how we\ncompare results. We create a signature where we normalize a bunch of\nvalues to make sure that we can compare them. As a silly example\n`calc(var(--a) + var(--b))` and `calc(var(--b) + var(--a))` will result\nin the same value, therefor should have the same signature and should be\nswappable.\nBut what's happening is that the signature of\n`left-[calc(-1*(var(--my-var1)+var(--my-var2)))]` and\n`-left-[(var(--my-var1)+var(--my-var2))]` result in:\n```\n/* Signature of: left-[calc(-1*(var(--my-var1)+var(--my-var2)))] */\n.x {\n  left: calc((var(--my-var1)+var(--my-var2))*-1);\n}\n\n/* Signature of: -left-[(var(--my-var1)+var(--my-var2))] */\n.x {\n  left: calc((var(--my-var1)+var(--my-var2))*-1);\n}\n```\n\nThis gets rid of whitespace to store less data, but this is obviously\nwrong now, so we need to improve the signatures around this. That said,\nthat will be a follow up PR as well because this requires much more\ntesting.\nBut this PR at least fixes the #20010 issue because we will properly\ninsert the whitespace around the math operators.\n\nFixes: #20010\n\n## Test plan\n\n1. Added a regression test to make sure that the new canonicalized\nsyntax results in the correct CSS. Before the fix, the test would fail:\n<img width=\"623\" height=\"106\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/c470ce38-c3fa-4080-92ca-8a3e509f700b\"\n/>\n2. Existing tests still pass",
+      "author": "RobinMalfait",
+      "date": "2026-05-05T15:08:24Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/8c779899bbc94f9f642db47cafdd363dd094984a",
+      "pr_number": 20011,
+      "pr_title": "Ensure math operators are surrounded by whitespace in arbitrary values",
+      "pr_body": "This PR fixes an issue where some `calc(…)` expressions become invalid after we canonicalize them to a different syntax.\r\n\r\nLet's say you start with: `left-[calc(-1*(var(--my-var1)+var(--my-var2)))]`, then the produced AST for this candidate looks like this:\r\n```js\r\n[\r\n  {\r\n    \"kind\": \"functional\",\r\n    \"root\": \"left\",\r\n    \"modifier\": null,\r\n    \"value\": {\r\n      \"kind\": \"arbitrary\",\r\n      \"dataType\": null,\r\n      \"value\": \"calc(-1 * (var(--my-var1) + var(--my-var2)))\"\r\n    },\r\n    \"variants\": [],\r\n    \"important\": false,\r\n    \"raw\": \"left-[calc(-1*(var(--my-var1)+var(--my-var2)))]\"\r\n  }\r\n]\r\n```\r\nNotice that the `+` in between the vars already contain spaces.\r\n\r\nAnd the generated CSS looks like this:\r\n```css\r\n.left-\\[calc\\(-1\\*\\(var\\(--my-var1\\)\\+var\\(--my-var2\\)\\)\\)\\] {\r\n  left: calc(-1 * (var(--my-var1) + var(--my-var2)));\r\n}\r\n```\r\nAgain, the `+` has spaces aroudn it.\r\n\r\nHowever, we canoncialize this syntax where we remove the `calc(-1 * <value>)` and move the `-` in front: `-left-[(var(--my-var1)+var(--my-var2))]`, which should behave the same, but it did not. The parsed value for this looks like:\r\n```js\r\n[\r\n  {\r\n    \"kind\": \"functional\",\r\n    \"root\": \"-left\",\r\n    \"modifier\": null,\r\n    \"value\": {\r\n      \"kind\": \"arbitrary\",\r\n      \"dataType\": null,\r\n      \"value\": \"(var(--my-var1)+var(--my-var2))\"\r\n    },\r\n    \"variants\": [],\r\n    \"important\": false,\r\n    \"raw\": \"-left-[(var(--my-var1)+var(--my-var2))]\"\r\n  }\r\n]\r\n```\r\nNotice that the `+` does not contain spaces around it. That's because we add them when we parse arbitrary values and when we are in a `calc(…)` expression. But the `calc(<value> * -1)` is added later, so at this point, no spaces are added yet.\r\nThis also means that the generated CSS currently looks like:\r\n```css\r\n.-left-\\[\\(var\\(--my-var1\\)\\+var\\(--my-var2\\)\\)\\] {\r\n  left: calc((var(--my-var1)+var(--my-var2)) * -1);\r\n}\r\n```\r\nWhich is invalid.\r\n\r\nTo solve this, we will make sure to add the whitespace around operators when we re-insert the `calc(<",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20011",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/utilities.ts"
+      ]
+    },
+    {
+      "sha": "4255671c5f792c42808ecd6b2dec27c16e3c559e",
+      "message": "Improve snapshot tests (#20013)\n\nThis PR improves the snapshot tests. At first, this looks like a very\nsilly PR, but I swear I have legit reasons for these changes:\n\nFirst, there are a few places where we use `.toMatchInlineSnapshot()`\nfor tests where we expect that nothing is being generated. This is fine,\nbut the issue is that this means that if you're not careful, and if we\nhave a bug, then these snapshots could start producing something.\nUpdating these snapshots is _too_ easy. So instead, we convert them to\nan explicit `.toEqual('')`\n\nNext, I introduced a `pretty` helper function which is used behind the\nscenes in the `compileCss(…)`, `run(…)`, and `optimizeCss(…)` test\nhelpers. It's very silly and simple, it either returns `''` when the\ntrimmed input is empty, or it will wrap the result in `\\n…\\n`. The\nreason for this is because of how (inline) snapshots works in Vitest. A\nsnapshot result will be in double quotes, and inside backticks:\n```ts\nexpect(result.css.trim()).toMatchInlineSnapshot(`\n  \"@layer utilities {\n    .foo {\n      color: #000;\n    }\n\n    .bar {\n      color: red;\n    }\n  }\"\n`)\n```\nThis CSS now starts with `\"` and ends with `\"`. While that is fine, it\nstarts to get annoying when we have merge conflicts when CSS changes\n(this is what triggered me to make this PR because I ran into this a\ndozen times already). Because the first and last CSS line also contain a\n`\"` that you have to keep into account.\n\nInstead we now use `\\n` around the output, which makes the tests look\nlike this:\n```ts\nexpect(pretty(result.css)).toMatchInlineSnapshot(`\n  \"\n  @layer utilities {\n    .foo {\n      color: #000;\n    }\n\n    .bar {\n      color: red;\n    }\n  }\n  \"\n`)\n```\n\nIn a perfect world, I wish we could use something like:\n```css\nexpect(pretty(result.css)).toMatchInlineSnapshot(css`\n  @layer utilities {\n    .foo {\n      color: #000;\n    }\n\n    .bar {\n      color: red;\n    }\n  }\n`)\n```\n\nThat way you are only dealing with CSS, nothing else. Most editors will\nshow syntax highlighting, and even prettier will do formatting on the\nCSS to keep everything consistent.\n\nUnfortunately this also causes issues because when prettier formats\nthis, then the input/output will not always match. We can solve that by\nparsing both sides and compare the ASTs but that would make things\nslower.\n\nThe biggest issue is that Vitest doesn't support this. You can use\ncustom serializers\nhttps://vitest.dev/guide/snapshot.html#custom-snapshot-matchers and\ndomains https://vitest.dev/guide/snapshot.html#custom-snapshot-domain\nbut this has an annoying issue around escaping values.\n\nWhen you use `css` it's typically implemented as `const css =\nString.raw`, which means that you can write actual CSS instead of JS:\n```ts\nlet input = css`\n  .\\[color:red\\] {\n    color: red;\n  }\n`\n```\n\nBut vitest would double scape the `\\`, which would make the snapshot\ntest fail:\n```ts\nlet input = css`\n  .\\\\[color:red\\\\] {\n    color: red;\n  }\n`\n```\n\n**Edit**: It is possible with a custom snapshot environment! But this\nstill introduces some levels of indirection. We are also not really\ntesting the same thing anymore. Prettier will be formatting the CSS, we\nrely on our own CSS parser / printer, which is fine but subtle bugs\ncould maybe be invisible or maybe it unlocks some hidden bugs, who\nknows. Funnily enough, running tests with this new matcher also goes\nfrom `23.60s` to `22.88s` (just 1 run comparison).\n<img width=\"1227\" height=\"897\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/698a0c67-a1fc-46e3-ba5a-60e5873b32df\"\n/>\n\nLong story short, simple `\\n` and `\\n` boundaries it is!\n\n## Test plan\n\n- Everything still works as expected.\n- There are visual changes in tests, but no actual source code was\nupdated either so there can not be an accidental diff",
+      "author": "RobinMalfait",
+      "date": "2026-05-05T20:24:25Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/4255671c5f792c42808ecd6b2dec27c16e3c559e",
+      "pr_number": 20013,
+      "pr_title": "Improve snapshot tests",
+      "pr_body": "This PR improves the snapshot tests. At first, this looks like a very silly PR, but I swear I have legit reasons for these changes:\r\n\r\nFirst, there are a few places where we use `.toMatchInlineSnapshot()` for tests where we expect that nothing is being generated. This is fine, but the issue is that this means that if you're not careful, and if we have a bug, then these snapshots could start producing something. Updating these snapshots is _too_ easy. So instead, we convert them to an explicit `.toEqual('')`\r\n\r\nNext, I introduced a `pretty` helper function which is used behind the scenes in the `compileCss(…)`, `run(…)`, and `optimizeCss(…)` test helpers. It's very silly and simple, it either returns `''` when the trimmed input is empty, or it will wrap the result in `\\n…\\n`. The reason for this is because of how (inline) snapshots works in Vitest. A snapshot result will be in double quotes, and inside backticks:\r\n```ts\r\nexpect(result.css.trim()).toMatchInlineSnapshot(`\r\n  \"@layer utilities {\r\n    .foo {\r\n      color: #000;\r\n    }\r\n\r\n    .bar {\r\n      color: red;\r\n    }\r\n  }\"\r\n`)\r\n```\r\nThis CSS now starts with `\"` and ends with `\"`. While that is fine, it starts to get annoying when we have merge conflicts when CSS changes (this is what triggered me to make this PR because I ran into this a dozen times already). Because the first and last CSS line also contain a `\"` that you have to keep into account.\r\n\r\nInstead we now use `\\n` around the output, which makes the tests look like this:\r\n```ts\r\nexpect(pretty(result.css)).toMatchInlineSnapshot(`\r\n  \"\r\n  @layer utilities {\r\n    .foo {\r\n      color: #000;\r\n    }\r\n\r\n    .bar {\r\n      color: red;\r\n    }\r\n  }\r\n  \"\r\n`)\r\n```\r\n\r\nIn a perfect world, I wish we could use something like:\r\n```css\r\nexpect(pretty(result.css)).toMatchInlineSnapshot(css`\r\n  @layer utilities {\r\n    .foo {\r\n      color: #000;\r\n    }\r\n\r\n    .bar {\r\n      color: red;\r\n    }\r\n  }\r\n`)\r\n```\r\n\r\nThat way you are only dealing with CSS, nothing else. Most editors w",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20013",
+      "labels": [],
+      "files": [
+        "packages/@tailwindcss-postcss/src/__snapshots__/index.test.ts.snap",
+        "packages/@tailwindcss-postcss/src/index.test.ts",
+        "packages/@tailwindcss-postcss/src/postcss-fix-relative-paths/index.test.ts",
+        "packages/tailwindcss/src/__snapshots__/index.test.ts.snap",
+        "packages/tailwindcss/src/__snapshots__/utilities.test.ts.snap",
+        "packages/tailwindcss/src/at-import.test.ts",
+        "packages/tailwindcss/src/compat/config.test.ts",
+        "packages/tailwindcss/src/compat/container-config.test.ts",
+        "packages/tailwindcss/src/compat/legacy-utilities.test.ts",
+        "packages/tailwindcss/src/compat/plugin-api.test.ts",
+        "packages/tailwindcss/src/compat/screens-config.test.ts",
+        "packages/tailwindcss/src/css-functions.test.ts",
+        "packages/tailwindcss/src/important.test.ts",
+        "packages/tailwindcss/src/index.test.ts",
+        "packages/tailwindcss/src/plugin.test.ts",
+        "packages/tailwindcss/src/prefix.test.ts",
+        "packages/tailwindcss/src/test-utils/run.ts",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/variants.test.ts"
+      ]
+    },
+    {
+      "sha": "12eb5ae7b6026ff64c04f889b2221418d772da72",
+      "message": "Cleanup noisy test output (#20015)\n\nThis PR cleans up the noisy test output where some `console.warn`\nmessages were leaking into the test output.\n\nThis also uses the `src/` files instead of the `dist/` files of\n`@tailwindcss/node` to get rid of a source map related warning in tests.\nIt also means that we don't have to rebuild `@tailwindcss/node` when we\nmake changes.\n\n## Test plan\n\n1. Existing tests pass\n2. Output is clean when running tests (`vitest run --reporter=minimal`)\n\nBefore:\n<img width=\"1193\" height=\"1376\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/9aceab62-cd99-4391-9734-0ae5c4c3fb48\"\n/>\n\nAfter:\n<img width=\"1099\" height=\"294\" alt=\"image\"\nsrc=\"https://github.com/user-attachments/assets/3ada4a0a-8a7a-48a7-9fbd-f3d5dd8700a5\"\n/>",
+      "author": "RobinMalfait",
+      "date": "2026-05-06T09:10:17Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/12eb5ae7b6026ff64c04f889b2221418d772da72",
+      "pr_number": 20015,
+      "pr_title": "Cleanup noisy test output",
+      "pr_body": "This PR cleans up the noisy test output where some `console.warn` messages were leaking into the test output.\r\n\r\nThis also uses the `src/` files instead of the `dist/` files of `@tailwindcss/node` to get rid of a source map related warning in tests. It also means that we don't have to rebuild `@tailwindcss/node` when we make changes.\r\n\r\n## Test plan\r\n\r\n1. Existing tests pass\r\n2. Output is clean when running tests (`vitest run --reporter=minimal`)\r\n\r\nBefore:\r\n<img width=\"1193\" height=\"1376\" alt=\"image\" src=\"https://github.com/user-attachments/assets/9aceab62-cd99-4391-9734-0ae5c4c3fb48\" />\r\n\r\nAfter:\r\n<img width=\"1099\" height=\"294\" alt=\"image\" src=\"https://github.com/user-attachments/assets/3ada4a0a-8a7a-48a7-9fbd-f3d5dd8700a5\" />\r\n\r\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20015",
+      "labels": [],
+      "files": [
+        "packages/@tailwindcss-node/package.json",
+        "packages/@tailwindcss-node/src/require-cache.ts",
+        "packages/@tailwindcss-postcss/src/index.test.ts",
+        "packages/tailwindcss/src/utilities.test.ts"
+      ]
+    },
+    {
+      "sha": "754e7512ca51db1f922dc67724cf85a0fde923a9",
+      "message": "Use non-existing example in tests (#20021)\n\nThis PR makes a small change to the tests. In some cases, where we test\n`@utility` functionality we use `tab-*` utilities.\n\nBut there is a possibility that we will add this as an actual utility,\nso instead let's use a much more generic `example-*` utility. Then we\ncan read from the `--example` theme value, and use `--resolved-value:\n…;` and `--resolved-modifier: …;` values.\n\nIt's admittedly more vague, but chances of conflicts go way down. Until\nCSS or Tailwind CSS introduces an `example-*` utility...\n\n\n## Test plan\n\n1. Only tests changed, and all of them still pass",
+      "author": "RobinMalfait",
+      "date": "2026-05-07T11:23:24Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/754e7512ca51db1f922dc67724cf85a0fde923a9",
+      "pr_number": 20021,
+      "pr_title": "Use non-existing example in tests",
+      "pr_body": "This PR makes a small change to the tests. In some cases, where we test `@utility` functionality we use `tab-*` utilities.\n\nBut there is a possibility that we will add this as an actual utility, so instead let's use a much more generic `example-*` utility. Then we can read from the `--example` theme value, and use `--resolved-value: …;` and `--resolved-modifier: …;` values.\n\nIt's admittedly more vague, but chances of conflicts go way down. Until CSS or Tailwind CSS introduces an `example-*` utility...\n\n\n## Test plan\n\n1. Only tests changed, and all of them still pass\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20021",
+      "labels": [],
+      "files": [
+        "packages/tailwindcss/src/canonicalize-candidates.test.ts",
+        "packages/tailwindcss/src/intellisense.test.ts",
+        "packages/tailwindcss/src/utilities.test.ts"
+      ]
+    },
+    {
+      "sha": "c00da894dd2df10b5a01acfc20837e25e46b2ec5",
+      "message": "Update listhen 1.9.1 → 1.10.0 (minor) (#20017)\n\nHere is everything you need to know about this update. Please take a\ngood look at what changed and the test results before merging this pull\nrequest.\n\n### What changed?\n\n\n\n\n#### ✳️ listhen (1.9.1 → 1.10.0) ·\n[Repo](https://github.com/unjs/listhen) ·\n[Changelog](https://github.com/unjs/listhen/blob/main/CHANGELOG.md)\n\n\n\n<details>\n<summary>Release Notes</summary>\n<h4><a\nhref=\"https://github.com/unjs/listhen/releases/tag/v1.10.0\">1.10.0</a></h4>\n\n<blockquote><p dir=\"auto\"><a\nhref=\"https://bounce.depfu.com/github.com/unjs/listhen/compare/v1.9.1...v1.10.0\">compare\nchanges</a></p>\n<h3 dir=\"auto\">🚀 Enhancements</h3>\n<ul dir=\"auto\">\n<li>Support <code class=\"notranslate\">extraURLs</code> and detect <a\nhref=\"https://portless.sh/\">portless</a> from env by default (<a\nhref=\"https://bounce.depfu.com/github.com/unjs/listhen/pull/228\">#228</a>)</li>\n</ul>\n<h3 dir=\"auto\">🩹 Fixes</h3>\n<ul dir=\"auto\">\n<li>Filter IPv4 link-local addresses from network interfaces (<a\nhref=\"https://bounce.depfu.com/github.com/unjs/listhen/pull/226\">#226</a>)</li>\n<li>Do not use fallback port in production (<a\nhref=\"https://bounce.depfu.com/github.com/unjs/listhen/pull/223\">#223</a>)</li>\n</ul>\n<h3 dir=\"auto\">❤️ Contributors</h3>\n<ul dir=\"auto\">\n<li>Kricsleo (<a\nhref=\"https://bounce.depfu.com/github.com/kricsleo\">@kricsleo</a>)</li>\n<li>Tim Krajcar (<a\nhref=\"https://bounce.depfu.com/github.com/tkrajcar\">@tkrajcar</a>)</li>\n<li>Max (<a\nhref=\"https://bounce.depfu.com/github.com/onmax\">@onmax</a>)</li>\n<li>Pooya Parsa (<a\nhref=\"https://bounce.depfu.com/github.com/pi0\">@pi0</a>)</li>\n</ul></blockquote>\n<p><em>Does any of this look wrong? <a\nhref=\"https://depfu.com/packages/npm/listhen/feedback\">Please let us\nknow.</a></em></p>\n</details>\n\n<details>\n<summary>Commits</summary>\n<p><a\nhref=\"https://github.com/unjs/listhen/compare/60ba9f2ae23553b02c5079ab225e9a4d8bc59af4...33c98f262d9d8c663e75f49ea5ac1f0ee6934e32\">See\nthe full diff on Github</a>. The new version differs by 5 commits:</p>\n<ul>\n<li><a\nhref=\"https://github.com/unjs/listhen/commit/33c98f262d9d8c663e75f49ea5ac1f0ee6934e32\"><code>fix:\ndo not use fallback port in production (#223)</code></a></li>\n<li><a\nhref=\"https://github.com/unjs/listhen/commit/49ef95e7a7e350217a6440a43894037efe7c6fc9\"><code>fix:\nfilter IPv4 link-local addresses from network interfaces\n(#226)</code></a></li>\n<li><a\nhref=\"https://github.com/unjs/listhen/commit/de2d49ae00e94725a81866f97a5150f127479b2a\"><code>chore(deps):\nupdate all non-major dependencies (#221)</code></a></li>\n<li><a\nhref=\"https://github.com/unjs/listhen/commit/f341eb9f76c48eb5a05a076989f7c07634f1e848\"><code>feat:\nsupport `extraURLs` and detect portless by env by default\n(#228)</code></a></li>\n<li><a\nhref=\"https://github.com/unjs/listhen/commit/402c52df879d88a03878f302faa8cc36f76e2000\"><code>chore:\nupdate deps</code></a></li>\n</ul>\n</details>\n\n\n\n\n\n\n\n\n\n\n\n\n---\n![Depfu\nStatus](https://depfu.com/badges/edd6acd35d74c8d41cbb540c30442adf/stats.svg)\n\n[Depfu](https://depfu.com) will automatically keep this PR\nconflict-free, as long as you don't add any commits to this branch\nyourself. You can also trigger a rebase manually by commenting with\n`@depfu rebase`.\n\n<details><summary>All Depfu comment commands</summary>\n<blockquote><dl>\n<dt>@​depfu rebase</dt><dd>Rebases against your default branch and\nredoes this update</dd>\n<dt>@​depfu recreate</dt><dd>Recreates this PR, overwriting any edits\nthat you've made to it</dd>\n<dt>@​depfu merge</dt><dd>Merges this PR once your tests are passing and\nconflicts are resolved</dd>\n<dt>@​depfu cancel merge</dt><dd>Cancels automatic merging of this\nPR</dd>\n<dt>@​depfu close</dt><dd>Closes this PR and deletes the branch</dd>\n<dt>@​depfu reopen</dt><dd>Restores the branch and reopens this PR (if\nit's closed)</dd>\n<dt>@​depfu pause</dt><dd>Ignores all future updates for this dependency\nand closes this PR</dd>\n<dt>@​depfu pause [minor|major]</dt><dd>Ignores all future minor/major\nupdates for this dependency and closes this PR</dd>\n<dt>@​depfu resume</dt><dd>Future versions of this dependency will\ncreate PRs again (leaves this PR as is)</dd>\n</dl></blockquote>\n</details>\n\n[ci-all]\n\nCo-authored-by: depfu[bot] <23717796+depfu[bot]@users.noreply.github.com>",
+      "author": "depfu[bot]",
+      "date": "2026-05-07T12:43:28Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/c00da894dd2df10b5a01acfc20837e25e46b2ec5",
+      "pr_number": 20017,
+      "pr_title": "Update listhen 1.9.1 → 1.10.0 (minor)",
+      "pr_body": "\r\n\r\n\r\n\r\n\r\nHere is everything you need to know about this update. Please take a good look at what changed and the test results before merging this pull request.\r\n\r\n### What changed?\r\n\r\n\r\n\r\n\r\n#### ✳️ listhen (1.9.1 → 1.10.0) · [Repo](https://github.com/unjs/listhen) · [Changelog](https://github.com/unjs/listhen/blob/main/CHANGELOG.md)\r\n\r\n\r\n\r\n<details>\r\n<summary>Release Notes</summary>\r\n<h4><a href=\"https://github.com/unjs/listhen/releases/tag/v1.10.0\">1.10.0</a></h4>\r\n\r\n<blockquote><p dir=\"auto\"><a href=\"https://bounce.depfu.com/github.com/unjs/listhen/compare/v1.9.1...v1.10.0\">compare changes</a></p>\r\n<h3 dir=\"auto\">🚀 Enhancements</h3>\r\n<ul dir=\"auto\">\r\n<li>Support <code class=\"notranslate\">extraURLs</code> and detect <a href=\"https://portless.sh/\">portless</a> from env by default (<a href=\"https://bounce.depfu.com/github.com/unjs/listhen/pull/228\">#228</a>)</li>\r\n</ul>\r\n<h3 dir=\"auto\">🩹 Fixes</h3>\r\n<ul dir=\"auto\">\r\n<li>Filter IPv4 link-local addresses from network interfaces (<a href=\"https://bounce.depfu.com/github.com/unjs/listhen/pull/226\">#226</a>)</li>\r\n<li>Do not use fallback port in production (<a href=\"https://bounce.depfu.com/github.com/unjs/listhen/pull/223\">#223</a>)</li>\r\n</ul>\r\n<h3 dir=\"auto\">❤️ Contributors</h3>\r\n<ul dir=\"auto\">\r\n<li>Kricsleo (<a href=\"https://bounce.depfu.com/github.com/kricsleo\">@kricsleo</a>)</li>\r\n<li>Tim Krajcar (<a href=\"https://bounce.depfu.com/github.com/tkrajcar\">@tkrajcar</a>)</li>\r\n<li>Max (<a href=\"https://bounce.depfu.com/github.com/onmax\">@onmax</a>)</li>\r\n<li>Pooya Parsa (<a href=\"https://bounce.depfu.com/github.com/pi0\">@pi0</a>)</li>\r\n</ul></blockquote>\r\n<p><em>Does any of this look wrong? <a href=\"https://depfu.com/packages/npm/listhen/feedback\">Please let us know.</a></em></p>\r\n</details>\r\n\r\n<details>\r\n<summary>Commits</summary>\r\n<p><a href=\"https://github.com/unjs/listhen/compare/60ba9f2ae23553b02c5079ab225e9a4d8bc59af4...33c98f262d9d8c663e75f49ea5ac1f0ee6934e32\">See the full diff on Github</a>. The new version diff",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20017",
+      "labels": [
+        "depfu"
+      ],
+      "files": [
+        "packages/@tailwindcss-browser/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "2e1ccf7f115732032d2b079073dcb0009baf82a0",
+      "message": "Add `scrollbar-gutter-*` utilities (#20018)\n\nThis PR adds new `scrollbar-gutter-*` utilities. The API looks like\nthis:\n\n| Class | CSS |\n| -- | -- |\n| `scrollbar-gutter-auto` | `scrollbar-gutter: auto` |\n| `scrollbar-gutter-stable` | `scrollbar-gutter: stable` |\n| `scrollbar-gutter-both` | `scrollbar-gutter: stable both-edges` |",
+      "author": "RobinMalfait",
+      "date": "2026-05-08T19:13:06Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/2e1ccf7f115732032d2b079073dcb0009baf82a0",
+      "pr_number": 20018,
+      "pr_title": "Add `scrollbar-gutter-*` utilities",
+      "pr_body": "This PR adds new `scrollbar-gutter-*` utilities. The API looks like this:\n\n| Class | CSS |\n| -- | -- |\n| `scrollbar-gutter-auto` | `scrollbar-gutter: auto` |\n| `scrollbar-gutter-stable` | `scrollbar-gutter: stable` |\n| `scrollbar-gutter-both` | `scrollbar-gutter: stable both-edges` |\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20018",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/__snapshots__/intellisense.test.ts.snap",
+        "packages/tailwindcss/src/compat/config.test.ts",
+        "packages/tailwindcss/src/compat/plugin-api.test.ts",
+        "packages/tailwindcss/src/property-order.ts",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/utilities.ts"
+      ]
+    },
+    {
+      "sha": "90a2373620200bf7e04d1d228a0d0a1c506e532a",
+      "message": "add `zoom-*` utilities (#20020)\n\nThis PR adds new `zoom-*` utilities.\n\nThe `zoom-*` utilities accept bare values that are transformed into `%`\nbased values, and arbitrary values:\n\n| Class | CSS |\n| -- | -- |\n| `zoom-50` | `zoom: 50%;` |\n| `zoom-[1.1]` | `zoom: 1.1;` |\n| `zoom-(--value)` | `zoom: var(--value);` |\n\n\nThis also adds the `zoom` property after the `transform` related\nproperties. Initially I added it right after `scale`, because logically\nthey are close together. But then `zoom-*` would sit between `scale` and\nother tranfsorm related properties which is a bit weird. Instead, I\nmoved it after `transform`.\n\n## Test plan\n\n1. Added new zoom based tests\n2. All other tests still pass",
+      "author": "RobinMalfait",
+      "date": "2026-05-08T19:15:59Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/90a2373620200bf7e04d1d228a0d0a1c506e532a",
+      "pr_number": 20020,
+      "pr_title": "add `zoom-*` utilities",
+      "pr_body": "This PR adds new `zoom-*` utilities.\r\n\r\nThe `zoom-*` utilities accept bare values that are transformed into `%` based values, and arbitrary values:\r\n\r\n| Class | CSS |\r\n| -- | -- |\r\n| `zoom-50` | `zoom: 50%;` |\r\n| `zoom-[1.1]` | `zoom: 1.1;` |\r\n| `zoom-(--value)` | `zoom: var(--value);` |\r\n\r\n\r\nThis also adds the `zoom` property after the `transform` related properties. Initially I added it right after `scale`, because logically they are close together. But then `zoom-*` would sit between `scale` and other tranfsorm related properties which is a bit weird. Instead, I moved it after `transform`.\r\n\r\n## Test plan\r\n\r\n1. Added new zoom based tests\r\n2. All other tests still pass\r\n\r\n",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20020",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/__snapshots__/intellisense.test.ts.snap",
+        "packages/tailwindcss/src/property-order.ts",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/utilities.ts"
+      ]
+    },
+    {
+      "sha": "59936c6cbb69eae114bc52d0a3c9315b18c70a94",
+      "message": "Add `tab-*` utilities (#20022)\n\nThis PR adds new `tab-*` utilities.\n\nThe `tab-*` utilities set the `tab-size` property. They support positive\ninteger bare values, and arbitrary values:\n\n| Class | CSS |\n| -- | -- |\n| `tab-2` | `tab-size: 2;` |\n| `tab-[12px]` | `tab-size: 12px;` |\n\nThis also adds `tab-size` to the property order near the other text\nlayout properties.\n\n## Test plan\n\n1. Added new `tab-*` utility tests\n2. Updated the intellisense snapshot\n3. Other existing tests still pass",
+      "author": "RobinMalfait",
+      "date": "2026-05-08T19:22:07Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/59936c6cbb69eae114bc52d0a3c9315b18c70a94",
+      "pr_number": 20022,
+      "pr_title": "Add `tab-*` utilities",
+      "pr_body": "This PR adds new `tab-*` utilities.\r\n\r\nThe `tab-*` utilities set the `tab-size` property. They support positive integer bare values, and arbitrary values:\r\n\r\n| Class | CSS |\r\n| -- | -- |\r\n| `tab-2` | `tab-size: 2;` |\r\n| `tab-[12px]` | `tab-size: 12px;` |\r\n\r\nThis also adds `tab-size` to the property order near the other text layout properties.\r\n\r\n## Test plan\r\n\r\n1. Added new `tab-*` utility tests\r\n2. Updated the intellisense snapshot\r\n3. Other existing tests still pass",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20022",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "packages/tailwindcss/src/__snapshots__/intellisense.test.ts.snap",
+        "packages/tailwindcss/src/property-order.ts",
+        "packages/tailwindcss/src/utilities.test.ts",
+        "packages/tailwindcss/src/utilities.ts"
+      ]
+    },
+    {
+      "sha": "588bd7371f4cae96426e1387819b7fd1d99765f9",
+      "message": "4.3.0 (#20023)",
+      "author": "RobinMalfait",
+      "date": "2026-05-08T20:03:59Z",
+      "parents": 1,
+      "html_url": "https://github.com/tailwindlabs/tailwindcss/commit/588bd7371f4cae96426e1387819b7fd1d99765f9",
+      "pr_number": 20023,
+      "pr_title": "4.3.0",
+      "pr_body": "",
+      "pr_url": "https://github.com/tailwindlabs/tailwindcss/pull/20023",
+      "labels": [],
+      "files": [
+        "CHANGELOG.md",
+        "crates/node/npm/android-arm-eabi/package.json",
+        "crates/node/npm/android-arm64/package.json",
+        "crates/node/npm/darwin-arm64/package.json",
+        "crates/node/npm/darwin-x64/package.json",
+        "crates/node/npm/freebsd-x64/package.json",
+        "crates/node/npm/linux-arm-gnueabihf/package.json",
+        "crates/node/npm/linux-arm64-gnu/package.json",
+        "crates/node/npm/linux-arm64-musl/package.json",
+        "crates/node/npm/linux-x64-gnu/package.json",
+        "crates/node/npm/linux-x64-musl/package.json",
+        "crates/node/npm/wasm32-wasi/package.json",
+        "crates/node/npm/win32-arm64-msvc/package.json",
+        "crates/node/npm/win32-x64-msvc/package.json",
+        "crates/node/package.json",
+        "integrations/vite/resolvers.test.ts",
+        "packages/@tailwindcss-browser/package.json",
+        "packages/@tailwindcss-cli/package.json",
+        "packages/@tailwindcss-node/package.json",
+        "packages/@tailwindcss-postcss/package.json",
+        "packages/@tailwindcss-standalone/package.json",
+        "packages/@tailwindcss-upgrade/package.json",
+        "packages/@tailwindcss-vite/package.json",
+        "packages/@tailwindcss-webpack/package.json",
+        "packages/tailwindcss/package.json"
+      ]
+    }
+  ],
+  "collected_at": "2026-10-04T16:56:05.456077Z",
+  "api_calls": 68,
+  "cache_hits": 0
+}

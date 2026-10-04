@@ -1,0 +1,218 @@
+{
+  "recorded_at": "2026-10-04T18:02:39.572248+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-18098",
+      "pr-17736",
+      "pr-18107",
+      "pr-18108",
+      "pr-18113"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "gemini-3.5-flash-lite"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "internal",
+            "user_summary": "Update internal package dependencies for the upgrade tool.",
+            "dev_summary": "Update `package-manager-detector` and `verkit` dependencies in `packages/upgrade/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#18098",
+              "86384c5"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Developers can now use `renderComponent()` in container APIs to render components along with their scripts and styles.",
+            "dev_summary": "Add `renderComponent()` method to `experimental_AstroContainer` supporting components imported with the `?container` query suffix.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#17736",
+              "2b8b2e8"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Update the chokidar file watcher dependency.",
+            "dev_summary": "Bump `chokidar` dependency to v5 in `packages/language-tools/astro-check/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#18107",
+              "da1333a"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Update the mocha test runner dependency.",
+            "dev_summary": "Bump `mocha` dependency to v12 in language tools packages.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#18108",
+              "b0d4ab4"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Release a new version of Astro and update examples.",
+            "dev_summary": "Run release process for `astro@7.3.5` and update example packages.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#18113",
+              "c2e0164"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T18:02:20.537039+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "reasoning_tokens": 0,
+          "latency_s": 41.188,
+          "finish_reason": null,
+          "attempts": 1,
+          "cost_usd": 0.0,
+          "price_known": true,
+          "error": "LLMTransientError: all 3 attempts failed. Last error: 429 from provider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01m1rrqct2e14tb3dkpwbmm4p9` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198508, Requested 4340. Please try again in 20m30.336s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+        },
+        {
+          "started_at": "2026-10-04T18:02:30.241946+00:00",
+          "provider": "gemini",
+          "model": "gemini-3.5-flash-lite",
+          "label": "map:1",
+          "prompt_tokens": 3875,
+          "completion_tokens": 601,
+          "reasoning_tokens": 0,
+          "latency_s": 9.719,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.002665,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release adds a new `renderComponent()` method to the experimental AstroContainer for handling components imported with the `?container` query suffix. It also updates several internal dependencies and runs the release process for the new version.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i2"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i1",
+              "i3",
+              "i4",
+              "i5"
+            ]
+          }
+        ],
+        "duplicates": []
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T18:02:31.995798+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 861,
+          "completion_tokens": 223,
+          "reasoning_tokens": 81,
+          "latency_s": 1.75,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00026295,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "You can now render components together with their scripts and styles using the renderComponent function in container APIs.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i2"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T18:02:39.572248+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 568,
+          "completion_tokens": 151,
+          "reasoning_tokens": 77,
+          "latency_s": 1.094,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0001758,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

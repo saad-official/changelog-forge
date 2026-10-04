@@ -1,0 +1,122 @@
+{
+  "repo": "fastapi/fastapi",
+  "base": "0.142.0",
+  "head": "0.142.2",
+  "compare_url": "https://github.com/fastapi/fastapi/compare/0.142.0...0.142.2",
+  "default_branch": "master",
+  "private": false,
+  "total_commits": 6,
+  "commits": [
+    {
+      "sha": "ac88f563db5f4d3300d43355eca728c93ed9ffe2",
+      "message": "🐛 Fix repeated endpoint wrapping in included routers (#16414)",
+      "author": "tiangolo",
+      "date": "2026-09-29T22:25:03Z",
+      "parents": 1,
+      "html_url": "https://github.com/fastapi/fastapi/commit/ac88f563db5f4d3300d43355eca728c93ed9ffe2",
+      "pr_number": 16414,
+      "pr_title": "🐛 Fix repeated endpoint wrapping in included routers",
+      "pr_body": "🐛 Fix repeated endpoint wrapping in included routers\r\n\r\nThis would handle a recursion issue with older versions of Sentry (the latest one handles it).\r\n\r\n## AI Disclaimer\r\n\r\nMade with the help of AI, using Codex with `gpt-6-astra`, manually reviewed.\r\n",
+      "pr_url": "https://github.com/fastapi/fastapi/pull/16414",
+      "labels": [
+        "bug"
+      ],
+      "files": [
+        "fastapi/routing.py",
+        "tests/test_route_handler_wrapping.py"
+      ]
+    },
+    {
+      "sha": "12ea7f5a5e76c5ba3495c2803f57ed92ac67731b",
+      "message": "📝 Update release notes\n\n[skip ci]",
+      "author": "latest-changes[bot]",
+      "date": "2026-09-29T22:25:07Z",
+      "parents": 1,
+      "html_url": "https://github.com/fastapi/fastapi/commit/12ea7f5a5e76c5ba3495c2803f57ed92ac67731b",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "docs/en/docs/release-notes.md"
+      ]
+    },
+    {
+      "sha": "3e33a03bdaa3a89f27d5e0c390c4ba9032f14b5e",
+      "message": "🔖 Release version 0.142.1 (#16415)\n\nCo-authored-by: pr-submit[bot] <pr-submit[bot]@users.noreply.github.com>",
+      "author": "pr-submit[bot]",
+      "date": "2026-09-29T22:33:43Z",
+      "parents": 1,
+      "html_url": "https://github.com/fastapi/fastapi/commit/3e33a03bdaa3a89f27d5e0c390c4ba9032f14b5e",
+      "pr_number": 16415,
+      "pr_title": "🔖 Release version 0.142.1",
+      "pr_body": "Prepare release 0.142.1.",
+      "pr_url": "https://github.com/fastapi/fastapi/pull/16415",
+      "labels": [
+        "release"
+      ],
+      "files": [
+        "docs/en/docs/release-notes.md",
+        "fastapi/__init__.py"
+      ]
+    },
+    {
+      "sha": "1d4953d2e528b58cfb09bbc28fb25dcda227c6ea",
+      "message": "🐛 Allow startup when automatic OpenTelemetry configuration fails (#16418)",
+      "author": "tiangolo",
+      "date": "2026-09-30T09:37:28Z",
+      "parents": 1,
+      "html_url": "https://github.com/fastapi/fastapi/commit/1d4953d2e528b58cfb09bbc28fb25dcda227c6ea",
+      "pr_number": 16418,
+      "pr_title": "🐛 Allow startup when automatic OpenTelemetry configuration fails",
+      "pr_body": "🐛 Allow startup when automatic OpenTelemetry configuration fails\r\n\r\nRelated to https://github.com/fastapi/fastapi/issues/16417\r\n\r\n## AI Disclaimer\r\n\r\nMade with the help of AI, using Codex with `gpt-6-astra`, manually reviewed.\r\n",
+      "pr_url": "https://github.com/fastapi/fastapi/pull/16418",
+      "labels": [
+        "bug"
+      ],
+      "files": [
+        "fastapi/telemetry/_runtime.py",
+        "tests/test_telemetry/test_runtime.py"
+      ]
+    },
+    {
+      "sha": "2579ed0d9e73205326463025cc756650f642f511",
+      "message": "📝 Update release notes\n\n[skip ci]",
+      "author": "latest-changes[bot]",
+      "date": "2026-09-30T09:37:31Z",
+      "parents": 1,
+      "html_url": "https://github.com/fastapi/fastapi/commit/2579ed0d9e73205326463025cc756650f642f511",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "docs/en/docs/release-notes.md"
+      ]
+    },
+    {
+      "sha": "78c4324f0c56bc5282a459978779a9e532d19709",
+      "message": "🔖 Release version 0.142.2 (#16419)\n\nCo-authored-by: pr-submit[bot] <pr-submit[bot]@users.noreply.github.com>",
+      "author": "pr-submit[bot]",
+      "date": "2026-09-30T09:46:20Z",
+      "parents": 1,
+      "html_url": "https://github.com/fastapi/fastapi/commit/78c4324f0c56bc5282a459978779a9e532d19709",
+      "pr_number": 16419,
+      "pr_title": "🔖 Release version 0.142.2",
+      "pr_body": "🔖 Release version 0.142.2\n\n## AI Disclaimer\n\nMade with the help of AI, using Codex with `gpt-6-astra`, manually reviewed.\n",
+      "pr_url": "https://github.com/fastapi/fastapi/pull/16419",
+      "labels": [
+        "release"
+      ],
+      "files": [
+        "docs/en/docs/release-notes.md",
+        "fastapi/__init__.py"
+      ]
+    }
+  ],
+  "collected_at": "2026-10-04T16:55:24.352146Z",
+  "api_calls": 14,
+  "cache_hits": 0
+}

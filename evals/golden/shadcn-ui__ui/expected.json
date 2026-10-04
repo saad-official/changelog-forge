@@ -1,0 +1,46 @@
+{
+  "repo": "shadcn-ui/ui",
+  "base": "shadcn@4.21.0",
+  "head": "shadcn@4.21.1",
+  "must_mention": [
+    "afda008",
+    "3ba91b1",
+    "#12087",
+    "#12061",
+    "#12057",
+    "#12058"
+  ],
+  "must_flag_breaking": [],
+  "may_flag_breaking": [],
+  "forbidden_claims": [
+    "shadcn@4\\.22"
+  ],
+  "categories": {
+    "#11753": "feature",
+    "#11861": "feature",
+    "#12033": "feature",
+    "#12087": "feature",
+    "afda008": "feature",
+    "#11807": "fix",
+    "#12054": "fix",
+    "#12034": "fix",
+    "#12044": "fix",
+    "#12061": "fix",
+    "#12057": "fix",
+    "3ba91b1": "fix",
+    "#11972": "docs",
+    "#12017": "docs",
+    "#11862": "internal",
+    "#11863": "internal",
+    "#11880": "internal",
+    "#11868": "internal",
+    "#11886": "internal",
+    "#11885": "internal",
+    "#11884": "internal",
+    "#11876": "internal",
+    "#11977": "internal",
+    "#12062": "internal",
+    "#12063": "internal"
+  },
+  "notes": "Mostly registry directory additions and dependabot bumps; one octopus merge."
+}

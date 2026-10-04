@@ -1,0 +1,337 @@
+{
+  "recorded_at": "2026-10-04T17:47:32.564370+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-4999",
+      "pr-1708",
+      "pr-5002",
+      "pr-1674",
+      "pr-1676",
+      "pr-5034",
+      "pr-5035",
+      "pr-5036",
+      "c-4e61887",
+      "pr-5087",
+      "pr-5095"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "openai/gpt-oss-20b"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "feature",
+            "user_summary": "Drizzle Kit now offers an extended API for developers.",
+            "dev_summary": "Drizzle Kit API has been extended in `src/api.ts` and related modules.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#4999",
+              "ad4ddd4"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Transactions now work correctly with pg-native connection pools.",
+            "dev_summary": "`node-postgres` session now detects `pg-native` `Pool` instances for transaction handling.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#1708",
+              "2bf1a0a"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Various internal updates and fixes applied to the main branch.",
+            "dev_summary": "Multiple internal files updated, including dialects and changelogs.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5002",
+              "ce85ad2",
+              "7722bd5",
+              "82993ae",
+              "645a6f3",
+              "adf9bf1",
+              "74b85ae",
+              "14d1118",
+              "5abed3d",
+              "378b043"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Users can now include subqueries in SELECT fields with proper typing.",
+            "dev_summary": "Subqueries are now allowed in SELECT fields; types inferred and mapping updated.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#1674",
+              "01c8043"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Corrected a typo in the algorithm name in serializers.",
+            "dev_summary": "Fixed typo `algorythm` to `algorithm` in MySQL and Singlestore serializers.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#1676",
+              "22e1986"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Drizzle Kit now correctly introspects Postgres 18 schemas without unnecessary DROP statements.",
+            "dev_summary": "Fixed Postgres 18 introspection to avoid unnecessary DROP SQL when schema unchanged.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5034",
+              "d99bf7c",
+              "572d2a5",
+              "67cf3bb",
+              "c3ecf62",
+              "6f12d45",
+              "98ab19f",
+              "64f4c79",
+              "c314c8d"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated release-latest workflow configuration.",
+            "dev_summary": "Fixed release-latest workflow file.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5035",
+              "b9d7199",
+              "b6a6aac",
+              "0dfed1b"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated release-latest workflow configuration.",
+            "dev_summary": "Fixed release-latest workflow file.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5036",
+              "97f9a45",
+              "391d33b",
+              "c66862c"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated release-feature-branch workflow configuration.",
+            "dev_summary": "Minor workflow updates in release-feature-branch.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "4e61887"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated CI and release workflows.",
+            "dev_summary": "Updated release and router workflows and package files.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5087",
+              "ef4f2f4",
+              "4b82d40",
+              "59e351d",
+              "73e2ea4",
+              "5c8a4c5",
+              "ce88a18",
+              "53dec98",
+              "6357645",
+              "45a1ffb"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Fixed condition for run-feature job in router workflow.",
+            "dev_summary": "Corrected condition logic in `router.yaml` for run-feature job.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5095",
+              "0d885a5",
+              "e7b3aaa",
+              "c445637"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:47:29.898823+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 2893,
+          "completion_tokens": 1324,
+          "reasoning_tokens": 457,
+          "latency_s": 2.094,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00061418,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release adds new capabilities to the Drizzle Kit API and enables subqueries in SELECT fields with proper type inference. It also improves PostgreSQL session handling and fixes several bugs, including typo corrections and introspection behavior. Various internal workflow and file updates were applied.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i4",
+              "i1"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i6",
+              "i2",
+              "i5"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i10",
+              "i3",
+              "i11",
+              "i9",
+              "i7"
+            ]
+          }
+        ],
+        "duplicates": [
+          {
+            "keep": "i7",
+            "merge": [
+              "i8"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:47:31.464252+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 1011,
+          "completion_tokens": 422,
+          "reasoning_tokens": 207,
+          "latency_s": 1.562,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00040485,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release adds new capabilities for building queries and improves reliability when working with PostgreSQL. You’ll also see several fixes that make transactions and schema handling work as expected.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i4",
+              "i1"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i2",
+              "i6",
+              "i5"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:47:32.563694+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 679,
+          "completion_tokens": 241,
+          "reasoning_tokens": 115,
+          "latency_s": 0.656,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00024645,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

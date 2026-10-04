@@ -1,0 +1,62 @@
+{
+  "repo": "tailwindlabs/tailwindcss",
+  "base": "v4.2.4",
+  "head": "v4.3.0",
+  "must_mention": [
+    "#19777",
+    "#19989",
+    "#19981",
+    "#20018",
+    "#20020",
+    "#20022",
+    "#19996",
+    "#19949",
+    "#19966",
+    "#19965",
+    "#19980",
+    "#20003",
+    "#19918",
+    "#19707"
+  ],
+  "must_flag_breaking": [],
+  "may_flag_breaking": [
+    "#20005",
+    "#19996"
+  ],
+  "forbidden_claims": [
+    "v4\\.4",
+    "tailwind\\.config\\.js (is|has been) removed"
+  ],
+  "categories": {
+    "#19777": "feature",
+    "#19989": "feature",
+    "#19981": "feature",
+    "#20018": "feature",
+    "#20020": "feature",
+    "#20022": "feature",
+    "#19949": "fix",
+    "#19966": "fix",
+    "#19965": "fix",
+    "#19980": "fix",
+    "#19986": "fix",
+    "#20003": "fix",
+    "#20011": "fix",
+    "#19707": "fix",
+    "#19918": "fix",
+    "#19878": "docs",
+    "#19954": "internal",
+    "#19957": "internal",
+    "#19982": "internal",
+    "#19983": "internal",
+    "#19995": "internal",
+    "#19999": "internal",
+    "#19998": "internal",
+    "#20013": "internal",
+    "#20015": "internal",
+    "#20021": "internal",
+    "#20017": "internal",
+    "#20023": "internal",
+    "#19997": "internal"
+  },
+  "notes": "Minor release: new utilities (scrollbar-*, zoom-*, tab-*), --default(), multiple @utility definitions. #20005 makes --value() required in functional @utility definitions (previously-valid CSS now discarded): arguably breaking."
+}

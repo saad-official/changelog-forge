@@ -1,0 +1,15 @@
+{
+  "version": "golden-v1",
+  "cases": [
+    {"slug": "fastapi__fastapi", "repo": "fastapi/fastapi", "base": "0.142.0", "head": "0.142.2"},
+    {"slug": "pydantic__pydantic", "repo": "pydantic/pydantic", "base": "v2.13.4", "head": "v2.13.5"},
+    {"slug": "vitest-dev__vitest", "repo": "vitest-dev/vitest", "base": "v5.0.2", "head": "v5.0.3"},
+    {"slug": "tailwindlabs__tailwindcss", "repo": "tailwindlabs/tailwindcss", "base": "v4.2.4", "head": "v4.3.0"},
+    {"slug": "honojs__hono", "repo": "honojs/hono", "base": "v4.13.10", "head": "v4.13.13"},
+    {"slug": "drizzle-team__drizzle-orm", "repo": "drizzle-team/drizzle-orm", "base": "0.44.7", "head": "0.45.0"},
+    {"slug": "vercel__ai", "repo": "vercel/ai", "base": "ai@7.0.126", "head": "ai@7.0.127"},
+    {"slug": "expo__expo", "repo": "expo/expo", "base": "expo@58.0.2", "head": "expo@58.0.3"},
+    {"slug": "shadcn-ui__ui", "repo": "shadcn-ui/ui", "base": "shadcn@4.21.0", "head": "shadcn@4.21.1"},
+    {"slug": "withastro__astro", "repo": "withastro/astro", "base": "astro@7.3.4", "head": "astro@7.3.5"}
+  ]
+}

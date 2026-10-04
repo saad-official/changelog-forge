@@ -1,0 +1,679 @@
+{
+  "recorded_at": "2026-10-04T17:45:24.264414+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-19949",
+      "pr-19954",
+      "pr-19965",
+      "pr-19966",
+      "pr-19957",
+      "pr-19980",
+      "pr-19982",
+      "pr-19983",
+      "pr-19986",
+      "pr-19988",
+      "pr-19991",
+      "pr-19918",
+      "pr-19878",
+      "pr-19777",
+      "pr-19707"
+    ],
+    [
+      "pr-19996",
+      "pr-19997",
+      "pr-19995",
+      "pr-19999",
+      "pr-19998",
+      "pr-20003",
+      "pr-20005",
+      "pr-19989",
+      "pr-19981",
+      "pr-20011",
+      "pr-20013"
+    ],
+    [
+      "pr-20015",
+      "pr-20021",
+      "pr-20017",
+      "pr-20018",
+      "pr-20020",
+      "pr-20022",
+      "pr-20023"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "openai/gpt-oss-20b"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "fix",
+            "user_summary": "Resolves JS plugin imports correctly, avoiding CSS misresolution.",
+            "dev_summary": "customJsResolver now returns undefined for non-JS files so @plugin resolves to the JS entry.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19949",
+              "f3fdda2"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Playground dependencies updated.",
+            "dev_summary": "Dependencies in playgrounds bumped.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19954",
+              "f62597a"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Relative imports now resolve to the correct file.",
+            "dev_summary": "Resolver now uses importer path and aliasOnly logic for relative files.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19965",
+              "5a79990"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "@variant directives are now processed by the Vite plugin.",
+            "dev_summary": "Features.Variants added to feature bitmask in @tailwindcss/vite.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19966",
+              "db27049"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Dependencies bumped across packages.",
+            "dev_summary": "Dependencies updated in all packages.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19957",
+              "3a890c3"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Plugin now resolves tailwindcss correctly even without a from option.",
+            "dev_summary": "inputBasePath now falls back to base when result.opts.from is missing.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19980",
+              "bfb5732"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "NAPI dependencies updated.",
+            "dev_summary": "NAPI related dependencies bumped.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19982",
+              "615835d"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "CI workflows updated for NAPI-RS.",
+            "dev_summary": "CI workflows now use Node v18 images for NAPI-RS.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19983",
+              "107e451"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Whitespace in arbitrary values is preserved correctly.",
+            "dev_summary": "Canonicalization now keeps '_' and wraps expressions with parentheses for readability.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19986",
+              "3aac5da"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Unit normalization no longer applied to arbitrary values.",
+            "dev_summary": "Canonicalization skips unit normalization for arbitrary values.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19988",
+              "b944961"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Variants using &:has are now converted to has-[] syntax.",
+            "dev_summary": "Arbitrary selector &:has is converted to has-[] variant during canonicalization.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19991",
+              "73f3a6a"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Upgrade tool no longer changes CSS properties inside style attributes.",
+            "dev_summary": "Upgrade codemod skips inline style properties.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19918",
+              "ba66740"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "Typos in docs and comments fixed.",
+            "dev_summary": "Minor typos corrected.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19878",
+              "d194d4c"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Multiple @utility definitions with same name but different value types now work.",
+            "dev_summary": "@utility handlers now try next handler on null, enabling multiple definitions.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19777",
+              "f036f80"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "TypeScript error TS2742 no longer occurs when importing Config type.",
+            "dev_summary": "Exported Config type now resolves correctly in TS.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#19707",
+              "6cf1af2"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:43:17.003625+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 5621,
+          "completion_tokens": 1773,
+          "reasoning_tokens": 877,
+          "latency_s": 3.0,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00095347,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:2",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "feature",
+            "user_summary": "You can now write compound and stacked @variant rules using comma and colon syntax.",
+            "dev_summary": "The @variant directive now accepts comma-separated variants and a colon syntax for stacking, simplifying variant usage.",
+            "breaking": false,
+            "breaking_confidence": 0.2,
+            "migration_note": null,
+            "refs": [
+              "#19996",
+              "e1201bc"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Source map visualization tests now print input and output for easier debugging.",
+            "dev_summary": "Added source map visualization utilities for tests, printing source locations and highlighted symbols.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#19997",
+              "1ca0aac"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Integration tests in CI are more stable.",
+            "dev_summary": "Adjusted integration test utilities to improve CI stability.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#19995",
+              "0db856f"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Codebase quality improved with better test practices.",
+            "dev_summary": "Updated tests to use correct variants, @reference, Vitest mocks, and modern assertions.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#19999",
+              "52f94c7"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Enhanced-resolve dependency updated to 5.21.0.",
+            "dev_summary": "Bumped enhanced-resolve to 5.21.0, adding promise API and new options.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#19998",
+              "4b5d6a5"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "CSS for start and end utilities is no longer generated when no value is provided.",
+            "dev_summary": "Removed generation of CSS for start and end utilities without values.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#20003",
+              "6e2b60e"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Functional @utility definitions now require --value(…) to avoid accidental empty utilities.",
+            "dev_summary": "Enforced presence of --value(…) in functional @utility definitions.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#20005",
+              "0f6f7d4"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "You can now use --default(…) inside --value(…) or --modifier(…) for fallback values.",
+            "dev_summary": "Added --default(…) support in functional utilities, allowing defaults for missing values or modifiers.",
+            "breaking": false,
+            "breaking_confidence": 0.2,
+            "migration_note": null,
+            "refs": [
+              "#19989",
+              "08cad84"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "New utilities for scrollbar-width and scrollbar-color are available.",
+            "dev_summary": "Introduced scrollbar-auto, scrollbar-thin, scrollbar-none, scrollbar-thumb-<color>, and scrollbar-track-<color> utilities.",
+            "breaking": false,
+            "breaking_confidence": 0.2,
+            "migration_note": null,
+            "refs": [
+              "#19981",
+              "b4db3b9"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Math operators in arbitrary values are now surrounded by whitespace for valid CSS.",
+            "dev_summary": "Ensured whitespace around operators in calc expressions during canonicalization.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#20011",
+              "8c77989"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Snapshot tests improved for clarity and stability.",
+            "dev_summary": "Replaced inline snapshots with explicit expectations and added pretty helper for test outputs.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#20013",
+              "4255671"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:44:19.441928+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:2",
+          "prompt_tokens": 5522,
+          "completion_tokens": 840,
+          "reasoning_tokens": 58,
+          "latency_s": 2.422,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00066615,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:3",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "internal",
+            "user_summary": "Test output is now cleaner and uses source files for node utilities.",
+            "dev_summary": "Test suite now imports `@tailwindcss/node` from `src/` instead of `dist/` to avoid source map warnings.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20015"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Tests now use a generic `example-*` utility to avoid future conflicts.",
+            "dev_summary": "Test code updated to reference `example-*` utilities instead of `tab-*` for future-proofing.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20021"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated the `listhen` dependency to 1.10.0 with new features and fixes.",
+            "dev_summary": "Bumped `listhen` to 1.10.0, adding `extraURLs` support and IPv4 link-local filtering.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20017"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds `scrollbar-gutter-*` utilities to control scrollbar gutter behavior.",
+            "dev_summary": "Introduced `scrollbar-gutter-auto`, `scrollbar-gutter-stable`, and `scrollbar-gutter-both` classes mapping to `scrollbar-gutter` CSS.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20018"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds `zoom-*` utilities for scaling elements with percentage or arbitrary values.",
+            "dev_summary": "Introduced `zoom-50`, `zoom-[1.1]`, and `zoom-(--value)` classes mapping to `zoom` CSS, positioned after `transform` in property order.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20020"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds `tab-*` utilities to set the tab-size property.",
+            "dev_summary": "Introduced `tab-2` and `tab-[12px]` classes mapping to `tab-size` CSS, added to property order near text layout properties.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20022"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Released Tailwind CSS v4.3.0 with updated package files and integrations.",
+            "dev_summary": "Version bump to 4.3.0, updating numerous package.json files and integration tests.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20023"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:45:20.876436+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:3",
+          "prompt_tokens": 3120,
+          "completion_tokens": 610,
+          "reasoning_tokens": 42,
+          "latency_s": 1.422,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.000417,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release adds several new utility classes and directives, including support for arbitrary selector &:has conversion, enhanced @variant syntax, functional utility defaults, and new scrollbar, scrollbar-gutter, zoom, and tab-size utilities. It also includes numerous fixes to resolver behavior, canonicalization, TypeScript typings, and code generation, along with internal dependency updates and test improvements.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i16",
+              "i14",
+              "i23",
+              "i24",
+              "i30",
+              "i31",
+              "i32",
+              "i11"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i15",
+              "i1",
+              "i3",
+              "i6",
+              "i9",
+              "i10",
+              "i12",
+              "i21",
+              "i22",
+              "i25"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i33",
+              "i5",
+              "i2",
+              "i7",
+              "i8",
+              "i20",
+              "i29",
+              "i17",
+              "i18",
+              "i19",
+              "i26",
+              "i27",
+              "i28"
+            ]
+          },
+          {
+            "section": "docs",
+            "prose": null,
+            "item_ids": [
+              "i13"
+            ]
+          }
+        ],
+        "duplicates": []
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:45:23.095741+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 1818,
+          "completion_tokens": 716,
+          "reasoning_tokens": 348,
+          "latency_s": 2.218,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0007023,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release improves the reliability of plugins and imports, and adds a set of new utilities for styling scrollbars, scaling elements, and tab size. It also refines variant handling and fixes several edge‑case issues with arbitrary values and TypeScript imports.",
+        "sections": [
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i1",
+              "i3",
+              "i6",
+              "i9",
+              "i10",
+              "i12",
+              "i15",
+              "i21",
+              "i22",
+              "i25",
+              "i4",
+              "i11"
+            ]
+          },
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i30",
+              "i31",
+              "i32",
+              "i24",
+              "i14",
+              "i23",
+              "i16",
+              "i11",
+              "i14"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:45:24.249650+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 1123,
+          "completion_tokens": 354,
+          "reasoning_tokens": 120,
+          "latency_s": 1.157,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00038085,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

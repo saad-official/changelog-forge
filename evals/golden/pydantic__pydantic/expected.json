@@ -1,0 +1,28 @@
+{
+  "repo": "pydantic/pydantic",
+  "base": "v2.13.4",
+  "head": "v2.13.5",
+  "must_mention": [
+    "b9d7252",
+    "47a6dbf",
+    "63d2ccc",
+    "92077fc"
+  ],
+  "must_flag_breaking": [],
+  "may_flag_breaking": [],
+  "forbidden_claims": [
+    "#13[0-9]{3}",
+    "v2\\.14",
+    "\\bnew feature\\b"
+  ],
+  "categories": {
+    "b9d7252": "fix",
+    "47a6dbf": "fix",
+    "a53ec2e": "internal",
+    "b353bbb": "internal",
+    "558379f": "internal",
+    "001dea0": "internal",
+    "2cfd5d3": "internal"
+  },
+  "notes": "Backport-only patch release: no PR associations in range. Bodies cite the original PR numbers (#13535 ...) which are NOT in the range: citing them must be dropped by the verifier, and writing them into prose is a forbidden claim."
+}

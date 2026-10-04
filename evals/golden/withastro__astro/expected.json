@@ -1,0 +1,25 @@
+{
+  "repo": "withastro/astro",
+  "base": "astro@7.3.4",
+  "head": "astro@7.3.5",
+  "must_mention": [
+    "#17736"
+  ],
+  "must_flag_breaking": [],
+  "may_flag_breaking": [
+    "#18107",
+    "#18108"
+  ],
+  "forbidden_claims": [
+    "astro@7\\.4",
+    "astro 8"
+  ],
+  "categories": {
+    "#17736": "feature",
+    "#18098": "internal",
+    "#18107": "internal",
+    "#18108": "internal",
+    "#18113": "internal"
+  },
+  "notes": "One feature (renderComponent in the container API) and dependency updates."
+}

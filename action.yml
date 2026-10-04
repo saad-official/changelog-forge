@@ -1,0 +1,55 @@
+# Changelog Forge as a GitHub Action (Docker). Usage: README.md "GitHub Action".
+#   - uses: saad-official/changelog-forge@v1
+#     with:
+#       audiences: user,dev
+#       output: release-body       # or: pr-comment
+#       github-token: ${{ secrets.GITHUB_TOKEN }}
+#       groq-api-key: ${{ secrets.GROQ_API_KEY }}
+name: Changelog Forge
+description: Release notes for users and developers from a git range, with every commit and PR link verified.
+author: saad-official
+branding:
+  icon: file-text
+  color: green
+
+inputs:
+  audiences:
+    description: "Comma-separated: user, dev"
+    required: false
+    default: user,dev
+  output:
+    description: "Where to publish: release-body (tag push / release) or pr-comment (pull request)"
+    required: false
+    default: release-body
+  github-token:
+    description: Token used to read the repository and to write the release or comment
+    required: false
+    default: ${{ github.token }}
+  groq-api-key:
+    description: Groq API key (map and reduce tiers)
+    required: true
+  gemini-api-key:
+    description: Gemini API key (fallback tier, optional)
+    required: false
+    default: ""
+  base:
+    description: Base ref. Default - the previous tag (tag push / release) or the PR base
+    required: false
+    default: ""
+  head:
+    description: Head ref. Default - the pushed tag, the release tag, or the PR head
+    required: false
+    default: ""
+
+runs:
+  using: docker
+  image: Dockerfile
+  entrypoint: /app/action/entrypoint.sh
+  env:
+    GITHUB_TOKEN: ${{ inputs.github-token }}
+    GROQ_API_KEY: ${{ inputs.groq-api-key }}
+    GEMINI_API_KEY: ${{ inputs.gemini-api-key }}
+    CF_AUDIENCES: ${{ inputs.audiences }}
+    CF_OUTPUT: ${{ inputs.output }}
+    CF_BASE: ${{ inputs.base }}
+    CF_HEAD: ${{ inputs.head }}

@@ -1,0 +1,1601 @@
+{
+  "repo": "expo/expo",
+  "base": "expo@58.0.2",
+  "head": "expo@58.0.3",
+  "compare_url": "https://github.com/expo/expo/compare/expo@58.0.2...expo@58.0.3",
+  "default_branch": "main",
+  "private": false,
+  "total_commits": 64,
+  "commits": [
+    {
+      "sha": "e9cfb520c5844729e3e2c47ba5db369bdd253d44",
+      "message": "[expo] Use Hermes TextDecoder and remove the UTF-8 polyfill (#50853)",
+      "author": "savv",
+      "date": "2026-10-01T19:54:40Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/e9cfb520c5844729e3e2c47ba5db369bdd253d44",
+      "pr_number": 50853,
+      "pr_title": "[expo] Use Hermes TextDecoder and remove the UTF-8 polyfill",
+      "pr_body": "# Why\n\nFollow-up to #41672: RN 0.88 now includes Hermes TextDecoder, so Expo should stop replacing it with its UTF-8-only implementation (which breaks Latin-1 consumers such as jsPDF/fast-png). Related: #48790 retains a fallback; this PR removes it completely for SDK 58.\n\n# How\n\nDelete `TextDecoder.ts`, its global registration, and its standalone tests; Hermes owns decoder conformance coverage. Keep Expo’s TextDecoderStream coverage on both native Jest presets. Combine the encoding documentation with links to both Hermes implementations, and link the changeset to facebook/hermes#1855. Custom JS runtimes must provide TextDecoder before Expo initializes.\n\n# Test Plan\n\n- `packages/expo`: after the review changes, `jest --runInBand --watchman=false src/winter` — 21 suites / 308 tests passed, 4 existing skips; includes expo/fetch and both encoding streams. Typecheck, lint, and changeset formatting passed. Standalone TextDecoder tests were removed as requested.\n- GT integration: applied the complete removal to SDK 58 preview.6 / RN 0.88 RC1 in existing iOS 27 simulator and Android emulator binaries. Verified native decoder identity, Latin-1/UTF-16/UTF-8, split UTF-8 and fatal errors; expo/fetch text/JSON/arrayBuffer/clone and streaming through TextDecoderStream; jsPDF PNG embedding, PDF creation/persistence, and GT App imports. The temporary bare-app harness explicitly loads `expo/virtual/streams`; no new native build was needed for this JS-only change.\n- Docs: production/normal li",
+      "pr_url": "https://github.com/expo/expo/pull/50853",
+      "labels": [
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/runtime-text-decoder.md",
+        "docs/pages/versions/unversioned/sdk/expo.mdx",
+        "packages/expo/src/winter/TextDecoder.ts",
+        "packages/expo/src/winter/__tests__/TextDecoder.test.native.ts",
+        "packages/expo/src/winter/__tests__/TextDecoderStream.test.native.ts",
+        "packages/expo/src/winter/runtime.native.ts"
+      ]
+    },
+    {
+      "sha": "7289b0d1634963439225d2353a23acf075447be0",
+      "message": "chore(workflows): Skip several EAS/GH workflows for `changeset-release/*` branches (#50930)\n\nWe rely on verification on `main` and on individual PRs. This means that\nmost runs on the `changeset-release/*` branches are redundant and\nusually ignored.",
+      "author": "kitten",
+      "date": "2026-10-01T20:19:39Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/7289b0d1634963439225d2353a23acf075447be0",
+      "pr_number": 50930,
+      "pr_title": "chore(workflows): Skip several EAS/GH workflows for `changeset-release/*` branches",
+      "pr_body": "We rely on verification on `main` and on individual PRs. This means that most runs on the `changeset-release/*` branches are redundant and usually ignored.\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50930",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint compatible",
+        "contributor: internal"
+      ],
+      "files": [
+        ".github/workflows/android-instrumentation-tests.yml",
+        ".github/workflows/android-unit-tests.yml",
+        ".github/workflows/cli.yml",
+        ".github/workflows/code-review.yml",
+        ".github/workflows/create-expo-app.yml",
+        ".github/workflows/create-expo-module.yml",
+        ".github/workflows/development-client-e2e.yml",
+        ".github/workflows/fingerprint.yml",
+        ".github/workflows/native-component-list.yml",
+        ".github/workflows/pr-labeler.yml",
+        ".github/workflows/test-suite-macos.yml",
+        ".github/workflows/test-suite.yml"
+      ]
+    },
+    {
+      "sha": "2d3eb104e290cb403c0712cc9fb78be820404363",
+      "message": "chore(workflows): Allow \"Version Packages\" PRs to be merged \"early\" pushing waiting to publish tasks (#50928)",
+      "author": "kitten",
+      "date": "2026-10-01T20:23:55Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/2d3eb104e290cb403c0712cc9fb78be820404363",
+      "pr_number": 50928,
+      "pr_title": "chore(workflows): Allow \"Version Packages\" PRs to be merged \"early\" pushing waiting to publish tasks",
+      "pr_body": "# Why\r\n\r\nThe `precompile-android` task can currently take 30+min, which exposed a weakness of precompiling in \"Version Packages\" PR workflows on EAS. While we can fall back to the publish runner, and let precompiling finish there, that's strictly slower. However, waiting 30+min to merge can be impossible if new changes come in too quickly.\r\n\r\nWe instead would like to merge any time the PR is fresh and then let the publish task wait for precompiling to finish. While sequencing EAS to GitHub or invoking from GitHub CI would be possible here, the cleaner approach is to (optionally) wait on the precompile task in GitHub.\r\n\r\n# How\r\n\r\n- Install `eas-cli` in `stable-publish`\r\n- Wait on EAS workflows to finish when publishing\r\n- Adjust EAS workflows to not cancel when new \"Version Packages\" PRs are opened\r\n\r\n# Test Plan\r\n\r\n- Can only be tested fully by running a release\r\n\r\n# Checklist\r\n\r\n<!--\r\nPlease check the appropriate items below if they apply to your diff.\r\n-->\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50928",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        ".github/workflows/publish-packages.yml",
+        "apps/expo-workflow-testing/.eas/workflows/changesets-precompile-android.yml",
+        "apps/expo-workflow-testing/.eas/workflows/changesets-precompile-ios.yml"
+      ]
+    },
+    {
+      "sha": "4c264c0698a0336ee56bde9b1506a89d2caa9a6d",
+      "message": "[docs] Sync docs data for SDK 58 (#50933)\n\n# Why\n\n<!--\nPlease describe the motivation for this PR, and link to relevant GitHub\nissues, forums posts, or feature requests.\n-->\n\nSync docs data for SDK 58.\n\n# Test Plan\n\n<!--\nPlease describe how you tested this change and how a reviewer could\nreproduce your test, especially if this PR does not include automated\ntests! If possible, please also provide terminal output and/or\nscreenshots demonstrating your test/reproduction.\n-->\n\nProofread.\n\n# Checklist\n\n<!--\nPlease check the appropriate items below if they apply to your diff.\n-->\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "amandeepmittal",
+      "date": "2026-10-01T21:04:15Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/4c264c0698a0336ee56bde9b1506a89d2caa9a6d",
+      "pr_number": 50933,
+      "pr_title": "[docs] Sync docs data for SDK 58",
+      "pr_body": "# Why\r\n\r\n<!--\r\nPlease describe the motivation for this PR, and link to relevant GitHub issues, forums posts, or feature requests.\r\n-->\r\n\r\nSync docs data for SDK 58.\r\n\r\n# Test Plan\r\n\r\n<!--\r\nPlease describe how you tested this change and how a reviewer could reproduce your test, especially if this PR does not include automated tests! If possible, please also provide terminal output and/or screenshots demonstrating your test/reproduction.\r\n-->\r\n\r\nProofread.\r\n\r\n# Checklist\r\n\r\n<!--\r\nPlease check the appropriate items below if they apply to your diff.\r\n-->\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50933",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        "docs/pages/versions/v58.0.0/config/metro.mdx",
+        "docs/pages/versions/v58.0.0/sdk/app-intents.mdx",
+        "docs/pages/versions/v58.0.0/sdk/audio.mdx",
+        "docs/pages/versions/v58.0.0/sdk/dev-client.mdx",
+        "docs/pages/versions/v58.0.0/sdk/expo.mdx",
+        "docs/pages/versions/v58.0.0/sdk/font.mdx",
+        "docs/pages/versions/v58.0.0/sdk/glass-effect.mdx",
+        "docs/pages/versions/v58.0.0/sdk/ui/jetpack-compose/modifiers.mdx",
+        "docs/pages/versions/v58.0.0/sdk/updates.mdx",
+        "docs/public/static/data/v58.0.0/expo-app-intents.json",
+        "docs/public/static/data/v58.0.0/expo-device.json",
+        "docs/public/static/data/v58.0.0/expo-linking.json"
+      ]
+    },
+    {
+      "sha": "ac4430f1a3601e2af7bf99b81f1033c28cd462c8",
+      "message": "[workspace] cleanup `package.json` files and reorder dependencies (#50390)\n\n# Why\n\nRecreation of #44087 by @Simek.\n\nRun [`manypkg\ncheck`](https://github.com/Thinkmill/manypkg#manypkg-check) on the\nmonorepo and address the warnings which are safe to tackle and should\nnot be controversial.\n\n# How\n\nRan `manypkg fix` with the same rules disabled that @Simek used:\n\n```json\n\"manypkg\": {\n  \"ignoredRules\": [\n    \"EXTERNAL_MISMATCH\",\n    \"INTERNAL_MISMATCH\",\n    \"INVALID_DEV_AND_PEER_DEPENDENCY_RELATIONSHIP\"\n  ]\n}\n```\n\nThe resulting changes are:\n\n- Sort `dependencies` alphabetically\n- Remove packages from `devDependencies` which are already defined in\n`dependencies`\n- Move the workspace root's `dependencies` into `devDependencies`\n\n# Test Plan\n\n`manypkg check` reports `workspaces valid!` with the rules above\nignored. `pnpm install` regenerates the lockfile with no dependency\nresolution changes.\n\n# Checklist\n\n- [ ] I added a `changelog.md` entry and rebuilt the package sources\naccording to [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\nCo-authored-by: expo-tuft[bot] <288127324+expo-tuft[bot]@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T21:07:06Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/ac4430f1a3601e2af7bf99b81f1033c28cd462c8",
+      "pr_number": 50390,
+      "pr_title": "[workspace] cleanup `package.json` files and reorder dependencies",
+      "pr_body": "# Why\r\n\r\nRecreation of #44087 by @Simek.\r\n\r\nRun [`manypkg check`](https://github.com/Thinkmill/manypkg#manypkg-check) on the monorepo and address the warnings which are safe to tackle and should not be controversial.\r\n\r\n# How\r\n\r\nRan `manypkg fix` with the same rules disabled that @Simek used:\r\n\r\n```json\r\n\"manypkg\": {\r\n  \"ignoredRules\": [\r\n    \"EXTERNAL_MISMATCH\",\r\n    \"INTERNAL_MISMATCH\",\r\n    \"INVALID_DEV_AND_PEER_DEPENDENCY_RELATIONSHIP\"\r\n  ]\r\n}\r\n```\r\n\r\nThe resulting changes are:\r\n\r\n- Sort `dependencies` alphabetically\r\n- Remove packages from `devDependencies` which are already defined in `dependencies`\r\n- Move the workspace root's `dependencies` into `devDependencies`\r\n\r\n# Test Plan\r\n\r\n`manypkg check` reports `workspaces valid!` with the rules above ignored. `pnpm install` regenerates the lockfile with no dependency resolution changes.\r\n\r\n# Checklist\r\n\r\n- [ ] I added a `changelog.md` entry and rebuilt the package sources according to [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50390",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        "apps/common/package.json",
+        "apps/native-tests/package.json",
+        "package.json",
+        "packages/eslint-config-expo/package.json",
+        "packages/expo-router/package.json",
+        "packages/expo/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "74b7c19d0030521e0e4c49f7d73b2a04fc757230",
+      "message": "[docs][eas-update] Document EAS_UPDATE_UPLOAD_EMBEDDED_BUNDLE and its SDK 58+ default (#50307)",
+      "author": "brentvatne",
+      "date": "2026-10-01T21:31:51Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/74b7c19d0030521e0e4c49f7d73b2a04fc757230",
+      "pr_number": 50307,
+      "pr_title": "[docs][eas-update] Document EAS_UPDATE_UPLOAD_EMBEDDED_BUNDLE and its SDK 58+ default",
+      "pr_body": "# Why\n\nexpo/eas-cli#4433 enables the embedded bundle upload by default for projects on SDK 58 and later, controlled by `EAS_UPDATE_UPLOAD_EMBEDDED_BUNDLE`. On SDK 57 and below the feature stays experimental and opt-in via `EAS_UPDATE_EXPERIMENTAL_UPLOAD_EMBEDDED_BUNDLE`. The bundle diffing guide needs to match.\n\n# How\n\n- Split \"Patches from the embedded bundle\" into tabs: **SDK 58 and later** (on by default, shows how to disable with `EAS_UPDATE_UPLOAD_EMBEDDED_BUNDLE: \"0\"`) and **SDK 57 and below** (keeps the experimental note and the existing `EAS_UPDATE_EXPERIMENTAL_UPLOAD_EMBEDDED_BUNDLE: \"1\"` opt-in).\n- Updated the intro paragraph and the \"Current limitations\" bullet so they no longer describe fresh-install patches as opt-in only.\n\n# Test Plan\n\nDocs-only change. Read through the rendered page and confirm the tabs render like the existing SDK-version tabs in the EAS Observe guides.\n\n# Checklist\n\n- [ ] I added a `changelog.md` entry and rebuilt the package sources according to [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting) (N/A, docs only)\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (N/A, docs only)\n- [x] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "pr_url": "https://github.com/expo/expo/pull/50307",
+      "labels": [
+        "bot: passed checks",
+        "preview",
+        "contributor: internal"
+      ],
+      "files": [
+        "docs/pages/eas-update/bundle-diffing.mdx"
+      ]
+    },
+    {
+      "sha": "dec034352f239ceb3cc1f3f2f7a0ef7a67a14254",
+      "message": "[workspace] Bump `react-native-web` to `~0.21.3` (#50458)\n\n# Why\n\n`react-native-web` 0.21.3 is the latest release, and carries various\nbehavioral changes, such as `pointerEvents` propagation fixes and\npassing the `inert` prop through to the DOM.\n\n# How\n\nBump every `~0.21.0` and `^0.21.0` pin to `~0.21.3`.\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [x] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T21:32:46Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/dec034352f239ceb3cc1f3f2f7a0ef7a67a14254",
+      "pr_number": 50458,
+      "pr_title": "[workspace] Bump `react-native-web` to `~0.21.3`",
+      "pr_body": "# Why\r\n\r\n`react-native-web` 0.21.3 is the latest release, and carries various behavioral changes, such as `pointerEvents` propagation fixes and passing the `inert` prop through to the DOM.\r\n\r\n# How\r\n\r\nBump every `~0.21.0` and `^0.21.0` pin to `~0.21.3`.\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [x] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50458",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/fluffy-wings-remain.md",
+        ".changeset/great-monkeys-dance.md",
+        "apps/brownfield-tester/expo-app/package.json",
+        "apps/minimal-tester/package.json",
+        "apps/native-component-list/package.json",
+        "apps/router-e2e/package.json",
+        "packages/@expo/log-box/package.json",
+        "packages/babel-preset-expo/package.json",
+        "packages/expo-router/package.json",
+        "packages/expo-sqlite/dev-plugin-webui/package.json",
+        "packages/expo/bundledNativeModules.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "009d1a2e4b9f6b135a1a54c1c5a9cb1046ceeff4",
+      "message": "[cli][metro-config][router-server][server] Unify static and streaming CSS assets (#50016)\n\n# Why\n\nStreaming rendering currently splits bundled, external, and inline CSS\nseparately, losing the order provided by Metro and changing the CSS\ncascade.\n\n# How\n\nUse a single ordered array of structured CSS assets across both\nrendering paths, which preserves the order as specified by Metro.\n\nOther related changes:\n\n- Metro doesn't generate unused link markup for external CSS; tag\nemission is handled by each renderer directly\n- Keeps support for SDK55+ server manifests which still separate CSS and\nexternal CSS assets\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [x] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "hassankhan",
+      "date": "2026-10-01T21:52:05Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/009d1a2e4b9f6b135a1a54c1c5a9cb1046ceeff4",
+      "pr_number": 50016,
+      "pr_title": "[cli][metro-config][router-server][server] Unify static and streaming CSS assets",
+      "pr_body": "# Why\r\n\r\nStreaming rendering currently splits bundled, external, and inline CSS separately, losing the order provided by Metro and changing the CSS cascade.\r\n\r\n# How\r\n\r\nUse a single ordered array of structured CSS assets across both rendering paths, which preserves the order as specified by Metro.\r\n\r\nOther related changes:\r\n\r\n- Metro doesn't generate unused link markup for external CSS; tag emission is handled by each renderer directly\r\n- Keeps support for SDK55+ server manifests which still separate CSS and external CSS assets\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [x] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50016",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/five-mammals-smell.md",
+        "apps/router-e2e/__e2e__/css-global-import/app/second.js",
+        "apps/router-e2e/__e2e__/css-global-import/cascade-a.css",
+        "apps/router-e2e/__e2e__/css-global-import/cascade-b.css",
+        "packages/@expo/cli/e2e/__tests__/export/__snapshots__/server.test.ts.snap",
+        "packages/@expo/cli/e2e/playwright/prod/css-global-import.test.ts",
+        "packages/@expo/cli/src/export/exportStaticAsync.ts",
+        "packages/@expo/cli/src/start/server/metro/MetroBundlerDevServer.ts",
+        "packages/@expo/cli/src/start/server/metro/__tests__/MetroBundlerDevServer-test.ts",
+        "packages/@expo/cli/src/start/server/metro/__tests__/serializeHtml.test.ts",
+        "packages/@expo/cli/src/start/server/metro/serializeHtml.ts",
+        "packages/@expo/metro-config/src/serializer/__tests__/css.test.ts"
+      ]
+    },
+    {
+      "sha": "25013111ea61241463b1adece60e1347c2016de2",
+      "message": "[workspace] align safe-to-bump dependencies (#50391)\n\n# Why\n\nRecreates #44924 by @Simek.\n\nAlign `lodash`, `semver`, `@types/semver` and `@vercel/ncc` to the\nhighest range already present in the workspace, resolving several\n`EXTERNAL_MISMATCH` warnings from `manypkg`.\n\n# How\n\nEvery modified dependency moves to the highest range already present in\nthe repo:\n\n| Dependency | Aligned to |\n| - | - |\n| `lodash` | `^4.18.1` |\n| `semver` | `^7.7.4` |\n| `@types/semver` | `^7.7.1` |\n| `@vercel/ncc` | `^0.38.4` |\n\n# Test Plan\n\n`pnpm install` resolves cleanly. The affected `manypkg`\n`EXTERNAL_MISMATCH` warnings for these four packages are gone.\n\n# Checklist\n\n- [x] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\n---------\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T23:15:32Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/25013111ea61241463b1adece60e1347c2016de2",
+      "pr_number": 50391,
+      "pr_title": "[workspace] align safe-to-bump dependencies",
+      "pr_body": "# Why\r\n\r\nRecreates #44924 by @Simek.\r\n\r\nAlign `lodash`, `semver`, `@types/semver` and `@vercel/ncc` to the highest range already present in the workspace, resolving several `EXTERNAL_MISMATCH` warnings from `manypkg`.\r\n\r\n# How\r\n\r\nEvery modified dependency moves to the highest range already present in the repo:\r\n\r\n| Dependency | Aligned to |\r\n| - | - |\r\n| `lodash` | `^4.18.1` |\r\n| `semver` | `^7.7.4` |\r\n| `@types/semver` | `^7.7.1` |\r\n| `@vercel/ncc` | `^0.38.4` |\r\n\r\n# Test Plan\r\n\r\n`pnpm install` resolves cleanly. The affected `manypkg` `EXTERNAL_MISMATCH` warnings for these four packages are gone.\r\n\r\n# Checklist\r\n\r\n- [x] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50391",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint compatible",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/nine-heads-punch.md",
+        ".changeset/thick-humans-study.md",
+        "apps/test-suite/package.json",
+        "packages/@expo/cli/package.json",
+        "packages/@expo/config-plugins/package.json",
+        "packages/@expo/config/package.json",
+        "packages/@expo/fingerprint/package.json",
+        "packages/@expo/image-utils/package.json",
+        "packages/@expo/prebuild-config/package.json",
+        "packages/@expo/sdk-compatibility/package.json",
+        "packages/create-expo/package.json",
+        "packages/expo-build-properties/package.json"
+      ]
+    },
+    {
+      "sha": "b469af786e5ac74d5d8013d44168a52d3c2e1adc",
+      "message": "[workspace] Align `@types/jest` to `^29.5.12` (#50420)\n\n# Why\n\nThe monorepo should use a single version of the same\ndependency/devDependency everywhere.\n\n# How\n\nResolves `@types/jest` to a single range (^29.5.12) and adds it to the\npnpm catalog.\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T23:18:07Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/b469af786e5ac74d5d8013d44168a52d3c2e1adc",
+      "pr_number": 50420,
+      "pr_title": "[workspace] Align `@types/jest` to `^29.5.12`",
+      "pr_body": "# Why\r\n\r\nThe monorepo should use a single version of the same dependency/devDependency everywhere.\r\n\r\n# How\r\n\r\nResolves `@types/jest` to a single range (^29.5.12) and adds it to the pnpm catalog.\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n",
+      "pr_url": "https://github.com/expo/expo/pull/50420",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        "apps/test-suite/package.json",
+        "packages/@expo/devtools/package.json",
+        "packages/@expo/inline-modules/package.json",
+        "packages/@expo/json-file/package.json",
+        "packages/@expo/plist/package.json",
+        "packages/@expo/router-server/package.json",
+        "packages/@expo/schema-utils/package.json",
+        "packages/@expo/sdk-compatibility/package.json",
+        "packages/babel-preset-expo/package.json",
+        "packages/create-expo-module/package.json",
+        "packages/eslint-plugin-expo/package.json",
+        "packages/expo-app-intents/package.json"
+      ]
+    },
+    {
+      "sha": "b047e6ef5588bd27d012f75718ae738a300b8ac8",
+      "message": "[workspace] Align `memfs` to `^3.6.0` (#50422)\n\n# Why\n\nThe monorepo should use a single version of the same\ndependency/devDependency everywhere.\n\n# How\n\nResolves `memfs` to a single range.\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T23:20:08Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/b047e6ef5588bd27d012f75718ae738a300b8ac8",
+      "pr_number": 50422,
+      "pr_title": "[workspace] Align `memfs` to `^3.6.0`",
+      "pr_body": "# Why\r\n\r\nThe monorepo should use a single version of the same dependency/devDependency everywhere.\r\n\r\n# How\r\n\r\nResolves `memfs` to a single range.\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50422",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        "packages/@expo/cli/package.json",
+        "packages/@expo/config-plugins/package.json",
+        "packages/@expo/config/package.json",
+        "packages/@expo/env/package.json",
+        "packages/@expo/fingerprint/package.json",
+        "packages/@expo/json-file/package.json",
+        "packages/@expo/local-build-cache-provider/package.json",
+        "packages/@expo/metro-config/package.json",
+        "packages/@expo/package-manager/package.json",
+        "packages/@expo/prebuild-config/package.json",
+        "packages/@expo/require-utils/package.json",
+        "packages/create-expo/package.json"
+      ]
+    },
+    {
+      "sha": "3434a225bf3508b3de46118bf15c9fb1c078cce3",
+      "message": "[workspace] Align `@types/getenv` to `^1.0.3` (#50423)\n\n# Why\n\nThe monorepo should use a single version of the same\ndependency/devDependency everywhere.\n\n# How\n\nResolves `@types/getenv` to a single range.\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T23:20:34Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/3434a225bf3508b3de46118bf15c9fb1c078cce3",
+      "pr_number": 50423,
+      "pr_title": "[workspace] Align `@types/getenv` to `^1.0.3`",
+      "pr_body": "# Why\r\n\r\nThe monorepo should use a single version of the same dependency/devDependency everywhere.\r\n\r\n# How\r\n\r\nResolves `@types/getenv` to a single range.\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50423",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        "apps/test-suite/package.json",
+        "packages/@expo/cli/package.json",
+        "packages/@expo/config-plugins/package.json",
+        "packages/@expo/config/package.json",
+        "packages/@expo/env/package.json",
+        "packages/@expo/fingerprint/package.json",
+        "packages/@expo/image-utils/package.json",
+        "packages/@expo/metro-config/package.json",
+        "packages/create-expo-module/package.json",
+        "packages/create-expo/package.json",
+        "packages/expo-doctor/package.json",
+        "packages/expo-updates/package.json"
+      ]
+    },
+    {
+      "sha": "196bc353aee902ebf2138957362aef0cc2a611b6",
+      "message": "[workspace] Align `@testing-library/jest-dom` to `^6.9.1` (#50424)\n\n# Why\n\nThe monorepo should use a single version of the same\ndependency/devDependency everywhere.\n\n# How\n\nResolves `@testing-library/jest-dom` to a single range.\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T23:21:14Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/196bc353aee902ebf2138957362aef0cc2a611b6",
+      "pr_number": 50424,
+      "pr_title": "[workspace] Align `@testing-library/jest-dom` to `^6.9.1`",
+      "pr_body": "# Why\r\n\r\nThe monorepo should use a single version of the same dependency/devDependency everywhere.\r\n\r\n# How\r\n\r\nResolves `@testing-library/jest-dom` to a single range.\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50424",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        "packages/expo-blur/package.json",
+        "packages/expo-checkbox/package.json",
+        "packages/expo-glass-effect/package.json",
+        "packages/expo-linear-gradient/package.json",
+        "packages/expo-status-bar/package.json",
+        "packages/html-elements/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "69452db5f132c40283e4ba9f615c9fe7eb3d21c6",
+      "message": " [workspace] Align `glob` to `^13.0.6` (#50425)\n\n# Why\n\nThe monorepo should use a single version of the same\ndependency/devDependency everywhere.\n\n# How\n\nResolves `glob` to a single range.\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T23:21:58Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/69452db5f132c40283e4ba9f615c9fe7eb3d21c6",
+      "pr_number": 50425,
+      "pr_title": " [workspace] Align `glob` to `^13.0.6`",
+      "pr_body": "# Why\r\n\r\nThe monorepo should use a single version of the same dependency/devDependency everywhere.\r\n\r\n# How\r\n\r\nResolves `glob` to a single range.\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50425",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        "packages/@expo/log-box/package.json",
+        "packages/create-expo/package.json",
+        "packages/expo-doctor/package.json",
+        "packages/install-expo-modules/package.json",
+        "packages/uri-scheme/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "92aa04f4d15a032819337023819ec8288137f4d4",
+      "message": "[workspace] Align `react` to `19.3.0` (#50426)\n\n# Why\n\nThe monorepo should use a single version of the same\ndependency/devDependency everywhere.\n\n# How\n\nResolves `react` to a single range.\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-01T23:25:54Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/92aa04f4d15a032819337023819ec8288137f4d4",
+      "pr_number": 50426,
+      "pr_title": "[workspace] Align `react` to `19.3.0`",
+      "pr_body": "# Why\r\n\r\nThe monorepo should use a single version of the same dependency/devDependency everywhere.\r\n\r\n# How\r\n\r\nResolves `react` to a single range.\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50426",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint compatible",
+        "contributor: internal"
+      ],
+      "files": [
+        "packages/@expo/cli/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "e3b6f8d17070a90518dac42e4dabf68e2adeb854",
+      "message": "[ios][ui] Add navigation and toolbar title display mode modifiers (#50687)\n\n# Why\n\n`@expo/ui/swift-ui` exposes `navigationTitle`, but does not expose\nSwiftUI's\ntitle display mode modifiers. This prevents JavaScript callers from\nchoosing\nhow navigation and toolbar titles are presented.\n\n# Changes\n\n- Add `navigationBarTitleDisplayMode('automatic' | 'inline' | 'large')`.\n- Add `toolbarTitleDisplayMode('automatic' | 'inline' | 'inlineLarge' |\n'large')`.\n- Register both modifiers in the native SwiftUI bridge.\n- Guard unsupported OS versions and platforms with no-op fallbacks.\n- Update the NavigationStack example, API data, and changelog.\n\n# Test plan\n\n- `corepack pnpm --filter @expo/ui typecheck`\n- `corepack pnpm --filter @expo/ui lint`\n- `corepack pnpm --filter @expo/ui format -- --check`\n- `corepack pnpm --filter @expo/ui build:lib`\n- `corepack pnpm --filter native-component-list exec oxfmt --check\nsrc/screens/UI/NavigationStackScreen.ios.tsx`\n- iOS CI/manual verification of the NavigationStack example\n\n# Checklist\n\n- [x] I added a `changelog.md` entry and rebuilt the package sources\naccording to [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [x] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "0x5bfa",
+      "date": "2026-10-02T03:17:19Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/e3b6f8d17070a90518dac42e4dabf68e2adeb854",
+      "pr_number": 50687,
+      "pr_title": "[ios][ui] Add navigation and toolbar title display mode modifiers",
+      "pr_body": "# Why\r\n\r\n`@expo/ui/swift-ui` exposes `navigationTitle`, but does not expose SwiftUI's\r\ntitle display mode modifiers. This prevents JavaScript callers from choosing\r\nhow navigation and toolbar titles are presented.\r\n\r\n# Changes\r\n\r\n- Add `navigationBarTitleDisplayMode('automatic' | 'inline' | 'large')`.\r\n- Add `toolbarTitleDisplayMode('automatic' | 'inline' | 'inlineLarge' | 'large')`.\r\n- Register both modifiers in the native SwiftUI bridge.\r\n- Guard unsupported OS versions and platforms with no-op fallbacks.\r\n- Update the NavigationStack example, API data, and changelog.\r\n\r\n# Test plan\r\n\r\n- `corepack pnpm --filter @expo/ui typecheck`\r\n- `corepack pnpm --filter @expo/ui lint`\r\n- `corepack pnpm --filter @expo/ui format -- --check`\r\n- `corepack pnpm --filter @expo/ui build:lib`\r\n- `corepack pnpm --filter native-component-list exec oxfmt --check src/screens/UI/NavigationStackScreen.ios.tsx`\r\n- iOS CI/manual verification of the NavigationStack example\r\n\r\n# Checklist\r\n\r\n- [x] I added a `changelog.md` entry and rebuilt the package sources according to [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [x] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50687",
+      "labels": [
+        "contributor: external",
+        "sdk-57"
+      ],
+      "files": [
+        "apps/native-component-list/src/screens/UI/NavigationStackScreen.ios.tsx",
+        "docs/public/static/data/unversioned/expo-ui/swift-ui/modifiers.json",
+        "packages/expo-ui/CHANGELOG.md",
+        "packages/expo-ui/ios/Modifiers/ViewModifierRegistry.swift",
+        "packages/expo-ui/src/swift-ui/modifiers/index.ts"
+      ]
+    },
+    {
+      "sha": "83045cc6795fc66ba3b714668139b59804a85e40",
+      "message": "[sqlite] Fix statement finalization and failed-close recovery (#50121)",
+      "author": "savv",
+      "date": "2026-10-02T06:16:15Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/83045cc6795fc66ba3b714668139b59804a85e40",
+      "pr_number": 50121,
+      "pr_title": "[android][ios][sqlite] Fix statement finalization and failed-close recovery",
+      "pr_body": "# Why\n\nA failed close leaves SQLite open, but Expo previously discarded the cached connection and prevented cleanup and retry. Automatic cleanup could also leave statement wrappers pointing to freed memory.\n\n# How\n\n- Preserve the connection and reference count when close fails.\n- Track prepared statement wrappers and invalidate them during automatic cleanup.\n- Mark statements finalized even when SQLite returns an error.\n- Synchronize preparation and finalization with cleanup, checking statement state inside its lock.\n\nIncludes the fix and regression tests from #50122. Interruption remains separate in #50123.\n\n# Test Plan\n\n- 216 Jest tests, TypeScript, and lint pass.\n- Android SQLite Kotlin/C++ build and 4 native unit tests pass.\n- Standalone Swift/SQLite checks reproduce the bug before the fix and pass afterward, including 1,000 concurrent prepare/close iterations.\n- Added native regression tests for failed-close cleanup, connection reuse, concurrent preparation, and concurrent finalization.\n- New device/simulator tests and full iOS build validation remain pending.\n\n# Checklist\n\n- [x] Added changelog entries.\n- [x] No prebuild or EAS Build configuration changes required.\n- [x] Conforms with the documentation writing style guide.\n",
+      "pr_url": "https://github.com/expo/expo/pull/50121",
+      "labels": [
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/sqlite-close-failure.md",
+        "apps/test-suite/tests/SQLite.ts",
+        "packages/expo-sqlite/android/src/main/cpp/NativeDatabaseBinding.cpp",
+        "packages/expo-sqlite/android/src/main/cpp/NativeDatabaseBinding.h",
+        "packages/expo-sqlite/android/src/main/cpp/NativeStatementBinding.cpp",
+        "packages/expo-sqlite/android/src/main/cpp/NativeStatementBinding.h",
+        "packages/expo-sqlite/android/src/main/java/expo/modules/sqlite/NativeDatabase.kt",
+        "packages/expo-sqlite/android/src/main/java/expo/modules/sqlite/NativeDatabaseBinding.kt",
+        "packages/expo-sqlite/android/src/main/java/expo/modules/sqlite/NativeStatement.kt",
+        "packages/expo-sqlite/android/src/main/java/expo/modules/sqlite/SQLiteModule.kt",
+        "packages/expo-sqlite/ios/NativeDatabase.swift",
+        "packages/expo-sqlite/ios/NativeStatement.swift"
+      ]
+    },
+    {
+      "sha": "7842d6350eb2057bd26b800173bc6cbb593e0a73",
+      "message": "[docs] Remove `/preview` paths from redriects (#50945)\n\n# Why\n\n<!--\nPlease describe the motivation for this PR, and link to relevant GitHub\nissues, forums posts, or feature requests.\n-->\n\n`/preview` URLs are not public or consumed by crawlers and therefore,\nshould not have redirects after they are moved to public docs.\n\n# How\n\n<!--\nHow did you build this feature or fix this bug and why?\n-->\n\nRemove them from both client-side and server-side redirect files.\n\n# Test Plan\n\n<!--\nPlease describe how you tested this change and how a reviewer could\nreproduce your test, especially if this PR does not include automated\ntests! If possible, please also provide terminal output and/or\nscreenshots demonstrating your test/reproduction.\n-->\n\nN/A\n\n# Checklist\n\n<!--\nPlease check the appropriate items below if they apply to your diff.\n-->\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "amandeepmittal",
+      "date": "2026-10-02T07:47:17Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/7842d6350eb2057bd26b800173bc6cbb593e0a73",
+      "pr_number": 50945,
+      "pr_title": "[docs] Remove `/preview` paths from redriects",
+      "pr_body": "# Why\r\n\r\n<!--\r\nPlease describe the motivation for this PR, and link to relevant GitHub issues, forums posts, or feature requests.\r\n-->\r\n\r\n`/preview` URLs are not public or consumed by crawlers and therefore, should not have redirects after they are moved to public docs.\r\n\r\n# How\r\n\r\n<!--\r\nHow did you build this feature or fix this bug and why?\r\n-->\r\n\r\nRemove them from both client-side and server-side redirect files.\r\n\r\n# Test Plan\r\n\r\n<!--\r\nPlease describe how you tested this change and how a reviewer could reproduce your test, especially if this PR does not include automated tests! If possible, please also provide terminal output and/or screenshots demonstrating your test/reproduction.\r\n-->\r\n\r\nN/A\r\n\r\n# Checklist\r\n\r\n<!--\r\nPlease check the appropriate items below if they apply to your diff.\r\n-->\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50945",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        "docs/common/client-redirects.ts",
+        "docs/public/_redirects"
+      ]
+    },
+    {
+      "sha": "0fba007828d59acd95205e85146071968198942a",
+      "message": "[modules-cli] Add `expo-modules-cli` with the `generate-types` command (#50233)",
+      "author": "tsapeta",
+      "date": "2026-10-02T07:55:34Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/0fba007828d59acd95205e85146071968198942a",
+      "pr_number": 50233,
+      "pr_title": "[modules-cli] Add `expo-modules-cli` with the `generate-types` command",
+      "pr_body": "# Why\n\nModules written with the new macros already declare their JS surface in Swift, but the TypeScript side is still typed by hand. The scanner shipped in `expo-modules-macros` has a `scan-exports` subcommand built exactly for this, and nothing consumes it yet.\n\n# How\n\nA new package, `expo-modules-cli`, with an `expo-modules` binary and one command for now, `generate-types [packageDir]`. It runs the scanner through the `scanExports` wrapper of `expo-modules-macros` and renders the reported surface into one file per package, `src/native.types.ts`, which the package compiles with its other sources:\n\n- `@ExpoModule` and `@SharedObject` become `declare class` extending `NativeModule` and `SharedObject` from `expo`, with their `@Event` declarations as an exported `<Name>Events` type on the base class. A shared object without a `@JS init` gets a private constructor.\n- `@Record` becomes a type, `Enumerable` a TS enum with the Swift case names and raw values, and `@Union` the union of its member types.\n- `TypedArray` comes from `expo`; the concrete typed array classes and `ArrayBuffer` map to the globals. Anything the scanner can't express renders as `unknown` with a warning naming the Swift file and member, so a gap stays visible instead of silently loosening the API.\n\nThe command only touches a file that starts with its own header, skips the write when the content is current, and removes its earlier output when the package no longer exports anything. `--check` reports staleness w",
+      "pr_url": "https://github.com/expo/expo/pull/50233",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint compatible",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/expo-modules-cli-generate-types.md",
+        ".github/resources/expo-modules-cli.svg",
+        "packages/expo-application/package.json",
+        "packages/expo-crypto/package.json",
+        "packages/expo-haptics/package.json",
+        "packages/expo-modules-cli/README.md",
+        "packages/expo-modules-cli/bin/expo-modules.js",
+        "packages/expo-modules-cli/jest.config.js",
+        "packages/expo-modules-cli/oxlint.config.mjs",
+        "packages/expo-modules-cli/package.json",
+        "packages/expo-modules-cli/src/commands/__tests__/generateTypesCommand.test.ts",
+        "packages/expo-modules-cli/src/commands/__tests__/styles.test.ts"
+      ]
+    },
+    {
+      "sha": "9d37bc5bed441a53ed5b9b7ebcb8df8766304573",
+      "message": "lock files [skip ci]",
+      "author": "alanjhughes",
+      "date": "2026-10-02T08:00:45Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/9d37bc5bed441a53ed5b9b7ebcb8df8766304573",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "apps/bare-expo/ios/Podfile.lock",
+        "apps/expo-go/ios/Podfile.lock"
+      ]
+    },
+    {
+      "sha": "d39dda9beb096644c89bc283a2e9fa6e03ae20cd",
+      "message": "chore(expo-ui): Fix changelog entry from #50687 (#50942)\n\nSee #50687",
+      "author": "kitten",
+      "date": "2026-10-02T09:49:15Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/d39dda9beb096644c89bc283a2e9fa6e03ae20cd",
+      "pr_number": 50942,
+      "pr_title": "chore(expo-ui): Fix changelog entry from #50687",
+      "pr_body": "See #50687",
+      "pr_url": "https://github.com/expo/expo/pull/50942",
+      "labels": [
+        "bot: needs changes",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/ui-title-display-modes.md",
+        "packages/expo-ui/CHANGELOG.md"
+      ]
+    },
+    {
+      "sha": "24693f0bc71539203a1cd7fe632a897278e16512",
+      "message": "[ci] Run `test-suite-macos` also on main (#50952)",
+      "author": "lukmccall",
+      "date": "2026-10-02T10:04:58Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/24693f0bc71539203a1cd7fe632a897278e16512",
+      "pr_number": 50952,
+      "pr_title": "[ci] Run `test-suite-macos` also on main",
+      "pr_body": "# Why\r\n\r\nRuns `test-suite-macos` also on main. \r\nThe current setup only runs this job on PRs, which doesn't make sense to me. It should run like the other tests - on both PRs and the main branch.",
+      "pr_url": "https://github.com/expo/expo/pull/50952",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        ".github/workflows/test-suite-macos.yml"
+      ]
+    },
+    {
+      "sha": "507a9586f92097c7468ebf19d3cd182f65e4135f",
+      "message": "[ci] Start using YAML anchors (#50954)",
+      "author": "lukmccall",
+      "date": "2026-10-02T10:05:17Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/507a9586f92097c7468ebf19d3cd182f65e4135f",
+      "pr_number": 50954,
+      "pr_title": "[ci] Start using YAML anchors",
+      "pr_body": "# Why\r\n\r\nStarted using YAML anchors to remove duplication \r\n\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50954",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint compatible",
+        "contributor: internal"
+      ],
+      "files": [
+        ".github/workflows/android-instrumentation-tests.yml",
+        ".github/workflows/android-unit-tests.yml",
+        ".github/workflows/cli.yml",
+        ".github/workflows/create-expo-app.yml",
+        ".github/workflows/create-expo-module.yml",
+        ".github/workflows/expotools.yml",
+        ".github/workflows/fingerprint.yml",
+        ".github/workflows/ios-unit-tests.yml",
+        ".github/workflows/native-component-list.yml",
+        ".github/workflows/pr-labeler.yml",
+        ".github/workflows/sdk.yml",
+        ".github/workflows/swift-format.yml"
+      ]
+    },
+    {
+      "sha": "ba9f3f134b681034dcbcca91ecba9c27f51978a6",
+      "message": "[android][media-library] Don't open assets for writing to check write access (#50817)\n\n# Why\n\nFixes #50816.\n\nOn Android, assets moved with `Album.create(name, assets, true)` or\n`album.add` sometimes disappear from the media library. The file ends up\nin the album folder, but its MediaStore row is deleted, so galleries and\n`expo-media-library` don't see it until a rescan gives it a new ID.\n\n# How\n\n`MediaStorePermissionsDelegate.hasWritePermissionForUri` checked write\naccess by opening the asset with `openOutputStream(uri, \"rw\")` and\nclosing it. Closing a file that was opened for writing makes\nMediaProvider scan it in the background. `AssetModernDelegate.move`\nrenames the file right after this check, so the scan can run after the\nrename, find the old path empty and delete the row.\n\nThe check now works without opening the file:\n\n- `Context.checkUriPermission(uri, pid, uid,\nFLAG_GRANT_WRITE_URI_PERMISSION)` covers grants from\n`MediaStore.createWriteRequest`.\n- Assets the app created itself (`OWNER_PACKAGE_NAME` is the app's\npackage) count as writable, as before. Without this, moving an asset the\napp created would show a write request it doesn't need.\n\n`setFavorite` uses the same check and no longer triggers a scan either.\n\n# Test Plan\n\nTested on an Android 16 emulator (Pixel 9a image) with the reproduction\nfrom the issue:\nhttps://github.com/devonik/expo-media-library-move-disappears (expo\n57.0.26, expo-media-library 57.0.5, development build, the change\napplied via `pnpm patch` an",
+      "author": "devonik",
+      "date": "2026-10-02T10:07:19Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/ba9f3f134b681034dcbcca91ecba9c27f51978a6",
+      "pr_number": 50817,
+      "pr_title": "[android][media-library] Don't open assets for writing to check write access",
+      "pr_body": "# Why\n\nFixes #50816.\n\nOn Android, assets moved with `Album.create(name, assets, true)` or `album.add` sometimes disappear from the media library. The file ends up in the album folder, but its MediaStore row is deleted, so galleries and `expo-media-library` don't see it until a rescan gives it a new ID.\n\n# How\n\n`MediaStorePermissionsDelegate.hasWritePermissionForUri` checked write access by opening the asset with `openOutputStream(uri, \"rw\")` and closing it. Closing a file that was opened for writing makes MediaProvider scan it in the background. `AssetModernDelegate.move` renames the file right after this check, so the scan can run after the rename, find the old path empty and delete the row.\n\nThe check now works without opening the file:\n\n- `Context.checkUriPermission(uri, pid, uid, FLAG_GRANT_WRITE_URI_PERMISSION)` covers grants from `MediaStore.createWriteRequest`.\n- Assets the app created itself (`OWNER_PACKAGE_NAME` is the app's package) count as writable, as before. Without this, moving an asset the app created would show a write request it doesn't need.\n\n`setFavorite` uses the same check and no longer triggers a scan either.\n\n# Test Plan\n\nTested on an Android 16 emulator (Pixel 9a image) with the reproduction from the issue: https://github.com/devonik/expo-media-library-move-disappears (expo 57.0.26, expo-media-library 57.0.5, development build, the change applied via `pnpm patch` and `expo.autolinking.android.buildFromSource: [\"expo-media-library\"]`). Media was reset ",
+      "pr_url": "https://github.com/expo/expo/pull/50817",
+      "labels": [
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/media-library-move-scan.md",
+        "apps/test-suite/tests/MediaLibraryNext.ts",
+        "packages/expo-media-library/android/src/main/java/expo/modules/medialibrary/next/extensions/resolver/AssetExtensions.kt",
+        "packages/expo-media-library/android/src/main/java/expo/modules/medialibrary/next/permissions/MediaStorePermissionsDelegate.kt"
+      ]
+    },
+    {
+      "sha": "d0c089d638c76874e0e07374b5953fb4106669c2",
+      "message": "[ios][autolinking] Prevent Pods.xcodeproj UUID collisions from Podfile post_install objects (#50946)\n\n# Why\n\nFixes #50794.\n\n`pod install` can write a `Pods.xcodeproj` that Xcode cannot open (\"The\nproject 'Pods' is damaged\"). A new object gets a UUID that an existing\nobject already has, and replaces it. In the worst case the root\n`PBXProject` is replaced. EAS builds then fail with only `no such module\n'Expo'`. It depends on the project's object count, so a routine\ndependency bump can trigger it.\n\nThe cause:\n\n- CocoaPods hands out sequential UUIDs with no collision check.\n`stabilize_target_uuids` runs on every install and restarts that counter\nnear zero.\n- Expo's guard from #44436 was installed in\n`perform_post_install_actions`, after the Podfile `post_install`.\nObjects that React Native's `spm.rb` (or any user hook) creates there\nwere not protected.\n- The guard only replaced how new batches of UUIDs are made. The current\nbatch, which already holds used UUIDs, stayed in place. So Expo's own\n`[Expo] Remove duplicate codegen output` phase could still take a used\nUUID.\n\nThe second point also affects `main`: React Native 0.87+\n(facebook/react-native#57576) protects its own objects, but leaves the\nstale batch behind for Expo's objects.\n\n### Previous fixes\n\nThis is the third fix for the same CocoaPods counter problem:\n\n- #40572 found that a build phase Expo added in\n`run_podfile_post_install_hooks` could collide with the root\n`PBXProject`. It moved that phase to `perform_post_install",
+      "author": "chrfalch",
+      "date": "2026-10-02T10:27:46Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/d0c089d638c76874e0e07374b5953fb4106669c2",
+      "pr_number": 50946,
+      "pr_title": "[ios][autolinking] Prevent Pods.xcodeproj UUID collisions from Podfile post_install objects",
+      "pr_body": "# Why\n\nFixes #50794.\n\n`pod install` can write a `Pods.xcodeproj` that Xcode cannot open (\"The project 'Pods' is damaged\"). A new object gets a UUID that an existing object already has, and replaces it. In the worst case the root `PBXProject` is replaced. EAS builds then fail with only `no such module 'Expo'`. It depends on the project's object count, so a routine dependency bump can trigger it.\n\nThe cause:\n\n- CocoaPods hands out sequential UUIDs with no collision check. `stabilize_target_uuids` runs on every install and restarts that counter near zero.\n- Expo's guard from #44436 was installed in `perform_post_install_actions`, after the Podfile `post_install`. Objects that React Native's `spm.rb` (or any user hook) creates there were not protected.\n- The guard only replaced how new batches of UUIDs are made. The current batch, which already holds used UUIDs, stayed in place. So Expo's own `[Expo] Remove duplicate codegen output` phase could still take a used UUID.\n\nThe second point also affects `main`: React Native 0.87+ (facebook/react-native#57576) protects its own objects, but leaves the stale batch behind for Expo's objects.\n\n### Previous fixes\n\nThis is the third fix for the same CocoaPods counter problem:\n\n- #40572 found that a build phase Expo added in `run_podfile_post_install_hooks` could collide with the root `PBXProject`. It moved that phase to `perform_post_install_actions`. This avoided the collision for that one phase, but did not protect objects created later.\n-",
+      "pr_url": "https://github.com/expo/expo/pull/50946",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal",
+        "sdk-57"
+      ],
+      "files": [
+        ".changeset/pods-uuid-collision.md",
+        "packages/expo-modules-autolinking/scripts/ios/cocoapods/installer.rb"
+      ]
+    },
+    {
+      "sha": "af8bbe23dd33f844e140226a9102c2420746270a",
+      "message": "chore(cli,config-plugins,tools): Bump external sub-packages (devcert, ws-tunnel, sdk-runtime-versions, xcpretty) (#50955)",
+      "author": "kitten",
+      "date": "2026-10-02T10:36:23Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/af8bbe23dd33f844e140226a9102c2420746270a",
+      "pr_number": 50955,
+      "pr_title": "chore(cli,config-plugins,tools): Bump external sub-packages (devcert, ws-tunnel, sdk-runtime-versions, xcpretty)",
+      "pr_body": "## Summary\r\n\r\nThis is a noop change that only adds missing `LICENSE` files without changing package contents. This won't need backporting, since the new versions are patches and in-range. The updates are to propagate the latest versions into `expo/expo`'s lockfile\r\n\r\n## Set of changes\r\n\r\n- Bump `@expo/devcert`\r\n- Bump `@expo/ws-tunnel`\r\n- Bump `@expo/sdk-runtime-versions`\r\n- Bump `@expo/xcpretty`",
+      "pr_url": "https://github.com/expo/expo/pull/50955",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/cli-devcert-ws-tunnel.md",
+        ".changeset/config-plugins-sdk-runtime-versions.md",
+        "packages/@expo/cli/package.json",
+        "packages/@expo/config-plugins/package.json",
+        "pnpm-lock.yaml",
+        "tools/package.json"
+      ]
+    },
+    {
+      "sha": "f706f94422f6ee54d5290d69dff399d7ee0e825a",
+      "message": "[android][camera] Fix window staying white when CameraView unmounts during shutter animation (#50950)",
+      "author": "alanjhughes",
+      "date": "2026-10-02T10:38:09Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/f706f94422f6ee54d5290d69dff399d7ee0e825a",
+      "pr_number": 50950,
+      "pr_title": "[android][camera] Fix window staying white when CameraView unmounts during shutter animation",
+      "pr_body": "# Why\r\nCloses #50904\r\n\r\nWith animateShutter on, unmounting a CameraView right after takePictureAsync() can leave the whole window covered in solid white on Android.  The app still works underneath the white layer, but the user cannot see it.\r\n\r\n# How\r\n\r\nThe shutter flash sets a white foreground on the root view, then clears it 50 ms later. The old code called rootView again inside each delayed runnable. While the camera view is attached, rootView is the DecorView. Once it detaches, rootView returns the camera view itself. If the view detached between the set and the clear, the clear went to the camera view and the DecorView stayed white.\r\n\r\nI moved the flash into a flashShutter function in FlashShutter.kt. It reads rootView once, then sets and clears the foreground on that same view.\r\n\r\n# Test Plan\r\nI added FlashShutterTest. One test checks the normal flash. The other removes the camera view between the set and the clear, then checks that the DecorView foreground is null.\r\n\r\n- Before the fix, the detach test failed with expected null, but was: ColorDrawable.\r\n- After the fix, both tests pass\r\n\r\nI also tested in bare-expo on a physical Pixel 7a (Android 17). I took pictures and then left the camera screen right after each capture. The window did not stay white.\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50950",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/camera-shutter-white-window.md",
+        "packages/expo-camera/android/build.gradle",
+        "packages/expo-camera/android/src/main/java/expo/modules/camera/ExpoCameraView.kt",
+        "packages/expo-camera/android/src/main/java/expo/modules/camera/FlashShutter.kt",
+        "packages/expo-camera/android/src/test/java/expo/modules/camera/FlashShutterTest.kt"
+      ]
+    },
+    {
+      "sha": "10f457049f249c1ec4d96de3a316510608f1dbf1",
+      "message": "[android][dev-launcher] Request the local network permission (#50951)",
+      "author": "alanjhughes",
+      "date": "2026-10-02T10:38:47Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/10f457049f249c1ec4d96de3a316510608f1dbf1",
+      "pr_number": 50951,
+      "pr_title": "[android][dev-launcher] Request the local network permission",
+      "pr_body": "# Why\r\n\r\nOn Android 17, an app that declares this permission no longer gets it automatically, so the app must ask for it. #50057 added the prompt to ReactActivityDelegateWrapper.onCreate, and dev-launcher goes through that wrapper too. But the prompt runs only when no handler replaces the delegate.\r\n  - In app mode, dev-launcher returns the same wrapper, so the prompt runs.\r\n  - In launcher mode, dev-launcher returns DevLauncherReactActivityRedirectDelegate, and the wrapper calls that delegate's onCreate. The redirect delegate does not ask for the permission.\r\n\r\nA development build always starts in launcher mode. The launcher fetches the manifest before it switches to app mode. So NSD discovery and the manifest request both run without the permission, and they fail before the code from #50057 can run.\r\n\r\n# How\r\n\r\n- LocalNetworkPermission: a new helper. It asks for the permission on Android 17 and later when the app does not have it. It asks at most once for each app process, so a denial at startup does not cause a second prompt on the launcher screen.\r\n- DevLauncherReactActivityRedirectDelegate: This handles MainActivity in launcher mode, for deep links and for reopening the last app. It asks for the permission first and redirects after the user answers. If the user denies, it redirects anyway, so the app does not get stuck.\r\n- DevLauncherActivity: It asks for the permission when the launcher opens. If the user grants it, NSD discovery restarts, because the first attempt fail",
+      "pr_url": "https://github.com/expo/expo/pull/50951",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/dev-launcher-android-local-network-permission.md",
+        "packages/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/launcher/DevLauncherActivity.kt",
+        "packages/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/launcher/LocalNetworkPermission.kt",
+        "packages/expo-dev-launcher/android/src/debug/java/expo/modules/devlauncher/react/activitydelegates/DevLauncherReactActivityRedirectDelegate.kt"
+      ]
+    },
+    {
+      "sha": "35a3c78704836552580f9ff8840113df6bf96315",
+      "message": "[JSI][iOS] Keep Swift symbol names in the prebuilt framework (#50698)",
+      "author": "tsapeta",
+      "date": "2026-10-02T11:32:43Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/35a3c78704836552580f9ff8840113df6bf96315",
+      "pr_number": 50698,
+      "pr_title": "[JSI][iOS] Keep Swift symbol names in the prebuilt framework",
+      "pr_body": "# Why\n\nCrash reports symbolicated on the device (MetricKit with `dladdr`, and the upcoming iOS 27 crash reporter extension) show no function names for `ExpoModulesJSI` frames. With `dwarf-with-dsym`, Xcode's default `STRIP_SWIFT_SYMBOLS=YES` runs `strip -T`, which turns every non-exported Swift symbol into `<redacted>` (1,150 in the device binary).\n\nOnly JSI for now. The long-term plan is server-side symbolication with dSYMs, and the other prebuilt frameworks are the same binary for every app on a release, so Expo can host their dSYMs. JSI is built on the customer's machine, so its dSYM (probably a different UUID per build) has to come from the customer's build, and it lands in `XCFrameworkIntermediates` where a `*.app.dSYM` upload misses it. Names in the binary are the fallback, and JSI is on every JS-to-native call. It's also cheap here: +254 KB, compared to +1.1 MB for `ExpoModulesCore`.\n\n# How\n\n`STRIP_SWIFT_SYMBOLS=NO` in `build-xcframework.sh`. The dSYM stays, since file/line and inlined frames come only from DWARF.\n\n# Test Plan\n\nClean `iphoneos` builds before and after: `__TEXT` is identical, the binary grows from 510,464 to 764,232 bytes (all `__LINKEDIT`), no `<redacted>` symbols left, same build time. In a Release device build of a test app, the embedded framework keeps the same symbol table (CocoaPods only runs `lipo` on it).\n\nNot verified: `xcodebuild archive`, App Store processing, a device crash.\n",
+      "pr_url": "https://github.com/expo/expo/pull/50698",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/jsi-keep-swift-symbol-names.md",
+        "packages/expo-modules-jsi/apple/scripts/build-xcframework.sh"
+      ]
+    },
+    {
+      "sha": "1d606a7c7c6671e81c3c880ca0260f2f6f5ee993",
+      "message": "[template] Fix directory names in `README` (#50443)\n\n# Why\n\nSome of the directories in the `README.md` are incorrect.\n\n# How\n\nUsed corrected directories.\n\n# Test Plan\n\nNone required.\n\n# Checklist\n\n- [x] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [x] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\n---------\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>",
+      "author": "hassankhan",
+      "date": "2026-10-02T11:39:59Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/1d606a7c7c6671e81c3c880ca0260f2f6f5ee993",
+      "pr_number": 50443,
+      "pr_title": "[template] Fix directory names in `README`",
+      "pr_body": "# Why\r\n\r\nSome of the directories in the `README.md` are incorrect.\r\n\r\n# How\r\n\r\nUsed corrected directories.\r\n\r\n# Test Plan\r\n\r\nNone required.\r\n\r\n# Checklist\r\n\r\n- [x] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [x] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50443",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/template-default-readme-dirs.md",
+        "templates/expo-template-default/README.md"
+      ]
+    },
+    {
+      "sha": "963dcba0e34d6116888e361f6e3d777202d51cc9",
+      "message": "[ios][image-manipulator] Add missing UIKit imports for SwiftPM builds (#50961)\n\n# Why\n\n`expo-image-manipulator` does not build from source with Swift Package\nManager. Nine of its Swift files use `UIImage` but do not import UIKit.\nCocoaPods builds hide this, because a file can use an import from\nanother file in the same module. SwiftPM with explicit modules does not\nallow that, so the build fails with `cannot find type 'UIImage' in\nscope`.\n\nThis PR also corrects a code comment that a reviewer flagged on #50549\n([thread](https://github.com/expo/expo/pull/50549#discussion_r4134024111)).\nThe comment said `readPodfileProperties` matches the Ruby reader, but\nthe function throws on an invalid file and the Ruby reader returns `{}`.\n\n# How\n\n- Added `import UIKit` to the 9 files in\n`packages/expo-image-manipulator/ios/` that use UIKit types. I checked\nall 15 Swift files in the package; the other files already import UIKit\nor use no UIKit types.\n- Rewrote the `readPodfileProperties` doc comment in\n`packages/expo/scripts/spm/app-target.js`. It now says that throwing is\nintentional, and that `precompiled_modules.rb#read_podfile_properties`\nand the Podfile template both rescue an invalid file to `{}`. The code\ndoes not change.\n\n# Test Plan\n\nI built `apps/minimal-swiftpm` (React Native 0.88.0-rc.3, Xcode 27.1)\nwith SwiftPM, with `expo-image-manipulator` added locally and built from\nsource:\n\n```\nxcodebuild -project ios/minimalswiftpm.xcodeproj -scheme minimalswiftpm \\\n  -configuration Debug ",
+      "author": "chrfalch",
+      "date": "2026-10-02T11:48:34Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/963dcba0e34d6116888e361f6e3d777202d51cc9",
+      "pr_number": 50961,
+      "pr_title": "[ios][image-manipulator] Add missing UIKit imports for SwiftPM builds",
+      "pr_body": "# Why\n\n`expo-image-manipulator` does not build from source with Swift Package Manager. Nine of its Swift files use `UIImage` but do not import UIKit. CocoaPods builds hide this, because a file can use an import from another file in the same module. SwiftPM with explicit modules does not allow that, so the build fails with `cannot find type 'UIImage' in scope`.\n\nThis PR also corrects a code comment that a reviewer flagged on #50549 ([thread](https://github.com/expo/expo/pull/50549#discussion_r4134024111)). The comment said `readPodfileProperties` matches the Ruby reader, but the function throws on an invalid file and the Ruby reader returns `{}`.\n\n# How\n\n- Added `import UIKit` to the 9 files in `packages/expo-image-manipulator/ios/` that use UIKit types. I checked all 15 Swift files in the package; the other files already import UIKit or use no UIKit types.\n- Rewrote the `readPodfileProperties` doc comment in `packages/expo/scripts/spm/app-target.js`. It now says that throwing is intentional, and that `precompiled_modules.rb#read_podfile_properties` and the Podfile template both rescue an invalid file to `{}`. The code does not change.\n\n# Test Plan\n\nI built `apps/minimal-swiftpm` (React Native 0.88.0-rc.3, Xcode 27.1) with SwiftPM, with `expo-image-manipulator` added locally and built from source:\n\n```\nxcodebuild -project ios/minimalswiftpm.xcodeproj -scheme minimalswiftpm \\\n  -configuration Debug -sdk iphonesimulator -destination \"generic/platform=iOS Simulator\" build\n```\n\n- ",
+      "pr_url": "https://github.com/expo/expo/pull/50961",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/image-manipulator-uikit-imports.md",
+        "packages/expo-image-manipulator/ios/ImageManipulatorContext.swift",
+        "packages/expo-image-manipulator/ios/ImageManipulatorUtils.swift",
+        "packages/expo-image-manipulator/ios/ImageRef.swift",
+        "packages/expo-image-manipulator/ios/ImageTransformer.swift",
+        "packages/expo-image-manipulator/ios/Transformers/ImageCropTransformer.swift",
+        "packages/expo-image-manipulator/ios/Transformers/ImageFixOrientationTransformer.swift",
+        "packages/expo-image-manipulator/ios/Transformers/ImageFlipTransformer.swift",
+        "packages/expo-image-manipulator/ios/Transformers/ImageResizeTransformer.swift",
+        "packages/expo-image-manipulator/ios/Transformers/ImageRotateTransformer.swift",
+        "packages/expo/scripts/spm/app-target.js"
+      ]
+    },
+    {
+      "sha": "5fae3f10ef38dada7ca8d5e19e85c487f12cc8cb",
+      "message": "[docs][router] Expose config plugin types (#50442)\n\n# Why\n\nExposes Expo Router's config plugin option types to the reference docs\ngenerator, so they can be used in the [Configurable\nproperties](https://docs.expo.dev/versions/latest/sdk/router/#configurable-properties)\ntable.\n\n# How\n\nExported the types from the config plugin. Additionally added a guard to\nensure that the options only display for the `expo-router` reference\npage, and not its subpath imports (stack etc).\n\n# Test Plan\n\n- Check PR preview\n\n# Checklist\n\n- [x] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\n\n---------\n\nCo-authored-by: hassankhan [bot] <331357257+hassankhan-bot@users.noreply.github.com>\nCo-authored-by: Aman Mittal <amandeepmittal@live.com>",
+      "author": "hassankhan",
+      "date": "2026-10-02T11:56:20Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/5fae3f10ef38dada7ca8d5e19e85c487f12cc8cb",
+      "pr_number": 50442,
+      "pr_title": "[docs][router] Expose config plugin types",
+      "pr_body": "# Why\r\n\r\nExposes Expo Router's config plugin option types to the reference docs generator, so they can be used in the [Configurable properties](https://docs.expo.dev/versions/latest/sdk/router/#configurable-properties) table.\r\n\r\n# How\r\n\r\nExported the types from the config plugin. Additionally added a guard to ensure that the options only display for the `expo-router` reference page, and not its subpath imports (stack etc).\r\n\r\n# Test Plan\r\n\r\n- Check PR preview\r\n\r\n# Checklist\r\n\r\n- [x] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50442",
+      "labels": [
+        "bot: passed checks",
+        "preview",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/witty-birds-clap.md",
+        "docs/pages/versions/unversioned/sdk/router/index.mdx",
+        "docs/public/static/data/unversioned/expo-router.json",
+        "docs/public/static/data/v58.0.0/expo-router.json",
+        "packages/expo-router/plugin/src/index.ts",
+        "packages/expo-router/plugin/src/withRouter.ts",
+        "tools/src/commands/GenerateDocsAPIData.ts"
+      ]
+    },
+    {
+      "sha": "b95b6f20b8a8412439e4195627447d7a4181307f",
+      "message": "[cli][server] Fix Content-Length header in JS inspector middleware for non-ASCII response bodies (#49305)",
+      "author": "Rakshit-gen",
+      "date": "2026-10-02T12:47:58Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/b95b6f20b8a8412439e4195627447d7a4181307f",
+      "pr_number": 49305,
+      "pr_title": "[cli][server] Fix Content-Length header in JS inspector middleware for non-ASCII response bodies",
+      "pr_body": "# Why\n\n`createJsInspectorMiddleware`'s `GET` handler (`packages/@expo/cli/src/start/server/middleware/inspector/createJsInspectorMiddleware.ts`) serves inspector app metadata as JSON and sets:\n\n```ts\nconst data = JSON.stringify(app);\nres.writeHead(200, {\n  'Content-Type': 'application/json; charset=UTF-8',\n  'Cache-Control': 'no-cache',\n  'Content-Length': data.length.toString(),\n});\nres.end(data);\n```\n\n`data.length` is the JS string's length in UTF-16 code units, not its size in bytes. `res.end(data)` writes the string UTF-8-encoded (the default for Node's `http` module and consistent with the declared `charset=UTF-8`). Any multi-byte character in the response — e.g. a connected device's name with an accent or emoji, which is metadata from the client, not something Expo CLI controls — makes the UTF-8 byte length larger than the declared `Content-Length`:\n\n```js\nconst data = JSON.stringify({ title: 'café ☕ App' });\ndata.length                        // 22 (UTF-16 code units)\nBuffer.byteLength(data, 'utf8')    // 25 (actual bytes written)\n```\n\nAn undersized `Content-Length` is invalid HTTP framing: the client either truncates the body before the trailing bytes or, on a persistent connection, mistakes the leftover bytes for the start of the next response. This surfaced while investigating an unrelated HTTP-framing report in #49111, where it was noted in passing as a separate, pre-existing defect in this file — this PR addresses that specific issue.\n\n# How\n\nUse `Buffer.byteLengt",
+      "pr_url": "https://github.com/expo/expo/pull/49305",
+      "labels": [
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/js-inspector-content-length.md",
+        "packages/@expo/cli/src/start/server/middleware/inspector/__tests__/createJsInspectorMiddleware-test.ts",
+        "packages/@expo/cli/src/start/server/middleware/inspector/createJsInspectorMiddleware.ts"
+      ]
+    },
+    {
+      "sha": "d33324f22dea5ce567f55835e2e2887cc8e50149",
+      "message": "[ios][jsi] Add a per-runtime cache with typed keys to `JavaScriptRuntime` (#50888)",
+      "author": "tsapeta",
+      "date": "2026-10-02T12:56:22Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/d33324f22dea5ce567f55835e2e2887cc8e50149",
+      "pr_number": 50888,
+      "pr_title": "[ios][jsi] Add a per-runtime cache with typed keys to `JavaScriptRuntime`",
+      "pr_body": "## Why\n\n`JavaScriptRuntime` had ad-hoc per-runtime caches (`propNameIdsRegistry`, `cachedDeferredPromiseFactory`), each with its own stored property and its own clear lines in `deinit` and the teardown hook. More such values are coming (for example `SharedObject` classes and prototypes in `expo-modules-core`), and a `String`-keyed lookup costs about as much as creating the `PropNameID` it caches.\n\nPlanned follow-ups that can use the cache once it lands:\n\n- `SharedObject`/`SharedRef` creation in `expo-modules-core`: the classes and prototypes are looked up by name through `global()` and the `expo` object on every call (`ExpoRuntime.getSharedObjectClass()` and friends), and their property names (`prototype`, `__expo_shared_object_id__`) are created per object.\n- JavaScript built-ins that are read from `global()` on every call: `Object.create` (`createObject(prototype:)`), `Object.defineProperty`, `JSON.stringify` (`jsonStringify`), and the `BigInt`, `Date` and `Uint8Array` constructors used by the codable conversions.\n- Constant property names that go through the `String`-keyed `JavaScriptPropNameID.cached(_:_:)` today, such as `then` in `JavaScriptPromise`.\n\n## How\n\n`runtime.cached(key) { make }` returns the value cached under a typed `JavaScriptRuntime.Cache.Key`, creating it with `make` on first use in that runtime. Each key gets a fixed index when created, so a lookup is one array read. The cache is cleared with the runtime, and `make` may look up other cached values. For e",
+      "pr_url": "https://github.com/expo/expo/pull/50888",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/jsi-runtime-cache.md",
+        "packages/expo-modules-jsi/apple/Benchmarks/RuntimeCacheBenchmarks.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/JavaScriptRuntime.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/JavaScriptRuntimeCache.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/Values/JavaScriptPromise.swift",
+        "packages/expo-modules-jsi/apple/Tests/JavaScriptRuntimeCacheTests.swift"
+      ]
+    },
+    {
+      "sha": "24bd8a3b9e6dc94b3822330e9eeac72b5a59bd71",
+      "message": "[ios][jsi] Move host callback results into the result slot instead of cloning them (#50937)",
+      "author": "tsapeta",
+      "date": "2026-10-02T12:56:41Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/24bd8a3b9e6dc94b3822330e9eeac72b5a59bd71",
+      "pr_number": 50937,
+      "pr_title": "[ios][jsi] Move host callback results into the result slot instead of cloning them",
+      "pr_body": "# Why\n\nA host callback's return value was cloned into the engine's result slot and the original released on deinit: one extra engine handle allocation and release per returned string, object or array.\n\n# How\n\n- `JavaScriptValue.write(_:to:)` moves the `jsi::Value` into the slot (new C++ helper `emplaceMovedValue`) when the instance is uniquely referenced, which is the normal case. A shared instance still takes the old clone path. Used by both `createFunction` overloads and host object getters.\n- `pointee` is now `@exclusivity(unchecked) nonisolated(unsafe) var`. Without the attribute, every read paid a dynamic exclusivity check (`getDouble()` 0.9 to 6.5 ns, two-number host call 90 ns slower).\n- `String.toJSIValue(in:)` moves the `jsi::String` into the `jsi::Value` through `createStringValueFromUtf8` / `createStringValueFromAscii` instead of cloning it.\n- ASCII chunks from `getStringData` use `String(decoding:as:)`, which builds strings of up to 15 bytes inline; `String(unsafeUninitializedCapacity:)` always allocated.\n\n# Test Plan\n\n`apple/scripts/test.sh` passed (715 tests, 4 new: host function returning a fresh string, a shared `JavaScriptValue`, a kept object; host object getter returning fresh and shared strings). `swift-format --lint` is clean.\n\nBenchmarks: Mac Catalyst, Release, Apple Silicon, median ns/op. Run-to-run drift is 10 to 20 percent, so the first two tables were measured in one build with the old code kept as a variant, interleaved over three rounds (each round",
+      "pr_url": "https://github.com/expo/expo/pull/50937",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/jsi-move-host-results.md",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI-Cxx/include/JSIUtils.h",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Protocols/JSIRepresentable.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/JavaScriptRuntime.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/Values/JavaScriptValue.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Utilities/String+JSI.swift",
+        "packages/expo-modules-jsi/apple/Tests/JavaScriptRuntimeTests.swift"
+      ]
+    },
+    {
+      "sha": "0eefb41f5c372d96a434ed0f15aa8ab7cc08756a",
+      "message": "[contacts][iOS] Fix presentCreateForm opening read-only view and resolving null (#50957)\n\n# Why\nfixes: #50895\n\n`Contact.presentCreateForm()` on iOS opens the edit view of a newly\ncreated contact instead of the create form and returns null instead of a\nboolean.\n\n# How\n\n- replaces `ContactsViewController(for:)` with\n[`CNContactViewController(forNewContact:)`](https://developer.apple.com/documentation/contactsui/cncontactviewcontroller/init(fornewcontact:))\n- fixes the function to return a boolean instead of null\n- fixes docs example\n\n# Test plan\n✅ BareExpo",
+      "author": "Wenszel",
+      "date": "2026-10-02T13:15:44Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/0eefb41f5c372d96a434ed0f15aa8ab7cc08756a",
+      "pr_number": 50957,
+      "pr_title": "[contacts][iOS] Fix presentCreateForm opening read-only view and resolving null",
+      "pr_body": "# Why\nfixes: #50895\n\n`Contact.presentCreateForm()` on iOS opens the edit view of a newly created contact instead of the create form and returns null instead of a boolean.\n\n# How\n\n- replaces `ContactsViewController(for:)` with [`CNContactViewController(forNewContact:)`](https://developer.apple.com/documentation/contactsui/cncontactviewcontroller/init(fornewcontact:))\n- fixes the function to return a boolean instead of null\n- fixes docs example\n\n# Test plan\n✅ BareExpo\n",
+      "pr_url": "https://github.com/expo/expo/pull/50957",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal",
+        "sdk-57"
+      ],
+      "files": [
+        ".changeset/contacts-next-create-form-ios.md",
+        "packages/expo-contacts/ios/ContactControllerDelegate.swift",
+        "packages/expo-contacts/ios/next/form/FormDelegate.swift",
+        "packages/expo-contacts/src/types/Contact.ts"
+      ]
+    },
+    {
+      "sha": "6b2305ba0c0423e7d17544fb97d576e993263d6b",
+      "message": "[router] Replace query-string with URLSearchParams (#50725)\n\n# Why\n\nRemove `query-string` library since we can replace it with built-in\n`URLSearchParams` and it seems to be causing issues to users.\n\n# How\n\n1. Implement `stringifySearchParams` using `URLSearchParams`\n2. Remove unused `handleUrlParams`\n3. Update usages in code\n\n# Test Plan\n\n1. CI\n2. Router tester\n\n# Checklist\n\n<!--\nPlease check the appropriate items below if they apply to your diff.\n-->\n\n- [ ] I added a `changelog.md` entry and rebuilt the package sources\naccording to [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "Ubax",
+      "date": "2026-10-02T13:53:49Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/6b2305ba0c0423e7d17544fb97d576e993263d6b",
+      "pr_number": 50725,
+      "pr_title": "[router] Replace query-string with URLSearchParams",
+      "pr_body": "# Why\r\n\r\nRemove `query-string` library since we can replace it with built-in `URLSearchParams` and it seems to be causing issues to users.\r\n\r\n# How\r\n\r\n1. Implement `stringifySearchParams` using `URLSearchParams`\r\n2. Remove unused `handleUrlParams`\r\n3. Update usages in code\r\n\r\n# Test Plan\r\n\r\n1. CI\r\n2. Router tester\r\n\r\n# Checklist\r\n\r\n<!--\r\nPlease check the appropriate items below if they apply to your diff.\r\n-->\r\n\r\n- [ ] I added a `changelog.md` entry and rebuilt the package sources according to [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50725",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint compatible",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/router-query-serialization.md",
+        "apps/router-tester/app/params/index.tsx",
+        "apps/router-tester/app/params/query-serialization.tsx",
+        "packages/expo-router/package.json",
+        "packages/expo-router/src/fork/__tests__/getPathFromState.test.web.ts",
+        "packages/expo-router/src/fork/__tests__/getStateFromPath-upstream.test.web.ts",
+        "packages/expo-router/src/fork/getPathFromState-forks.ts",
+        "packages/expo-router/src/fork/getPathFromState.ts",
+        "packages/expo-router/src/fork/getStateFromPath-forks.ts",
+        "packages/expo-router/src/utils/__tests__/queryParams.test.ts",
+        "packages/expo-router/src/utils/queryParams.ts",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "203d0f99cbed13fcb4f36572e347fc6bae090283",
+      "message": "[expo-camera][web] Fire onCameraReady once the video can be captured (#50884)",
+      "author": "Cedric921",
+      "date": "2026-10-02T13:59:14Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/203d0f99cbed13fcb4f36572e347fc6bae090283",
+      "pr_number": 50884,
+      "pr_title": "[expo-camera][web] Fire onCameraReady once the video can be captured",
+      "pr_body": "# Why\n\nFixes #50878.\n\nOn web, `onCameraReady` was fired as soon as `getUserMedia` resolved, before the stream was even attached to the `<video>` element (that happens in an effect after the next render). `takePicture` requires the video to have data, so taking a picture right after `onCameraReady` threw `ERR_CAMERA_NOT_READY`.\n\n# How\n\n- Removed the `onCameraReady` call from `resumeAsync`.\n- In the effect that attaches the stream to the video element, wait until the video has a frame to capture (checked synchronously and on `loadeddata` / `canplay` / `canplaythrough` / `playing`) before calling `onCameraReady`. Listeners are removed once ready or when the stream/element changes. `onCameraReady` is read from a ref so the latest callback is used.\n- Added an `isVideoReadyForCapture()` helper (`readyState >= HAVE_CURRENT_DATA` and `videoWidth > 0`) used by both `onCameraReady` and `takePicture`. Drawing the video to a canvas only needs a current frame, and the verification run showed WebKit keeping a live stream at `HAVE_FUTURE_DATA` (only briefly hitting `HAVE_ENOUGH_DATA`), where the previous `HAVE_ENOUGH_DATA` gate made `onCameraReady` flaky and `takePicture` always fail.\n\nBehavior changes (noted in the changeset):\n- `onCameraReady` is still fired once per new stream (camera switches), but no longer after `onMountError` when the camera fails to start.\n- `takePictureAsync` now accepts `HAVE_CURRENT_DATA` instead of requiring `HAVE_ENOUGH_DATA`.\n\n# Test Plan\n\n- Added `src/web/__t",
+      "pr_url": "https://github.com/expo/expo/pull/50884",
+      "labels": [
+        "📦 expo-camera",
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/expo-camera-web-camera-ready.md",
+        "packages/expo-camera/package.json",
+        "packages/expo-camera/src/ExpoCamera.web.tsx",
+        "packages/expo-camera/src/web/WebCameraUtils.ts",
+        "packages/expo-camera/src/web/__tests__/useWebCameraStream-test.web.ts",
+        "packages/expo-camera/src/web/useWebCameraStream.ts",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "44b9b9623a02eeb2b1d5085b53b6d65a18fa7a2c",
+      "message": "[android][audio] Allow background recording without the notification permission (#50968)",
+      "author": "alanjhughes",
+      "date": "2026-10-02T14:37:47Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/44b9b9623a02eeb2b1d5085b53b6d65a18fa7a2c",
+      "pr_number": 50968,
+      "pr_title": "[android][audio] Allow background recording without the notification permission",
+      "pr_body": "# Why\r\nCloses #50705\r\nOn Android 13+, prepareToRecordAsync() rejects when allowsBackgroundRecording is true and the user has not granted the notification permission. Notifications are off by default on Android 13+, so every user who declines the notification prompt loses recording.\r\n\r\nAndroid does not need this permission. From [Notification runtime permission](https://developer.android.com/develop/ui/views/notifications/notification-permission#exemptions): \"Apps don't need to request the POST_NOTIFICATIONS permission in order to launch a foreground service.\" The app must still post a notification, and without the permission the system shows it in the Task Manager instead of the notification drawer.\r\n\r\n# How\r\n\r\n- Removed the POST_NOTIFICATIONS check from AudioRecorder.prepareRecording, together with hasNotificationPermissions() and NotificationPermissionsException. The check came from #43015.\r\n- bare-expo: added the missing AudioRecordingService declaration to its hand-written manifest. The config plugin adds it for prebuild apps. In bare-expo, the permission check failed first and hid the missing declaration.\r\n\r\n# Test Plan\r\nTested on a API 37 device\r\n\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50968",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/audio-background-recording-without-notifications.md",
+        "apps/bare-expo/android/app/src/main/AndroidManifest.xml",
+        "docs/pages/versions/unversioned/sdk/audio.mdx",
+        "packages/expo-audio/android/src/main/java/expo/modules/audio/AudioExceptions.kt",
+        "packages/expo-audio/android/src/main/java/expo/modules/audio/AudioRecorder.kt"
+      ]
+    },
+    {
+      "sha": "369a79e65ff4d4f5567a75c9261b3a73cb2b633a",
+      "message": "[core][symbols] Honor aria props on Expo views (#50959)",
+      "author": "alanjhughes",
+      "date": "2026-10-02T14:56:01Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/369a79e65ff4d4f5567a75c9261b3a73cb2b633a",
+      "pr_number": 50959,
+      "pr_title": "[core][symbols] Honor aria props on Expo views",
+      "pr_body": "# Why\r\nCloses #50782\r\n\r\nSymbolView accepts aria-hidden and aria-label because its props extend ViewProps, but it ignores them. Inside a button, the symbol ends up in the button's accessibility label. VoiceOver reads the SF Symbol name, and TalkBack gets the Material glyph's private-use character.\r\n\r\nThis supersedes #50797. That PR maps two props inside expo-symbols. The root cause is in expo-modules-core, and it affects every Expo native view.\r\n\r\n# How\r\nReact Native turns aria-* props into native props in JS, inside its own View component ([View.js (https://github.com/facebook/react-native/blob/v0.88.0-rc.3/packages/reactnative/Libraries/Components/View/View.js#L34-L116)). For example, aria-label becomes accessibilityLabel, and aria-hidden becomes accessibilityElementsHidden. Text.js\r\ndoes the same for text. The native side does not read aria-* props. AccessibilityProps.cpp reads only accessibilityElementsHidden, for example.\r\n\r\nrequireNativeViewManager renders the host component directly and does not go through React Native's View. So no Expo native view gets this mapping. The props reach native unchanged, and native ignores them.+\r\n\r\nNativeViewManagerAdapter now maps aria-*, id and tabIndex before it renders the host component. The mapping matches React Natives, so aria-* props win over accessibility* props as they do in React Native. This fixes SymbolView on iOS and macOS with no change in expo-symbols. It also fixes the same gap for all other Expo views. When React Native",
+      "pr_url": "https://github.com/expo/expo/pull/50959",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/modules-core-native-view-aria-props.md",
+        ".changeset/symbols-aria-props.md",
+        "packages/expo-modules-core/src/NativeViewManagerAdapter.native.tsx",
+        "packages/expo-modules-core/src/__tests__/NativeViewManagerAdapter-test.native.tsx",
+        "packages/expo-symbols/package.json",
+        "packages/expo-symbols/src/SymbolView.tsx",
+        "packages/expo-symbols/src/__tests__/SymbolView-test.android.tsx",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "3984c0b4b3d8cd8107ea71d0804822ced650b5a2",
+      "message": "[web][audio] Handle blocked play() calls on web (#50972)",
+      "author": "alanjhughes",
+      "date": "2026-10-02T15:01:23Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/3984c0b4b3d8cd8107ea71d0804822ced650b5a2",
+      "pr_number": 50972,
+      "pr_title": "[web][audio] Handle blocked play() calls on web",
+      "pr_body": "# Why\r\nCloses #36264. \r\n\r\nOn web, AudioPlayer.play() ignored the promise from HTMLMediaElement.play(). When the browser blocks playback because the user has not interacted with the page yet, the promise rejects and the app gets an uncaught NotAllowedError. The player also set isPlaying to true before the result was known. So player.playing stayed true while no sound played, and the app received no status update. \r\n\r\n# How\r\n- AudioPlayer.web.ts: play() now catches the rejection. It sets isPlaying back to false, stops sampling, and sends a playbackStatusUpdate with playing: false and error set to the browser's message. \r\n- Both handlers ignore an AbortError. The browser sends it when pause() or a new source interrupts a pending play, which is normal use. They also ignore a late rejection from a media element that replace() has already swapped out.\r\n\r\n# Test Plan\r\nAdded tests\r\nVerified in the browser\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50972",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/audio-web-play-rejection.md",
+        "packages/expo-audio/package.json",
+        "packages/expo-audio/src/AudioPlayer.web.ts",
+        "packages/expo-audio/src/AudioPlaylist.web.ts",
+        "packages/expo-audio/src/AudioUtils.web.ts",
+        "packages/expo-audio/src/__tests__/AudioPlayerWeb-test.web.ts",
+        "packages/expo-audio/src/__tests__/AudioRecorderWeb-test.web.ts"
+      ]
+    },
+    {
+      "sha": "d357a34547f9bb77bd42b89af3e75f1ab5528e84",
+      "message": "[expo-audio][android] Start the recording service binding timeout (#50883)",
+      "author": "Cedric921",
+      "date": "2026-10-02T15:30:12Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/d357a34547f9bb77bd42b89af3e75f1ab5528e84",
+      "pr_number": 50883,
+      "pr_title": "[expo-audio][android] Start the recording service binding timeout",
+      "pr_body": "# Why\n\nFixes #50706.\n\nWith `allowsBackgroundRecording: true`, `prepareToRecordAsync()` on Android awaits `AudioRecordingServiceConnection.bindWithService()`, which suspends until `onServiceConnected`, `onBindingDied` or `onNullBinding` resumes the continuation. Two paths could leave the promise pending forever:\n\n1. `startBindingTimeout()` exists for the \"system never calls back\" case, but nothing ever called it.\n2. When the React context is lost, the `run { }` branch only logged and returned without resuming the continuation.\n\n# How\n\n- Call `startBindingTimeout()` once the state transitions to `BINDING` and the continuation is stored.\n- Reject with an `AudioRecordingServiceException` when the React context is lost (and fix the message, which said \"playback service\").\n- The timeout runs on `Dispatchers.Default` while the service callbacks run on the main thread, so a late `onServiceConnected` could race the timeout and resume the continuation twice (`IllegalStateException: Already resumed`). Added a small `takeBindingContinuation()` helper that atomically reads and clears the continuation, and use it everywhere the continuation is resumed.\n\n# Test Plan\n\nThe hang can't be triggered on demand (it requires the system to never deliver a bind callback), so this is a code-level fix:\n\n- Reviewed all paths that resume the continuation: each one now goes through `takeBindingContinuation()`, so at most one resume can happen.\n- Happy path is unchanged: `onServiceConnected` cancels the ti",
+      "pr_url": "https://github.com/expo/expo/pull/50883",
+      "labels": [
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/expo-audio-recording-binding-timeout.md",
+        "packages/expo-audio/android/src/main/java/expo/modules/audio/service/AudioRecordingServiceConnection.kt"
+      ]
+    },
+    {
+      "sha": "39cb4216c6ecf5905d55ee3371de8a5a43f84bb3",
+      "message": "[packages] Restore `./plugin` subpath export for typed config plugins (#50965)",
+      "author": "Titozzz",
+      "date": "2026-10-02T15:34:03Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/39cb4216c6ecf5905d55ee3371de8a5a43f84bb3",
+      "pr_number": 50965,
+      "pr_title": "[packages] Restore `./plugin` subpath export for typed config plugins",
+      "pr_body": "> [!NOTE]\n> This PR was generated by AI (Claude) and reviewed by a human (@Titozzz) before posting.\n\n# Why\n\n#44098 added typed config plugin helpers, imported as `<package>/plugin`:\n\n```ts\nimport expoFontPlugin from 'expo-font/plugin';\n\nexport default {\n  plugins: [expoFontPlugin({ ios: { fonts: ['./assets/fonts/Inter.ttf'] } })],\n};\n```\n\n#46801 (the Turborepo migration) then added `package.json` `exports` maps to many packages. Once a package declares `exports`, Node refuses any subpath that isn't listed. Some of the new maps include `./plugin` (for example `expo-asset`, `expo-file-system`, `expo-status-bar`), but these six don't:\n\n| Package | SDK 57 | SDK 58 |\n|---|---|---|\n| `expo-font` | `./plugin` exported | `./plugin` dropped from `exports` |\n| `expo-image` | no `exports` field, so `/plugin` worked | not in `exports` |\n| `expo-maps` | no `exports` field, so `/plugin` worked | not in `exports` |\n| `expo-router` | no `exports` field, so `/plugin` worked | not in `exports` |\n| `expo-web-browser` | no `exports` field, so `/plugin` worked | not in `exports` |\n| `expo-updates` | no `exports` field, so `/plugin` worked | caught by `./*` → `./plugin.js`, which doesn't exist |\n\nAs a result, any app config that uses these typed helpers fails to load on SDK 58:\n\n```\nError [ERR_PACKAGE_PATH_NOT_EXPORTED]: Error reading Expo config at app.config.ts:\nPackage subpath './plugin' is not defined by \"exports\" in node_modules/expo-font/package.json\n```\n\n`expo-updates` fails with `MODULE_NO",
+      "pr_url": "https://github.com/expo/expo/pull/50965",
+      "labels": [
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/restore-plugin-subpath-exports.md",
+        "packages/expo-font/package.json",
+        "packages/expo-image/package.json",
+        "packages/expo-maps/package.json",
+        "packages/expo-router/package.json",
+        "packages/expo-updates/package.json",
+        "packages/expo-web-browser/package.json"
+      ]
+    },
+    {
+      "sha": "68c8102fd4da3f6e4c6c99701991296abebf0685",
+      "message": "[ios][expo-notifications] allow disabling Aps Entitlement (#50891)\n\n# Why\n\ncurrently by adding `expo-notifications` it will always add aps\nentitlement to app. This is fine for 99.99% of use case. I am on a free\napple developer plan and only using local notification **no** remote\nnotification. Xcode will refuse to build for device because of provision\nprofile and auto enable apple push notification service.\nIf app is only using local notification aps entitlement is not required\n\n# How\n\nnew bool prop to `NotificationsPluginProps` by default false. followed\nby a simple if check in `withNotificationsIOS` for adding\nentitlementplist mods\n\n# Test Plan\n\n1.  set `noApsEntitlement` to  plugin  configuration\n2. run prebuild `expo prebuild -c -p ios`\n3. Verify no key is added with name `aps-environment` to app's\nentitlements file\n4. remove `noApsEntitlement` from  plugin  configuration\n5. run prebuild `expo prebuild -c -p ios` again\n6. Verify  `aps-environment`  is set in app's entitlements file\n\n# Checklist\n\n\n\n- [x] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\nI am not sure I need to manually write docs or it will be generated from\nprops, please let ",
+      "author": "netmaxt3r",
+      "date": "2026-10-02T15:55:05Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/68c8102fd4da3f6e4c6c99701991296abebf0685",
+      "pr_number": 50891,
+      "pr_title": "[ios][expo-notifications] allow disabling Aps Entitlement",
+      "pr_body": "# Why\r\n\r\ncurrently by adding `expo-notifications` it will always add aps entitlement to app. This is fine for 99.99% of use case. I am on a free apple developer plan and only using local notification **no** remote notification. Xcode will refuse to build for device because of provision profile and auto enable apple push notification service.\r\nIf app is only using local notification aps entitlement is not required\r\n\r\n# How\r\n\r\nnew bool prop to `NotificationsPluginProps` by default false. followed by a simple if check in `withNotificationsIOS` for adding entitlementplist mods\r\n\r\n# Test Plan\r\n\r\n1.  set `noApsEntitlement` to  plugin  configuration\r\n2. run prebuild `expo prebuild -c -p ios`\r\n3. Verify no key is added with name `aps-environment` to app's entitlements file\r\n4. remove `noApsEntitlement` from  plugin  configuration\r\n5. run prebuild `expo prebuild -c -p ios` again\r\n6. Verify  `aps-environment`  is set in app's entitlements file\r\n\r\n# Checklist\r\n\r\n\r\n\r\n- [x] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\nI am not sure I need to manually write docs or it will be generated from props, please let me know",
+      "pr_url": "https://github.com/expo/expo/pull/50891",
+      "labels": [
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/tricky-jeans-join.md",
+        "docs/pages/versions/unversioned/sdk/notifications.mdx",
+        "packages/expo-notifications/plugin/src/__tests__/withNotificationsIOS-entitlements-test.ts",
+        "packages/expo-notifications/plugin/src/withNotifications.ts",
+        "packages/expo-notifications/plugin/src/withNotificationsIOS.ts"
+      ]
+    },
+    {
+      "sha": "db0db5eaebc8777334730f5927dad357cf1ee305",
+      "message": "[ui][ios] Fix delay() and repeat() changing the original animation (#50927)\n\n# Why\n\n`delay()` and `repeat()` return a new chain, but they also change the\nanimation they are called on: `ChainableAnimation` reassigned its\ncaptured value before building the new chain. This leaks in two ways:\n\n- `Animation.default` is the only preset created once at module load\nrather than by a factory, so a single `Animation.default.delay(0.3)`\nanywhere in an app adds that delay to every later use of\n`Animation.default`.\n- An animation stored in a constant, such as `const spring =\nAnimation.spring({ duration: 0.4 })` shared across screens, picks up the\ndelay or repeat of the first chain built from it.\n\nThis also departs from SwiftUI, which the builder API was chosen to\nmirror in #38954:\n[`Animation`](https://developer.apple.com/documentation/swiftui/animation)\nis a struct, and\n[`delay(_:)`](https://developer.apple.com/documentation/swiftui/animation/delay(_:))\nand\n[`repeatCount(_:autoreverses:)`](https://developer.apple.com/documentation/swiftui/animation/repeatcount(_:autoreverses:))\nreturn a new animation without changing the original.\n\n# How\n\n`delay()` and `repeat()` build the new chain from a copy of the\nreceiver's value and no longer reassign it, so each chain is an\nimmutable value, like SwiftUI's `Animation`. Chaining still accumulates,\nbecause each call runs on the chain returned by the previous one, which\nalready holds the earlier values. The public types are unchanged, and\n`Animation.de",
+      "author": "Den1Marshall",
+      "date": "2026-10-02T16:04:20Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/db0db5eaebc8777334730f5927dad357cf1ee305",
+      "pr_number": 50927,
+      "pr_title": "[ui][ios] Fix delay() and repeat() changing the original animation",
+      "pr_body": "# Why\r\n\r\n`delay()` and `repeat()` return a new chain, but they also change the animation they are called on: `ChainableAnimation` reassigned its captured value before building the new chain. This leaks in two ways:\r\n\r\n- `Animation.default` is the only preset created once at module load rather than by a factory, so a single `Animation.default.delay(0.3)` anywhere in an app adds that delay to every later use of `Animation.default`.\r\n- An animation stored in a constant, such as `const spring = Animation.spring({ duration: 0.4 })` shared across screens, picks up the delay or repeat of the first chain built from it.\r\n\r\nThis also departs from SwiftUI, which the builder API was chosen to mirror in #38954: [`Animation`](https://developer.apple.com/documentation/swiftui/animation) is a struct, and [`delay(_:)`](https://developer.apple.com/documentation/swiftui/animation/delay(_:)) and [`repeatCount(_:autoreverses:)`](https://developer.apple.com/documentation/swiftui/animation/repeatcount(_:autoreverses:)) return a new animation without changing the original.\r\n\r\n# How\r\n\r\n`delay()` and `repeat()` build the new chain from a copy of the receiver's value and no longer reassign it, so each chain is an immutable value, like SwiftUI's `Animation`. Chaining still accumulates, because each call runs on the chain returned by the previous one, which already holds the earlier values. The public types are unchanged, and `Animation.default` stays a shared instance, which is now safe.\r\n\r\nCode that ca",
+      "pr_url": "https://github.com/expo/expo/pull/50927",
+      "labels": [
+        "contributor: external",
+        "sdk-57"
+      ],
+      "files": [
+        ".changeset/expo-ui-chainable-animation.md",
+        "packages/expo-ui/src/__tests__/animation-test.ts",
+        "packages/expo-ui/src/swift-ui/modifiers/animation/index.ts"
+      ]
+    },
+    {
+      "sha": "28c487edebbd8364ec89d6d4d3dabf5fa33b7a53",
+      "message": "[tools][android] Remove Prettier from the publish flow (#47438)\n\n# Why\n\nFollow-up to #47326. \n\nThe nightly Publish Canaries workflow broke because the Android publish\nflow shelled out to `pnpm prettier --write expo-module.config.json`,\nwhich only resolves when `prettier` is hoisted to the workspace root.\n#47326 fixed it by re-adding `prettier` as a root dev dependency, but\nthat keeps the publish flow coupled to a formatter the repo no longer\nuses (we migrated to oxfmt in #47096).\n\nSince then, #50052 and #50190 replaced the old\n`tools/src/publish-packages` flow, so the only remaining `prettier`\ninvocation is in `expoPublishBody`, which is called from the\n`expoPublish` and `expoPublishToMavenLocal` Gradle tasks in\n`expo-module-gradle-plugin`.\n\nNote: `expo/expo` doesn't invoke those tasks anymore, so a future\nfollowup should aim to remove these tasks entirely.\n\n# How\n\n- `MavenPublicationExtension.kt`: `expoPublishBody` now runs `pnpm oxfmt\n--write expo-module.config.json` instead of `pnpm prettier --write`.\n- Removed `prettier` from the root `package.json`\n\n# Test Plan\n\n- `./gradlew :expo-camera:expoPublish --no-configuration-cache` from\n`apps/bare-expo/android` successfully completes\n- `pnpm precompile-android` in `packages/expo-camera` successfully\ncompletes\n- CI\n\n# Checklist\n\n- [x] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Buil",
+      "author": "hassankhan",
+      "date": "2026-10-02T16:29:05Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/28c487edebbd8364ec89d6d4d3dabf5fa33b7a53",
+      "pr_number": 47438,
+      "pr_title": "[tools][android] Remove Prettier from the publish flow",
+      "pr_body": "# Why\r\n\r\nFollow-up to #47326. \r\n\r\nThe nightly Publish Canaries workflow broke because the Android publish flow shelled out to `pnpm prettier --write expo-module.config.json`, which only resolves when `prettier` is hoisted to the workspace root. #47326 fixed it by re-adding `prettier` as a root dev dependency, but that keeps the publish flow coupled to a formatter the repo no longer uses (we migrated to oxfmt in #47096).\r\n\r\nSince then, #50052 and #50190 replaced the old `tools/src/publish-packages` flow, so the only remaining `prettier` invocation is in `expoPublishBody`, which is called from the `expoPublish` and `expoPublishToMavenLocal` Gradle tasks in `expo-module-gradle-plugin`.\r\n\r\nNote: `expo/expo` doesn't invoke those tasks anymore, so a future followup should aim to remove these tasks entirely.\r\n\r\n# How\r\n\r\n- `MavenPublicationExtension.kt`: `expoPublishBody` now runs `pnpm oxfmt --write expo-module.config.json` instead of `pnpm prettier --write`.\r\n- Removed `prettier` from the root `package.json`\r\n\r\n# Test Plan\r\n\r\n- `./gradlew :expo-camera:expoPublish --no-configuration-cache` from `apps/bare-expo/android` successfully completes\r\n- `pnpm precompile-android` in `packages/expo-camera` successfully completes\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [x] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] C",
+      "pr_url": "https://github.com/expo/expo/pull/47438",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/expo-publish-oxfmt.md",
+        "package.json",
+        "packages/expo-modules-core/expo-module-gradle-plugin/src/main/kotlin/expo/modules/plugin/android/MavenPublicationExtension.kt",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "8f7fd07f716ce5beb283f3888cfa5e0a22a7aa72",
+      "message": "[router] Fix platform-specific route parsing and loader keys (#49035)\n\n# Why\n\nThis PR addresses issues found by Musclog\n[here](https://musclog.app/blog/2026/08/this-blog-was-built-using-expo).\n\nPlatform-specific catch-all routes such as `[...slug].web.tsx` were\nparsed incorrectly because we split on `.` in `getRoutesCore()`; the\ndots in `...slug` were mistakenly split on, preventing Expo Router from\nrecognizing `.web` as the platform suffix.\n\nPlatform suffixes are also preserved by `getContextKey()`, this\nprevented platform-specific layouts' such as `_layout.web.tsx` from\nbeing normalized consistently.\n\n# How\n\n- Added a new `getPlatformFromFilePath()` which recognises one of the\nfollowing platforms: `android`, `ios`, `native` and `web`.\n- Refactored `getRoutesCore()` to use `getPlatformFromFilePath()`.\n- Refactored `getContextKey()` to remove the platform as found by\n`getPlatformFromFilePath()`. This now means that `layout.tsx` and\n`layout.web.tsx` both become `\"\"` after being passed to\n`getContextKey()`.\n\n# Test Plan\n\n- CI\n\n# Checklist\n\n- [x] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "hassankhan",
+      "date": "2026-10-02T16:54:32Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/8f7fd07f716ce5beb283f3888cfa5e0a22a7aa72",
+      "pr_number": 49035,
+      "pr_title": "[router] Fix platform-specific route parsing and loader keys",
+      "pr_body": "# Why\r\n\r\nThis PR addresses issues found by Musclog [here](https://musclog.app/blog/2026/08/this-blog-was-built-using-expo). \r\n\r\nPlatform-specific catch-all routes such as `[...slug].web.tsx` were parsed incorrectly because we split on `.` in `getRoutesCore()`;  the dots in `...slug` were mistakenly split on, preventing Expo Router from recognizing `.web` as the platform suffix. \r\n\r\nPlatform suffixes are also preserved by `getContextKey()`, this prevented platform-specific layouts' such as `_layout.web.tsx` from being normalized consistently.\r\n\r\n# How\r\n\r\n- Added a new `getPlatformFromFilePath()` which recognises one of the following platforms: `android`, `ios`, `native` and `web`.\r\n- Refactored `getRoutesCore()` to use `getPlatformFromFilePath()`.\r\n- Refactored `getContextKey()` to remove the platform as found by `getPlatformFromFilePath()`. This now means that `layout.tsx` and `layout.web.tsx` both become `\"\"` after being passed to `getContextKey()`.\r\n\r\n# Test Plan\r\n\r\n- CI\r\n\r\n# Checklist\r\n\r\n- [x] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [x] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/49035",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "sdk-56",
+        "contributor: internal",
+        "sdk-57",
+        "ai-review"
+      ],
+      "files": [
+        ".changeset/router-platform-route-parsing.md",
+        "apps/router-e2e/__e2e__/server-loader/app/(group)/platform/[...slug].tsx",
+        "apps/router-e2e/__e2e__/server-loader/app/(group)/platform/[...slug].web.tsx",
+        "apps/router-e2e/__e2e__/server-loader/app/index.tsx",
+        "apps/router-e2e/__e2e__/server-loader/workerd/config.capnp",
+        "packages/@expo/cli/e2e/__tests__/export/server-loader.test.ts",
+        "packages/@expo/cli/e2e/__tests__/export/static-loader.test.ts",
+        "packages/@expo/cli/e2e/playwright/dev/server-loader.test.ts",
+        "packages/@expo/cli/e2e/playwright/prod/server-loader.test.ts",
+        "packages/@expo/cli/e2e/playwright/prod/static-loader.test.ts",
+        "packages/expo-router/src/__tests__/getRoutes.test.ios.ts",
+        "packages/expo-router/src/__tests__/matchers.test.ios.ts"
+      ]
+    },
+    {
+      "sha": "88dc39229fc80683dab0328dd182f4f11ea01311",
+      "message": "[workspace] Upgrade `jest` to `^30.0.0` (#50427)\n\n# Why\n\nUpgrade the monorepo to use Jest 30.\n\nSee also #37394, #48808, #47332, #44167.\n\n# How\n\n- Bump Jest to 30 across the workspace\n- Add `jest@^30` as a peer dependency of `jest-expo`\n- Map `react-native/asset-registry` to an absolute path in `jest-expo`.\nJest 30 switched to `unrs-resolver` and dropped `packageFilter`, so the\n`exports`-stripping resolver in `@react-native/jest-preset` no longer\nworks\n- Add a `jest-expo` test environment for native tests.\n`@react-native/jest-preset` still depends on `jest-environment-node@29`,\nwhich causes a `clearMocksOnScope is not a function` error\n- Skip lazy global getters in `clearMocksOnScope`. Jest 30 reads every\nenumerable global on teardown, which triggers the lazy `expo` winter\nglobals (`fetch`, `structuredClone`, ...) and throws \"import a file\noutside of the scope of the test code\"\n- Strip root-only `watchPlugins`/`passWithNoTests` from\n`jest-expo/universal` project configs to silence validation warnings\n- Drop the `jest-snapshot-prettier` (Prettier v2) workaround from\n`expo-module-scripts` since Jest 30 now supports Prettier v3\n- Remove `jest.mock('node:fs', () => require('fs'))` workarounds; Jest\n30 now treats `node:fs` and `fs` as the same module\n- Update tests for JSDom 26 (`window.location` is no longer\nconfigurable, `rgba(...,1.00)` becomes `rgb(...)`, gradients stay in\n`style`)\n- Update the snapshots\n- Fix TypeScript errors from `@types/jest@30`; `@types/node` is no\nlonger ",
+      "author": "hassankhan",
+      "date": "2026-10-02T16:58:58Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/88dc39229fc80683dab0328dd182f4f11ea01311",
+      "pr_number": 50427,
+      "pr_title": "[workspace] Upgrade `jest` to `^30.0.0`",
+      "pr_body": "# Why\r\n\r\nUpgrade the monorepo to use Jest 30.\r\n\r\nSee also #37394, #48808, #47332, #44167.\r\n\r\n# How\r\n\r\n- Bump Jest to 30 across the workspace\r\n- Add `jest@^30` as a peer dependency of `jest-expo`\r\n- Map `react-native/asset-registry` to an absolute path in `jest-expo`. Jest 30 switched to `unrs-resolver` and dropped `packageFilter`, so the `exports`-stripping resolver in `@react-native/jest-preset` no longer works\r\n- Add a `jest-expo` test environment for native tests. `@react-native/jest-preset` still depends on `jest-environment-node@29`, which causes a `clearMocksOnScope is not a function` error\r\n- Skip lazy global getters in `clearMocksOnScope`. Jest 30 reads every enumerable global on teardown, which triggers the lazy `expo` winter globals (`fetch`, `structuredClone`, ...) and throws \"import a file outside of the scope of the test code\"\r\n- Strip root-only `watchPlugins`/`passWithNoTests` from `jest-expo/universal` project configs to silence validation warnings\r\n- Drop the `jest-snapshot-prettier` (Prettier v2) workaround from `expo-module-scripts` since Jest 30 now supports Prettier v3\r\n- Remove `jest.mock('node:fs', () => require('fs'))` workarounds; Jest 30 now treats `node:fs` and `fs` as the same module\r\n- Update tests for JSDom 26 (`window.location` is no longer configurable, `rgba(...,1.00)` becomes `rgb(...)`, gradients stay in `style`)\r\n- Update the snapshots\r\n- Fix TypeScript errors from `@types/jest@30`; `@types/node` is no longer pulled in transitively, and `toH",
+      "pr_url": "https://github.com/expo/expo/pull/50427",
+      "labels": [
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/jest-30-jest-expo.md",
+        ".changeset/jest-30-module-scripts.md",
+        "apps/bare-expo/package.json",
+        "apps/native-component-list/package.json",
+        "apps/notification-tester/package.json",
+        "apps/test-suite/package.json",
+        "package.json",
+        "packages/@expo/cli/e2e/__tests__/__snapshots__/lint.test.ts.snap",
+        "packages/@expo/cli/e2e/__tests__/__snapshots__/prebuild-test.ts.snap",
+        "packages/@expo/cli/e2e/__tests__/export/__snapshots__/export-no-ssg.test.ts.snap",
+        "packages/@expo/cli/e2e/__tests__/export/__snapshots__/server-rendering.test.ts.snap",
+        "packages/@expo/cli/e2e/__tests__/export/__snapshots__/server.test.ts.snap"
+      ]
+    },
+    {
+      "sha": "3ef808d592cc2e20f489972f7c8eb24a63c3cea2",
+      "message": "fix(metro-config): Stop collapsing every `node_modules` stack frame (#50973)\n\nSupersedes #48538\n\n# Why\n\nWe currently collapse every stack frame inside `node_modules`, so when a\nlibrary throws, LogBox and the terminal point at the app line that\ncalled it and hide the frames where it actually threw.\n\n# How\n\nWe removed the `node_modules` catch-all from `INTERNAL_CALLSITES_REGEX`\nso library frames show like they already do in RN. The catch-all was\nalso hiding files that RN's default list hides [see\nhere](https://github.com/react/react-native/blob/main/packages/metro-config/src/index.flow.js#L18-L38),\nso the entries we were missing from that list are added and everything\nRN already considers internal stays collapsed.\n\n# Test Plan\n\nAll tests pass.",
+      "author": "ramonclaudio",
+      "date": "2026-10-02T18:24:33Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/3ef808d592cc2e20f489972f7c8eb24a63c3cea2",
+      "pr_number": 50973,
+      "pr_title": "fix(metro-config): Stop collapsing every `node_modules` stack frame",
+      "pr_body": "Supersedes #48538\n\n# Why\n\nWe currently collapse every stack frame inside `node_modules`, so when a library throws, LogBox and the terminal point at the app line that called it and hide the frames where it actually threw.\n\n# How\n\nWe removed the `node_modules` catch-all from `INTERNAL_CALLSITES_REGEX` so library frames show like they already do in RN. The catch-all was also hiding files that RN's default list hides [see here](https://github.com/react/react-native/blob/main/packages/metro-config/src/index.flow.js#L18-L38), so the entries we were missing from that list are added and everything RN already considers internal stays collapsed.\n\n# Test Plan\n\nAll tests pass.\n",
+      "pr_url": "https://github.com/expo/expo/pull/50973",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/metro-config-node-modules-frames.md",
+        "packages/@expo/cli/src/start/server/__tests__/__snapshots__/serverLogLikeMetro.test.ts.snap",
+        "packages/@expo/metro-config/src/__tests__/customizeFrame.test.ts",
+        "packages/@expo/metro-config/src/customizeFrame.ts"
+      ]
+    },
+    {
+      "sha": "7d3ed06bd7e5dc3722d697ac06b51ff8033a2c06",
+      "message": "[router] Replace `toThrowError` with `toThrow` in getRoutes test (#50986)\n\n# Why\n\nDocs CI is failing because package data could not be generated. Router\npackage's Jest throws an error internally after version 30 upgrade:\n\n<img width=\"2416\" height=\"822\" alt=\"CleanShot 2026-10-02 at 23 43 49@2x\"\nsrc=\"https://github.com/user-attachments/assets/709f3027-2c53-4d12-a55a-770d118d2a72\"\n/>\n\n\n# How\n\nReplace `toThrowError` with `toThrow` in getRoutes test.\n\n# Test Plan\n\nCI should pass.\n\n# Checklist\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "amandeepmittal",
+      "date": "2026-10-02T18:24:41Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/7d3ed06bd7e5dc3722d697ac06b51ff8033a2c06",
+      "pr_number": 50986,
+      "pr_title": "[router] Replace `toThrowError` with `toThrow` in getRoutes test",
+      "pr_body": "# Why\r\n\r\n<!--\r\nPlease describe the motivation for this PR, and link to relevant GitHub issues, forums posts, or feature requests.\r\n-->\r\n\r\nDocs CI is failing because package data could not be generated. Router package's Jest throws an error internally after version 30 upgrade:\r\n\r\n<img width=\"2416\" height=\"822\" alt=\"CleanShot 2026-10-02 at 23 43 49@2x\" src=\"https://github.com/user-attachments/assets/709f3027-2c53-4d12-a55a-770d118d2a72\" />\r\n\r\n\r\n# How\r\n\r\n<!--\r\nHow did you build this feature or fix this bug and why?\r\n-->\r\n\r\nReplace `toThrowError` with `toThrow` in getRoutes test.\r\n\r\n# Test Plan\r\n\r\n<!--\r\nPlease describe how you tested this change and how a reviewer could reproduce your test, especially if this PR does not include automated tests! If possible, please also provide terminal output and/or screenshots demonstrating your test/reproduction.\r\n-->\r\n\r\nCI should pass.\r\n\r\n# Checklist\r\n\r\n<!--\r\nPlease check the appropriate items below if they apply to your diff.\r\n-->\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50986",
+      "labels": [
+        "bot: suggestions",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        "packages/expo-router/src/__tests__/getRoutes.test.ios.ts"
+      ]
+    },
+    {
+      "sha": "dc6eb59139af14fda95dbea341729fae8d8f4169",
+      "message": "fix(cli): Keep `node_modules` frames when logging server rendering errors (#50974)\n\n# Why\n\nWhen a module throws while the dev server renders a route, the terminal\nprints the raw stack with the bundle's line numbers instead of a code\nframe and it's source locations. The CLI drops every frame whose path\ncontains `node_modules` before symbolicating, and the server bundle is\nserved from `node_modules/@expo/router-server/node/render.js.bundle`, so\nevery frame gets dropped and it falls back to `error.stack`.\n\n# How\n\nI removed the `node_modules` check from `parseErrorStack`, so these\nframes get symbolicated like everything else.\n\n# Test Plan\n\nAll tests pass.",
+      "author": "ramonclaudio",
+      "date": "2026-10-02T18:25:56Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/dc6eb59139af14fda95dbea341729fae8d8f4169",
+      "pr_number": 50974,
+      "pr_title": "fix(cli): Keep `node_modules` frames when logging server rendering errors",
+      "pr_body": "# Why\n\nWhen a module throws while the dev server renders a route, the terminal prints the raw stack with the bundle's line numbers instead of a code frame and it's source locations. The CLI drops every frame whose path contains `node_modules` before symbolicating, and the server bundle is served from `node_modules/@expo/router-server/node/render.js.bundle`, so every frame gets dropped and it falls back to `error.stack`.\n\n# How\n\nI removed the `node_modules` check from `parseErrorStack`, so these frames get symbolicated like everything else.\n\n# Test Plan\n\nAll tests pass.\n",
+      "pr_url": "https://github.com/expo/expo/pull/50974",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint compatible",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/cli-server-error-node-modules-frames.md",
+        "packages/@expo/cli/src/start/server/metro/__tests__/metroErrorInterface.test.ts",
+        "packages/@expo/cli/src/start/server/metro/metroErrorInterface.ts"
+      ]
+    },
+    {
+      "sha": "cabd12a043bd7641ef1ca5cce60a5d3bb994c7c1",
+      "message": "fix(cli): Show the call stack of a thrown error when all of its frames are collapsed (#50975)\n\n# Why\n\nWhen a native error has more than one stack, the terminal drops any\nstack whose frames are collapsed but it also drops the stack of a thrown\nerror. For example, in the terminal, Expo router's `TypeError` only\nshows the `Layout` component frame and never where it was thrown.\n\n# How\n\nA collapsed stack is now only dropped when it has no error message, and\nthe stack of a thrown error is always printed.\n\n# Test Plan\n\nAll tests pass.",
+      "author": "ramonclaudio",
+      "date": "2026-10-02T18:26:44Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/cabd12a043bd7641ef1ca5cce60a5d3bb994c7c1",
+      "pr_number": 50975,
+      "pr_title": "fix(cli): Show the call stack of a thrown error when all of its frames are collapsed",
+      "pr_body": "# Why\n\nWhen a native error has more than one stack, the terminal drops any stack whose frames are collapsed but it also drops the stack of a thrown error. For example, in the terminal, Expo router's `TypeError` only shows the `Layout` component frame and never where it was thrown.\n\n# How\n\nA collapsed stack is now only dropped when it has no error message, and the stack of a thrown error is always printed.\n\n# Test Plan\n\nAll tests pass.\n",
+      "pr_url": "https://github.com/expo/expo/pull/50975",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint compatible",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/cli-keep-thrown-error-stack.md",
+        "packages/@expo/cli/src/start/server/metro/MetroTerminalReporter.ts",
+        "packages/@expo/cli/src/start/server/metro/__tests__/MetroTerminalReporter-test.ts"
+      ]
+    },
+    {
+      "sha": "822a8330e425b472bb5c2378e525c6a873ce565d",
+      "message": "[ios][jsi] Default the owning `decode` to borrow, and decode unowned values in place (#50960)\n\n# Why\n\nOn the argument fast path, a `@JS` argument is decoded from a borrowed\n`JavaScriptUnownedValue`. A type without its own unowned `decode` falls\nback to the protocol default, which copies the value into a new\n`JavaScriptValue` (a heap allocation plus a `jsi::Value` clone) and\ndecodes that. Arrays, dictionaries, dates, records and enums all took\nthat path.\n\nIt also lets a conformer implement only the unowned overload, which a\ngenerated `@Union` decode can then use for both overloads.\n\n# How\n\n- `JavaScriptValue.withUnownedValue(in:_:)` calls a closure with a\n`JavaScriptUnownedValue` that borrows the value's own `jsi::Value`. It\ntakes the runtime because a runtime-free value (undefined, null, a\nboolean or a number) doesn't hold one. It's `@inlinable`, so the closure\nand its result type specialize in the caller; the JSI types stay behind\none non-inlinable `@usableFromInline` helper that returns the unowned\nvalue.\n- The owning `decode` requirement gets a default that borrows the value\nand forwards to the unowned overload. The unowned default (copy, then\nthe owning decode) stays, so existing owning-only conformers are\nunaffected. Each default forwards to the other, so a conformer must\nimplement at least one overload; the doc comments say so.\n- `Array`, `Dictionary` and `Date` (number fast path) in\nexpo-modules-jsi, and `Record` and `Enumerable` in expo-modules-core,\ndecode unowned va",
+      "author": "tsapeta",
+      "date": "2026-10-02T18:46:54Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/822a8330e425b472bb5c2378e525c6a873ce565d",
+      "pr_number": 50960,
+      "pr_title": "[ios][jsi] Default the owning `decode` to borrow, and decode unowned values in place",
+      "pr_body": "# Why\n\nOn the argument fast path, a `@JS` argument is decoded from a borrowed `JavaScriptUnownedValue`. A type without its own unowned `decode` falls back to the protocol default, which copies the value into a new `JavaScriptValue` (a heap allocation plus a `jsi::Value` clone) and decodes that. Arrays, dictionaries, dates, records and enums all took that path.\n\nIt also lets a conformer implement only the unowned overload, which a generated `@Union` decode can then use for both overloads.\n\n# How\n\n- `JavaScriptValue.withUnownedValue(in:_:)` calls a closure with a `JavaScriptUnownedValue` that borrows the value's own `jsi::Value`. It takes the runtime because a runtime-free value (undefined, null, a boolean or a number) doesn't hold one. It's `@inlinable`, so the closure and its result type specialize in the caller; the JSI types stay behind one non-inlinable `@usableFromInline` helper that returns the unowned value.\n- The owning `decode` requirement gets a default that borrows the value and forwards to the unowned overload. The unowned default (copy, then the owning decode) stays, so existing owning-only conformers are unaffected. Each default forwards to the other, so a conformer must implement at least one overload; the doc comments say so.\n- `Array`, `Dictionary` and `Date` (number fast path) in expo-modules-jsi, and `Record` and `Enumerable` in expo-modules-core, decode unowned values directly. `Data` and typed arrays keep the copying default: they hold an owning typed arra",
+      "pr_url": "https://github.com/expo/expo/pull/50960",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/jsi-unowned-decode.md",
+        "packages/expo-modules-core/ios/Core/Coding/JavaScriptCodable+Enumerable.swift",
+        "packages/expo-modules-core/ios/Core/Coding/JavaScriptCodable+Record.swift",
+        "packages/expo-modules-core/ios/Tests/JavaScriptCodableUnownedDecodeTests.swift",
+        "packages/expo-modules-jsi/apple/Benchmarks/UnownedDecodeBenchmarks.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Containers.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Date.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptDecodable.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/Values/JavaScriptValue.swift",
+        "packages/expo-modules-jsi/apple/Tests/JavaScriptUnownedDecodeTests.swift"
+      ]
+    },
+    {
+      "sha": "89888b03b36a0a75f28683d3d323b159bc1a397a",
+      "message": "[ios][jsi] Keep checkout paths out of the Swift compilation cache key (#50354)",
+      "author": "janicduplessis",
+      "date": "2026-10-02T18:52:54Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/89888b03b36a0a75f28683d3d323b159bc1a397a",
+      "pr_number": 50354,
+      "pr_title": "[ios][jsi] Keep checkout paths out of the Swift compilation cache key",
+      "pr_body": "# Why\n\nWith Xcode 26+ compilation caching on, no Swift target that imports `ExpoModulesCore` ever hits the cache from a second checkout or worktree of the same app, even when the sources are identical. On an SDK 58 app, 141 Swift tasks recompiled in every fresh worktree while every clang task hit. Two per-checkout absolute paths end up in the Swift cache key:\n\n- `ExpoModulesJSI` is built per checkout by `build-xcframework.sh`, and the binary `.swiftmodule` it produces embeds that checkout's paths: the serialized `-I` search paths under `PODS_ROOT`, and the explicit-module cache directories under `.DerivedData`. Consumers key on the module's content, so a different module per checkout means a different key for everything downstream.\n- The macros plugin is passed as `-Xfrontend -load-plugin-executable -Xfrontend <abs path>`, which bypasses swift-driver's plugin resolution and puts the raw path in the frontend argv. As a driver flag, the scanner emits the prefix-mapped `-load-resolved-plugin` instead.\n\n# How\n\n`build-xcframework.sh` now builds with `SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO` and `SWIFT_ENABLE_EXPLICIT_MODULES=NO`, which leaves no absolute path in the `.swiftmodule` and makes it byte-identical across checkouts. The `.swiftinterface`, the dSYM and the C++ interop surface are unchanged.\n\n**Why not something simpler:** neither setting alone is enough (the first still leaves the four explicit-module cache directories), and consumers cannot fall back to the `.swiftinterface",
+      "pr_url": "https://github.com/expo/expo/pull/50354",
+      "labels": [
+        "contributor: external"
+      ],
+      "files": [
+        ".changeset/swift-compilation-cache-paths.md",
+        "packages/expo-modules-autolinking/scripts/ios/project_integrator.rb",
+        "packages/expo-modules-jsi/apple/scripts/build-xcframework.sh"
+      ]
+    },
+    {
+      "sha": "bffa323e74ed499eb806251c8905dabb47f8c2dc",
+      "message": "[ios][jsi] Decode array elements and dictionary values as unowned values (#50980)\n\n# Why\n\nArrays and dictionaries decoded each element from a new\n`JavaScriptValue`, a class instance allocated per element, even when the\ncontainer itself came in as a borrowed `JavaScriptUnownedValue`. With\nthe unowned overload as the primary decode, the elements should take the\nsame path.\n\n# How\n\n- `JavaScriptArray.mapUnowned(_:)` and\n`JavaScriptObject.withUnownedProperty(_:_:)` lend each element or\nproperty to a closure as a `JavaScriptUnownedValue` pointing at the\ntemporary `jsi::Value`, valid only for that call.\n- `JavaScriptUnownedValue` gets `isArray()` and `getArray(in:)`, the\ncounterparts of the owning value's, so an unowned array is read without\ngoing through a `JavaScriptObject` first.\n- The unowned `Array` and `Dictionary` decodes use them, so elements\ndecode through their own unowned overload.\n- `Date`'s unowned decode now holds the implementation. A number is read\ndirectly and a `Date` object is checked with `instanceOf` on the\nborrowed object, so neither copies. A string is copied once into an\nowning value for the `Date` constructor, which takes owning arguments;\nit's the rare input.\n- The owning `Array`, `Dictionary` and `Date` decodes are now one-line\nforwards to the unowned ones through `withUnownedValue(in:_:)`. They\nstay declared so their published symbols remain.\n\n# Test Plan\n\nNew `JavaScriptUnownedElementsTests` in expo-modules-jsi cover\n`mapUnowned` (order, an empty array, ",
+      "author": "tsapeta",
+      "date": "2026-10-02T18:58:40Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/bffa323e74ed499eb806251c8905dabb47f8c2dc",
+      "pr_number": 50980,
+      "pr_title": "[ios][jsi] Decode array elements and dictionary values as unowned values",
+      "pr_body": "# Why\n\nArrays and dictionaries decoded each element from a new `JavaScriptValue`, a class instance allocated per element, even when the container itself came in as a borrowed `JavaScriptUnownedValue`. With the unowned overload as the primary decode, the elements should take the same path.\n\n# How\n\n- `JavaScriptArray.mapUnowned(_:)` and `JavaScriptObject.withUnownedProperty(_:_:)` lend each element or property to a closure as a `JavaScriptUnownedValue` pointing at the temporary `jsi::Value`, valid only for that call.\n- `JavaScriptUnownedValue` gets `isArray()` and `getArray(in:)`, the counterparts of the owning value's, so an unowned array is read without going through a `JavaScriptObject` first.\n- The unowned `Array` and `Dictionary` decodes use them, so elements decode through their own unowned overload.\n- `Date`'s unowned decode now holds the implementation. A number is read directly and a `Date` object is checked with `instanceOf` on the borrowed object, so neither copies. A string is copied once into an owning value for the `Date` constructor, which takes owning arguments; it's the rare input.\n- The owning `Array`, `Dictionary` and `Date` decodes are now one-line forwards to the unowned ones through `withUnownedValue(in:_:)`. They stay declared so their published symbols remain.\n\n# Test Plan\n\nNew `JavaScriptUnownedElementsTests` in expo-modules-jsi cover `mapUnowned` (order, an empty array, a rethrown error), `withUnownedProperty` (present and missing properties), `isArray",
+      "pr_url": "https://github.com/expo/expo/pull/50980",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/jsi-unowned-elements.md",
+        "packages/expo-modules-jsi/apple/Benchmarks/UnownedDecodeBenchmarks.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Containers.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Date.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/Values/JavaScriptArray.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/Values/JavaScriptObject.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Runtime/Values/JavaScriptUnownedValue.swift",
+        "packages/expo-modules-jsi/apple/Tests/JavaScriptUnownedDecodeTests.swift",
+        "packages/expo-modules-jsi/apple/Tests/JavaScriptUnownedElementsTests.swift"
+      ]
+    },
+    {
+      "sha": "f02f90fb6a782a339e4317bc9ca3b351cac5afe9",
+      "message": "[jest-expo] Merge the base `moduleNameMapper` into the web and node presets (#50444)\n\n# Why\n\nFixes #50448. Standalone reproduction:\nhttps://github.com/joernroeder/jest-expo-58-web-mapper-repro\n\nFound while testing the **SDK 58 beta** (`expo@58.0.0-preview.4`,\n`jest-expo@58.0.3`, `react-native@0.88.0-rc.1`).\n\n`jest-expo`'s web and node presets silently lose almost all of their\n`moduleNameMapper` entries. The user-visible symptom is that\n`tsconfig.json` `paths` aliases do not resolve on web: in a project with\n`\"@/*\": [\"./src/*\"]`, every web suite fails with `Cannot find module\n'@/…'` while the identical test passes on native.\n\nRoot cause: `getPlatformPreset()` builds its own `moduleNameMapper` from\nscratch, and `getWebPreset()` / `getNodePreset()` spread it **last**\nover `getBaseWebPreset()`. A later spread replaces `moduleNameMapper`\nwholesale rather than merging it, so everything the base preset\ncontributed is discarded — both the `expoPreset` mappers (which is\n`../jest-preset`, i.e. after `withTypescriptMapping` has added the\n`tsconfig` `paths` aliases) and the explicit `'^react-native$':\n'react-native-web'` alias that `getBaseWebPreset()` adds right above.\n\nThis class of bug is already known here: `withNativeModuleNameMapper`\nwas added to merge the base mapper back, but it was only applied to\n`getIOSPreset` and `getAndroidPreset`. `getWebPreset` and\n`getNodePreset` were left unfixed.\n\n### On the dropped `react-native-web` alias\n\nThe `'^react-native$': 'react-native-web'` al",
+      "author": "joernroeder",
+      "date": "2026-10-02T20:12:42Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/f02f90fb6a782a339e4317bc9ca3b351cac5afe9",
+      "pr_number": 50444,
+      "pr_title": "[jest-expo] Merge the base `moduleNameMapper` into the web and node presets",
+      "pr_body": "# Why\n\nFixes #50448. Standalone reproduction: https://github.com/joernroeder/jest-expo-58-web-mapper-repro\n\nFound while testing the **SDK 58 beta** (`expo@58.0.0-preview.4`, `jest-expo@58.0.3`, `react-native@0.88.0-rc.1`).\n\n`jest-expo`'s web and node presets silently lose almost all of their `moduleNameMapper` entries. The user-visible symptom is that `tsconfig.json` `paths` aliases do not resolve on web: in a project with `\"@/*\": [\"./src/*\"]`, every web suite fails with `Cannot find module '@/…'` while the identical test passes on native.\n\nRoot cause: `getPlatformPreset()` builds its own `moduleNameMapper` from scratch, and `getWebPreset()` / `getNodePreset()` spread it **last** over `getBaseWebPreset()`. A later spread replaces `moduleNameMapper` wholesale rather than merging it, so everything the base preset contributed is discarded — both the `expoPreset` mappers (which is `../jest-preset`, i.e. after `withTypescriptMapping` has added the `tsconfig` `paths` aliases) and the explicit `'^react-native$': 'react-native-web'` alias that `getBaseWebPreset()` adds right above.\n\nThis class of bug is already known here: `withNativeModuleNameMapper` was added to merge the base mapper back, but it was only applied to `getIOSPreset` and `getAndroidPreset`. `getWebPreset` and `getNodePreset` were left unfixed.\n\n### On the dropped `react-native-web` alias\n\nThe `'^react-native$': 'react-native-web'` alias **is** dropped from the web mapper, but web still gets `react-native-web` — so thi",
+      "pr_url": "https://github.com/expo/expo/pull/50444",
+      "labels": [
+        "contributor: external",
+        "sdk-58"
+      ],
+      "files": [
+        ".changeset/kind-news-nail.md",
+        "packages/jest-expo/config/getPlatformPreset.js",
+        "packages/jest-expo/tests/__tests__/platform-preset-module-name-mapper.test.node.js"
+      ]
+    },
+    {
+      "sha": "753750b52e4f7f23037111d3ad5d9bbc7a455455",
+      "message": "[docs] Update Release Manager docs re: protected channels (#50931)",
+      "author": "byronkarlen",
+      "date": "2026-10-02T22:12:42Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/753750b52e4f7f23037111d3ad5d9bbc7a455455",
+      "pr_number": 50931,
+      "pr_title": "[docs] Update Release Manager docs re: protected channels",
+      "pr_body": "# Why\r\nWe're opening up the protected channels feature to everyone, no longer just enterprise. This updates the docs added for the Release Manager role to be accurate. We'll likely want separate docs for protected channels themselves in the near future.\r\n\r\n# How\r\nUpdated copy.\r\n\r\n# Test Plan\r\n<img width=\"918\" height=\"482\" alt=\"Screenshot 2026-10-01 at 1 25 37 PM\" src=\"https://github.com/user-attachments/assets/85ba5a1d-8e84-468e-8208-7d614a13a360\" />\r\n<img width=\"936\" height=\"267\" alt=\"image\" src=\"https://github.com/user-attachments/assets/dffffa5b-3692-4285-9bfb-e179bb0409d9\" />\r\n\r\n# Checklist\r\n\r\n<!--\r\nPlease check the appropriate items below if they apply to your diff.\r\n-->\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50931",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        "docs/pages/accounts/account-types.mdx",
+        "docs/pages/accounts/audit-logs.mdx"
+      ]
+    },
+    {
+      "sha": "c0cac774ad42eaeddd0d8e26a3ef538bdad619ee",
+      "message": "[ui][ios] Add smooth, snappy, and bouncy animation presets (#50984)\n\n# Why\n\nSwiftUI ships three ready-made springs,\n[`smooth`](https://developer.apple.com/documentation/swiftui/animation/smooth),\n[`snappy`](https://developer.apple.com/documentation/swiftui/animation/snappy),\nand\n[`bouncy`](https://developer.apple.com/documentation/swiftui/animation/bouncy),\neach as a value and as a function that takes `duration` and\n`extraBounce`, such as\n[`smooth(duration:extraBounce:)`](https://developer.apple.com/documentation/swiftui/animation/smooth(duration:extrabounce:)).\n`Animation` in `@expo/ui` has no counterpart, so the closest option is\n`Animation.spring({ duration, bounce })` with the base bounce of each\npreset copied by hand.\n\n# How\n\n- `Animation.smooth()`, `Animation.snappy()`, and `Animation.bouncy()`\ntake optional `SpringPresetAnimationParams` (`duration`, `extraBounce`).\nLike `easeInOut` and `spring`, one factory covers both SwiftUI forms:\n`Animation.smooth()` maps to `.smooth`, and `Animation.smooth({\nextraBounce: 0.1 })` to `.smooth(duration:extraBounce:)`.\n- On the native side, `AnimationConfig` calls SwiftUI's own preset\nfunctions instead of `spring(duration:bounce:)` with a hard-coded base\nbounce, so the presets follow the tuning of the SDK the app is built\nwith. A missing parameter falls back to SwiftUI's default, as in the\nother variants.\n- The presets are declared in an `@available(iOS 13.0, …)` extension and\nemitted into the client, so they need no availability chec",
+      "author": "Den1Marshall",
+      "date": "2026-10-03T02:10:01Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/c0cac774ad42eaeddd0d8e26a3ef538bdad619ee",
+      "pr_number": 50984,
+      "pr_title": "[ui][ios] Add smooth, snappy, and bouncy animation presets",
+      "pr_body": "# Why\r\n\r\nSwiftUI ships three ready-made springs, [`smooth`](https://developer.apple.com/documentation/swiftui/animation/smooth), [`snappy`](https://developer.apple.com/documentation/swiftui/animation/snappy), and [`bouncy`](https://developer.apple.com/documentation/swiftui/animation/bouncy), each as a value and as a function that takes `duration` and `extraBounce`, such as [`smooth(duration:extraBounce:)`](https://developer.apple.com/documentation/swiftui/animation/smooth(duration:extrabounce:)). `Animation` in `@expo/ui` has no counterpart, so the closest option is `Animation.spring({ duration, bounce })` with the base bounce of each preset copied by hand.\r\n\r\n# How\r\n\r\n- `Animation.smooth()`, `Animation.snappy()`, and `Animation.bouncy()` take optional `SpringPresetAnimationParams` (`duration`, `extraBounce`). Like `easeInOut` and `spring`, one factory covers both SwiftUI forms: `Animation.smooth()` maps to `.smooth`, and `Animation.smooth({ extraBounce: 0.1 })` to `.smooth(duration:extraBounce:)`.\r\n- On the native side, `AnimationConfig` calls SwiftUI's own preset functions instead of `spring(duration:bounce:)` with a hard-coded base bounce, so the presets follow the tuning of the SDK the app is built with. A missing parameter falls back to SwiftUI's default, as in the other variants.\r\n- The presets are declared in an `@available(iOS 13.0, …)` extension and emitted into the client, so they need no availability check at the package's iOS 16.4 floor.\r\n- `withAnimation` accepts",
+      "pr_url": "https://github.com/expo/expo/pull/50984",
+      "labels": [
+        "contributor: external",
+        "sdk-57"
+      ],
+      "files": [
+        ".changeset/expo-ui-animation-spring-presets.md",
+        "apps/native-component-list/src/screens/UI/AnimationModifierScreen.ios.tsx",
+        "docs/public/static/data/unversioned/expo-ui/swift-ui/modifiers.json",
+        "packages/expo-ui/ios/Modifiers/AnimationConfig.swift",
+        "packages/expo-ui/src/__tests__/animation-test.ts",
+        "packages/expo-ui/src/swift-ui/modifiers/animation/index.ts",
+        "packages/expo-ui/src/swift-ui/modifiers/animation/types.ts",
+        "packages/expo-ui/src/swift-ui/modifiers/index.ts"
+      ]
+    },
+    {
+      "sha": "d431352be9a7277cedebc42a3bc5284f8c6e4564",
+      "message": "[ios][jsi] Add `decodableKinds` to `JavaScriptDecodable` (#50905)",
+      "author": "tsapeta",
+      "date": "2026-10-03T07:17:47Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/d431352be9a7277cedebc42a3bc5284f8c6e4564",
+      "pr_number": 50905,
+      "pr_title": "[ios][jsi] Add `decodableKinds` to `JavaScriptDecodable`",
+      "pr_body": "# Why\n\n`@Union` decodes by trying each case with `try? Payload.decode(...)`, so every case that doesn't match throws an error that is then discarded. expo/expo-modules-macros#64 makes the generated code skip such cases with a cheap check first; this adds what that check reads.\n\n# How\n\n`JavaScriptDecodable` gets `decodableKinds`, the `JavaScriptValueKinds` that `decode` can accept. It's a protocol requirement with a default of `.all`, so existing conformers are unaffected and generic code (`Optional`, `Array`, a union payload) dispatches to the overrides. A kind outside the set is definitive: `decode` would throw. A kind in the set only means the type may decode it.\n\n`JavaScriptValueKinds` is a frozen `OptionSet` of the kinds a value's type tag tells apart (a function counts as an object, since telling it apart needs a runtime call). `JavaScriptValueKinds(of:)` reads the kind of an owning or an unowned value. It isn't inlinable on purpose: the type checks read the `jsi::Value`, which clients can't see, so it's one call into ExpoModulesJSI instead of one per check.\n\nThe overrides declare the kinds `decode` accepts: booleans, strings and numbers for the primitives (64-bit integers also accept a bigint), objects for `Dictionary`, `Data`, `ArrayBuffer`, typed arrays, records and shared objects. `Optional` adds `null`/`undefined` to its wrapped type's kinds, `Array` adds objects to its element's (a scalar decodes as a one-element array), `Date` accepts numbers, strings and objects,",
+      "pr_url": "https://github.com/expo/expo/pull/50905",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/jsi-decodable-kinds.md",
+        "packages/expo-modules-core/ios/Core/ArrayBuffers/ArrayBuffer.swift",
+        "packages/expo-modules-core/ios/Core/Coding/JavaScriptCodable+Enumerable.swift",
+        "packages/expo-modules-core/ios/Core/Coding/JavaScriptCodable+Record.swift",
+        "packages/expo-modules-core/ios/Core/Coding/JavaScriptCodable+SharedObject.swift",
+        "packages/expo-modules-core/ios/Core/Coding/JavaScriptCodable+TypedArray.swift",
+        "packages/expo-modules-core/ios/Core/ExpoModulesMacros.swift",
+        "packages/expo-modules-core/ios/Tests/JavaScriptDecodableKindsTests.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Containers.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Data.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Date.swift",
+        "packages/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Primitives.swift"
+      ]
+    },
+    {
+      "sha": "bf48e89d8374d5ee3ac2f6c90d668ff202069c20",
+      "message": "[docs][ci] Upgrade vale-action to v3.0.0 in the docs PR workflow (#50964)\n\n# Why\n\n<!--\nPlease describe the motivation for this PR, and link to relevant GitHub\nissues, forums posts, or feature requests.\n-->\n\nFollow-up https://github.com/expo/expo/pull/50963\n\nUpgrade vale-action to v3.0.0 in the docs workflows.\n\n# Checklist\n\n<!--\nPlease check the appropriate items below if they apply to your diff.\n-->\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "amandeepmittal",
+      "date": "2026-10-03T07:41:38Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/bf48e89d8374d5ee3ac2f6c90d668ff202069c20",
+      "pr_number": 50964,
+      "pr_title": "[docs][ci] Upgrade vale-action to v3.0.0 in the docs PR workflow",
+      "pr_body": "# Why\r\n\r\n<!--\r\nPlease describe the motivation for this PR, and link to relevant GitHub issues, forums posts, or feature requests.\r\n-->\r\n\r\nFollow-up https://github.com/expo/expo/pull/50963\r\n\r\nUpgrade vale-action to v3.0.0 in the docs workflows.\r\n\r\n# Checklist\r\n\r\n<!--\r\nPlease check the appropriate items below if they apply to your diff.\r\n-->\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50964",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        ".github/workflows/docs-pr.yml",
+        ".github/workflows/docs.yml"
+      ]
+    },
+    {
+      "sha": "ed14917d1f65b162f0683713dc1953343a9cd0c6",
+      "message": "[docs] Update Vale version to 3.24.0 (#50963)\n\n# Why\n\n<!--\nPlease describe the motivation for this PR, and link to relevant GitHub\nissues, forums posts, or feature requests.\n-->\n\nVale 3.24.0 is out. This PR moves Vale checksums in the repo to it.\n\n# Checklist\n\n<!--\nPlease check the appropriate items below if they apply to your diff.\n-->\n\n- [ ] I added a changeset and followed [this short\nguide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build\n(eg: updated a module plugin).\n- [ ] Conforms with the [Documentation Writing Style\nGuide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)",
+      "author": "amandeepmittal",
+      "date": "2026-10-03T07:42:07Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/ed14917d1f65b162f0683713dc1953343a9cd0c6",
+      "pr_number": 50963,
+      "pr_title": "[docs] Update Vale version to 3.24.0",
+      "pr_body": "# Why\r\n\r\n<!--\r\nPlease describe the motivation for this PR, and link to relevant GitHub issues, forums posts, or feature requests.\r\n-->\r\n\r\nVale 3.24.0 is out. This PR moves Vale checksums in the repo to it.\r\n\r\n# Checklist\r\n\r\n<!--\r\nPlease check the appropriate items below if they apply to your diff.\r\n-->\r\n\r\n- [ ] I added a changeset and followed [this short guide](https://github.com/expo/expo/blob/main/CONTRIBUTING.md#-before-submitting)\r\n- [ ] This diff will work correctly for `npx expo prebuild` & EAS Build (eg: updated a module plugin).\r\n- [ ] Conforms with the [Documentation Writing Style Guide](https://github.com/expo/expo/blob/main/guides/Expo%20Documentation%20Writing%20Style%20Guide.md)\r\n",
+      "pr_url": "https://github.com/expo/expo/pull/50963",
+      "labels": [
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        "docs/.vale-version.json"
+      ]
+    },
+    {
+      "sha": "eed85a478952f34bfdbafe2c323ae92da2df0828",
+      "message": "[docs] Sync upstream reference content (EAS CLI reference, other) (#51002)\n\nAutomated upstream sync of generated reference content.\n\n| Generator | Status |\n| --- | --- |\n| App config schema | ➖ No changes |\n| Expo Skills | ➖ No changes |\n| EAS CLI reference | ✅ Synced |\n| Android permissions | ➖ No changes |\n\n## Files\n- `docs/pages/eas/cli.mdx`\n- `docs/ui/components/EASCLIReference/data/eas-cli-commands.json`\n\nCo-authored-by: Expo Bot <expo-bot@users.noreply.github.com>",
+      "author": "expo-bot",
+      "date": "2026-10-03T08:25:03Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/eed85a478952f34bfdbafe2c323ae92da2df0828",
+      "pr_number": 51002,
+      "pr_title": "[docs] Sync upstream reference content (EAS CLI reference, other)",
+      "pr_body": "Automated upstream sync of generated reference content.\n\n| Generator | Status |\n| --- | --- |\n| App config schema | ➖ No changes |\n| Expo Skills | ➖ No changes |\n| EAS CLI reference | ✅ Synced |\n| Android permissions | ➖ No changes |\n\n## Files\n- `docs/pages/eas/cli.mdx`\n- `docs/ui/components/EASCLIReference/data/eas-cli-commands.json`",
+      "pr_url": "https://github.com/expo/expo/pull/51002",
+      "labels": [
+        "docs",
+        "bot: passed checks",
+        "contributor: internal"
+      ],
+      "files": [
+        "docs/pages/eas/cli.mdx",
+        "docs/ui/components/EASCLIReference/data/eas-cli-commands.json"
+      ]
+    },
+    {
+      "sha": "8ab2bd6556aeca68577dbbecc5d871926f6a1a53",
+      "message": "[core] Fix `SharedObject.release()` throwing on frozen shared objects (#50970)",
+      "author": "tsapeta",
+      "date": "2026-10-03T10:51:37Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/8ab2bd6556aeca68577dbbecc5d871926f6a1a53",
+      "pr_number": 50970,
+      "pr_title": "[core] Fix `SharedObject.release()` throwing on frozen shared objects",
+      "pr_body": "# Why\n\nReact Native deep-freezes view props in development, so a shared object passed as a prop is frozen by the time its owner calls `release()`. Hermes can't reset the native state on a frozen object, and `release()` throws \"failed to define internal native state property\". For example, a `useImage` `ImageRef` used as an `expo-maps` marker icon throws on unmount and takes down the tree.\n\nFixes #50962\n\n# How\n\nResetting the native state in `release()` is now best effort. The native object is already released by then, and calling the releaser again later is a no-op since IDs are never reused. That's all Android needs, as its native state only holds the ID.\n\nOn iOS, a frozen object's native state would still link the released native object and the frozen JS object. `SharedObjectNativeState` now has a released flag, and lookups in both directions skip a released state: `SharedObject.native(from:)` throws `NotFoundException`, events are no longer emitted to the frozen JS object, and returning the native object to JS again pairs it with a new JS object instead of the released one. The native state keeps owning the native object, so a frozen object keeps it alive until GC, same as before. Since all runtimes share one native state, a release now makes the object unresolvable in every runtime, not only the one that released it.\n\n# Test Plan\n\nAdded tests on both platforms that freeze a shared object and release it. They failed with the error from the issue before the fix. The iOS test",
+      "pr_url": "https://github.com/expo/expo/pull/50970",
+      "labels": [
+        "bot: passed checks",
+        "bot: fingerprint changed",
+        "contributor: internal"
+      ],
+      "files": [
+        ".changeset/shared-object-release-frozen.md",
+        "packages/expo-modules-core/android/src/androidTest/java/expo/modules/kotlin/jni/SharedObjectTest.kt",
+        "packages/expo-modules-core/common/cpp/SharedObject.cpp",
+        "packages/expo-modules-core/ios/Core/SharedObjects/SharedObject.swift",
+        "packages/expo-modules-core/ios/Core/SharedObjects/SharedObjectNativeState.swift",
+        "packages/expo-modules-core/ios/Core/SharedObjects/SharedObjectRegistry.swift",
+        "packages/expo-modules-core/ios/Tests/Macros/MacroSharedObjectTests.swift",
+        "packages/expo-modules-core/ios/Tests/SharedObjectRegistryTests.swift"
+      ]
+    },
+    {
+      "sha": "f1c525a960edd0183a8aad72d08968f45008aa5c",
+      "message": "Version packages (main) (#50929)\n\nThis PR was opened by the [Changesets\nrelease](https://github.com/changesets/action) GitHub action. When\nyou're ready to do a release, you can merge this and publish to npm\nyourself or [setup this action to publish\nautomatically](https://github.com/changesets/action#with-publishing). If\nyou're not ready to do a release yet, that's fine, whenever you add more\nchangesets to main, this PR will be updated.\n\n\n# Releases\n## expo-modules-cli@0.2.0\n\n### Minor Changes\n\n- Add the `expo-modules-cli` package with the `generate-types` command,\nwhich generates a TypeScript file for the native API an Expo module\nexports to JavaScript from its Swift sources.\n([#50233](https://github.com/expo/expo/pull/50233) by\n[@tsapeta](https://github.com/tsapeta))\n## expo-notifications@58.1.0\n\n### Minor Changes\n\n- Add `enableRemoteNotifications` config plugin option. Set it to\n`false` to skip the APNs entitlement for apps that use only local\nnotifications. Defaults to `true`.\n([#50891](https://github.com/expo/expo/pull/50891) by\n[@netmaxt3r](https://github.com/netmaxt3r))\n\n### Patch Changes\n\n- Updated dependencies.\n([#50391](https://github.com/expo/expo/pull/50391))\n  - @expo/image-utils@0.12.3\n## @expo/cli@58.1.2\n\n### Patch Changes\n\n- Bump `@expo/devcert` to `^1.2.2`, `@expo/ws-tunnel` to `^2.0.1`, and\n`@expo/xcpretty` to `^4.4.6`.\n([#50955](https://github.com/expo/expo/pull/50955) by\n[@kitten](https://github.com/kitten))\n- Show the call stack of a thrown error in the te",
+      "author": "github-actions[bot]",
+      "date": "2026-10-03T12:44:15Z",
+      "parents": 1,
+      "html_url": "https://github.com/expo/expo/commit/f1c525a960edd0183a8aad72d08968f45008aa5c",
+      "pr_number": 50929,
+      "pr_title": "Version packages (main)",
+      "pr_body": "This PR was opened by the [Changesets release](https://github.com/changesets/action) GitHub action. When you're ready to do a release, you can merge this and publish to npm yourself or [setup this action to publish automatically](https://github.com/changesets/action#with-publishing). If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, this PR will be updated.\n\n\n# Releases\n## expo-modules-cli@0.2.0\n\n### Minor Changes\n\n- Add the `expo-modules-cli` package with the `generate-types` command, which generates a TypeScript file for the native API an Expo module exports to JavaScript from its Swift sources. ([#50233](https://github.com/expo/expo/pull/50233) by [@tsapeta](https://github.com/tsapeta))\n## expo-notifications@58.1.0\n\n### Minor Changes\n\n- Add `enableRemoteNotifications` config plugin option. Set it to `false` to skip the APNs entitlement for apps that use only local notifications. Defaults to `true`. ([#50891](https://github.com/expo/expo/pull/50891) by [@netmaxt3r](https://github.com/netmaxt3r))\n\n### Patch Changes\n\n- Updated dependencies. ([#50391](https://github.com/expo/expo/pull/50391))\n  - @expo/image-utils@0.12.3\n## @expo/cli@58.1.2\n\n### Patch Changes\n\n- Bump `@expo/devcert` to `^1.2.2`, `@expo/ws-tunnel` to `^2.0.1`, and `@expo/xcpretty` to `^4.4.6`. ([#50955](https://github.com/expo/expo/pull/50955) by [@kitten](https://github.com/kitten))\n- Show the call stack of a thrown error in the terminal even when all of its frames",
+      "pr_url": "https://github.com/expo/expo/pull/50929",
+      "labels": [],
+      "files": [
+        ".changeset/audio-background-recording-without-notifications.md",
+        ".changeset/audio-web-play-rejection.md",
+        ".changeset/camera-shutter-white-window.md",
+        ".changeset/cli-devcert-ws-tunnel.md",
+        ".changeset/cli-keep-thrown-error-stack.md",
+        ".changeset/cli-server-error-node-modules-frames.md",
+        ".changeset/config-plugins-sdk-runtime-versions.md",
+        ".changeset/contacts-next-create-form-ios.md",
+        ".changeset/dev-launcher-android-local-network-permission.md",
+        ".changeset/expo-audio-recording-binding-timeout.md",
+        ".changeset/expo-camera-web-camera-ready.md",
+        ".changeset/expo-modules-cli-generate-types.md"
+      ]
+    }
+  ],
+  "collected_at": "2026-10-04T16:56:48.737280Z",
+  "api_calls": 130,
+  "cache_hits": 0
+}

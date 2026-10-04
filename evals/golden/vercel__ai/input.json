@@ -1,0 +1,385 @@
+{
+  "repo": "vercel/ai",
+  "base": "ai@7.0.126",
+  "head": "ai@7.0.127",
+  "compare_url": "https://github.com/vercel/ai/compare/ai@7.0.126...ai@7.0.127",
+  "default_branch": "main",
+  "private": false,
+  "total_commits": 14,
+  "commits": [
+    {
+      "sha": "eee1954ddd8ccf5e6c9a8582a826fba8b256653b",
+      "message": "feat(docs): restore landing page (#21882)\n\nFollow-up to #21799, which restores the AI SDK landing page inside the\nGeistdocs app. This branch aligns that page with the layout and\ncomponents used in the new vercel design language, and restores\ninteractive pieces that existed before the Geistdocs migration.\n\n---------\n\nCo-authored-by: Gregor Martynus <39992+gr2m@users.noreply.github.com>",
+      "author": "christopherkindl",
+      "date": "2026-10-01T14:36:18Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/eee1954ddd8ccf5e6c9a8582a826fba8b256653b",
+      "pr_number": 21882,
+      "pr_title": "docs: restore landing page",
+      "pr_body": "Follow-up to #21799, which restores the AI SDK landing page inside the Geistdocs app. This branch aligns that page with the layout and components used in the new vercel design language, and restores interactive pieces that existed before the Geistdocs migration.\r\n\r\nhttps://ai-sdk-docs-git-christopherkindl-landing-page-vercel-style.vercel.sh/\r\n",
+      "pr_url": "https://github.com/vercel/ai/pull/21882",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        "apps/docs/README.md",
+        "apps/docs/app/[lang]/page.tsx",
+        "apps/docs/app/[lang]/unauthenticated-ai-gateway/page.tsx",
+        "apps/docs/app/global.css",
+        "apps/docs/app/sitemap.ts",
+        "apps/docs/components/docs/interactive-code-preview.tsx",
+        "apps/docs/components/home/card-snippet.tsx",
+        "apps/docs/components/home/code-examples/browser-window.tsx",
+        "apps/docs/components/home/code-examples/code-examples-section.tsx",
+        "apps/docs/components/home/code-examples/core-preview.tsx",
+        "apps/docs/components/home/code-examples/index.ts",
+        "apps/docs/components/home/code-examples/preview-kit.tsx",
+        "apps/docs/components/home/code-examples/sliding-tabs.tsx",
+        "apps/docs/components/home/code-examples/ui-preview.tsx",
+        "apps/docs/components/home/code-examples/use-scene.ts",
+        "apps/docs/components/home/code-window.tsx",
+        "apps/docs/components/home/company-logos.tsx",
+        "apps/docs/components/home/hero-interactive/capability-tabs.tsx",
+        "apps/docs/components/home/hero-interactive/hero-interactive.tsx",
+        "apps/docs/components/home/hero-interactive/image-generation.tsx",
+        "apps/docs/components/home/hero-interactive/index.ts",
+        "apps/docs/components/home/hero-interactive/llm-provider-selector.tsx",
+        "apps/docs/components/home/hero-interactive/llm-provider-tabs.tsx",
+        "apps/docs/components/home/hero-interactive/preview-panel.tsx",
+        "apps/docs/components/home/hero-interactive/provider-logo.tsx"
+      ]
+    },
+    {
+      "sha": "b9b349b00c0d8502deb47f80f9165de3c9036fa1",
+      "message": "docs: remove promotional grok banner (#21904)\n\n## Background\n\nremove the promotional banner on the homepage\n\n## End-to-End Verification\n\nchecked on local dev\n\n## Checklist\n\n- [x] All commits are signed (PRs with unsigned commits cannot be\nmerged)\n- [ ] Tests have been added / updated (for bug fixes / features)\n- [x] Documentation has been added / updated (for bug fixes / features)\n- [ ] A _patch_ changeset for relevant packages has been added (for bug\nfixes / features - run `pnpm changeset` in the project root)\n- [x] I have reviewed this pull request (self-review)",
+      "author": "aayush-kapoor",
+      "date": "2026-10-01T16:36:13Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/b9b349b00c0d8502deb47f80f9165de3c9036fa1",
+      "pr_number": 21904,
+      "pr_title": "docs: remove promotional grok banner",
+      "pr_body": "## Background\r\n\r\nremove the promotional banner on the homepage\r\n\r\n## End-to-End Verification\r\n\r\nchecked on local dev\r\n\r\n## Checklist\r\n\r\n- [x] All commits are signed (PRs with unsigned commits cannot be merged)\r\n- [ ] Tests have been added / updated (for bug fixes / features)\r\n- [x] Documentation has been added / updated (for bug fixes / features)\r\n- [ ] A _patch_ changeset for relevant packages has been added (for bug fixes / features - run `pnpm changeset` in the project root)\r\n- [x] I have reviewed this pull request (self-review)",
+      "pr_url": "https://github.com/vercel/ai/pull/21904",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        "apps/docs/components/home/landing-page.tsx"
+      ]
+    },
+    {
+      "sha": "ba8afe9eedd6ecf6118487ae4b11ca97e07b8cb8",
+      "message": "feat(ai): add a configurable maxResults for number of tools returned in tool search (#21897)\n\n## Background\n\n#21861 and #21866 \n\npreviously, `toolSearch()` always returned at most five matching tools,\nwhich could omit a required tool and trigger another search.\n\n## Summary\n\n- we added `toolSearch({ maxResults })` so applications can configure\nthe limit\n- default remains five, ranking is unchanged\n\n## End-to-End Verification\n\nverified by running the example\n`examples/ai-functions/src/generate-text/gateway/tool-search-limitations.ts`\n\n## Checklist\n\n- [x] All commits are signed (PRs with unsigned commits cannot be\nmerged)\n- [x] Tests have been added / updated (for bug fixes / features)\n- [x] Documentation has been added / updated (for bug fixes / features)\n- [x] A _patch_ changeset for relevant packages has been added (for bug\nfixes / features - run `pnpm changeset` in the project root)\n- [x] I have reviewed this pull request (self-review)\n\n## Related Issues\n\nfixes #21866",
+      "author": "aayush-kapoor",
+      "date": "2026-10-01T16:36:39Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/ba8afe9eedd6ecf6118487ae4b11ca97e07b8cb8",
+      "pr_number": 21897,
+      "pr_title": "feat(ai): add a configurable maxResults for number of tools returned in tool search",
+      "pr_body": "## Background\r\n\r\n#21861 and #21866 \r\n\r\npreviously, `toolSearch()` always returned at most five matching tools, which could omit a required tool and trigger another search.\r\n\r\n## Summary\r\n\r\n- we added `toolSearch({ maxResults })` so applications can configure the limit\r\n- default remains five, ranking is unchanged\r\n\r\n## End-to-End Verification\r\n\r\nverified by running the example `examples/ai-functions/src/generate-text/gateway/tool-search-limitations.ts`\r\n\r\n## Checklist\r\n\r\n- [x] All commits are signed (PRs with unsigned commits cannot be merged)\r\n- [x] Tests have been added / updated (for bug fixes / features)\r\n- [x] Documentation has been added / updated (for bug fixes / features)\r\n- [x] A _patch_ changeset for relevant packages has been added (for bug fixes / features - run `pnpm changeset` in the project root)\r\n- [x] I have reviewed this pull request (self-review)\r\n\r\n## Related Issues\r\n\r\nfixes #21866 ",
+      "pr_url": "https://github.com/vercel/ai/pull/21897",
+      "labels": [
+        "task-merge-tracking-done",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/tidy-tools-discover.md",
+        "content/docs/03-ai-sdk-core/19-tool-search.mdx",
+        "content/docs/07-reference/01-ai-sdk-core/23-tool-search.mdx",
+        "examples/ai-functions/src/generate-text/gateway/tool-search-limitations.ts",
+        "packages/ai/src/tool-search/prepare-tool-search.test.ts",
+        "packages/ai/src/tool-search/prepare-tool-search.ts",
+        "packages/ai/src/tool-search/tool-search.test.ts",
+        "packages/ai/src/tool-search/tool-search.ts"
+      ]
+    },
+    {
+      "sha": "d1bb9e883083cec5c7b290fb0cf4846b7fde95ef",
+      "message": "chore(provider/gateway): update gateway model settings files (#21907)\n\nAutomated update of the gateway model settings files.\n\nRegenerated from the upstream gateway model list by\n[`update-model-settings.yml`](https://github.com/vercel/ai/blob/main/.github/workflows/update-model-settings.yml)\n([this run](https://github.com/vercel/ai/actions/runs/36891120280)).\nMerging this PR is what surfaces newly-released gateway models as IDE\nautocomplete suggestions when users type a model string with\n`@ai-sdk/gateway`.\n\nSee the workflow file for details on cadence and scope.\n\nCo-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
+      "author": "github-actions[bot]",
+      "date": "2026-10-01T16:40:15Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/d1bb9e883083cec5c7b290fb0cf4846b7fde95ef",
+      "pr_number": 21907,
+      "pr_title": "chore(provider/gateway): update gateway model settings files",
+      "pr_body": "Automated update of the gateway model settings files.\n\nRegenerated from the upstream gateway model list by [`update-model-settings.yml`](https://github.com/vercel/ai/blob/main/.github/workflows/update-model-settings.yml) ([this run](https://github.com/vercel/ai/actions/runs/36891120280)). Merging this PR is what surfaces newly-released gateway models as IDE autocomplete suggestions when users type a model string with `@ai-sdk/gateway`.\n\nSee the workflow file for details on cadence and scope.",
+      "pr_url": "https://github.com/vercel/ai/pull/21907",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/glcon-ywmtm-zdgod.md",
+        "packages/gateway/src/gateway-language-model-settings.ts",
+        "packages/gateway/src/gateway-reranking-model-settings.ts",
+        "packages/gateway/src/gateway-speech-model-settings.ts",
+        "packages/gateway/src/gateway-transcription-model-settings.ts"
+      ]
+    },
+    {
+      "sha": "3ff0f543d39eb272e0280abca38369d19919c086",
+      "message": "feat(mcp): add AuthorizationServerMismatchError for OAuth pin mismatches (#20560)\n\n## Background\n\n`assertAuthorizationServerInformationMatches` throws a bare\n`MCPClientOAuthError` when stored credentials were issued by a different\nauthorization server. Consumers need to treat this case as permanent\n(drop credentials, reconnect) rather than retry, but the only handle\ntoday is matching the message string — every other case in\n`oauth-error.ts` has a subclass with a `static errorCode`.\n\n## Summary\n\n- Add `AuthorizationServerMismatchError` (`errorCode:\n'authorization_server_mismatch'`), following the existing subclass\npattern, and throw it at the mismatch site. Message unchanged. Not added\nto `OAUTH_ERRORS`, which maps server-reported wire codes; this is a\nclient-side check.\n- Export it and `MCPClientOAuthError` from the entrypoint so\n`isInstance` is reachable (neither was exported).\n- The existing end-to-end mismatch test in `oauth.test.ts` now asserts\nthe subclass, not just the message. Patch changeset added.\n\n## Verification\n\n`pnpm --filter @ai-sdk/mcp test`: 319 passed, 3 skipped (unchanged) on\nboth node and edge configs. `type-check` clean.\n\n## Checklist\n\n- [x] All commits are signed (PRs with unsigned commits cannot be\nmerged)\n- [x] Tests have been added / updated (for bug fixes / features)\n- [ ] Documentation has been added / updated (for bug fixes / features)\n- [x] A _patch_ changeset for relevant packages has been added (for bug\nfixes / features - run `pnpm changeset` in the project root)\n- [x] I have reviewed this pull request (self-review)\n\n---------\n\nCo-authored-by: Aayush Kapoor <aayushkapoor34@gmail.com>",
+      "author": "aadi-lightfield",
+      "date": "2026-10-01T16:40:49Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/3ff0f543d39eb272e0280abca38369d19919c086",
+      "pr_number": 20560,
+      "pr_title": "feat(mcp): add AuthorizationServerMismatchError for OAuth pin mismatches",
+      "pr_body": "## Background\n\n`assertAuthorizationServerInformationMatches` throws a bare `MCPClientOAuthError` when stored credentials were issued by a different authorization server. Consumers need to treat this case as permanent (drop credentials, reconnect) rather than retry, but the only handle today is matching the message string — every other case in `oauth-error.ts` has a subclass with a `static errorCode`.\n\n## Summary\n\n- Add `AuthorizationServerMismatchError` (`errorCode: 'authorization_server_mismatch'`), following the existing subclass pattern, and throw it at the mismatch site. Message unchanged. Not added to `OAUTH_ERRORS`, which maps server-reported wire codes; this is a client-side check.\n- Export it and `MCPClientOAuthError` from the entrypoint so `isInstance` is reachable (neither was exported).\n- The existing end-to-end mismatch test in `oauth.test.ts` now asserts the subclass, not just the message. Patch changeset added.\n\n## Verification\n\n`pnpm --filter @ai-sdk/mcp test`: 319 passed, 3 skipped (unchanged) on both node and edge configs. `type-check` clean.\n\n## Checklist\n\n- [x] All commits are signed (PRs with unsigned commits cannot be merged)\n- [x] Tests have been added / updated (for bug fixes / features)\n- [ ] Documentation has been added / updated (for bug fixes / features)\n- [x] A _patch_ changeset for relevant packages has been added (for bug fixes / features - run `pnpm changeset` in the project root)\n- [x] I have reviewed this pull request (self-review)\n",
+      "pr_url": "https://github.com/vercel/ai/pull/20560",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/lazy-rivers-argue.md",
+        "packages/mcp/src/error/oauth-error.ts",
+        "packages/mcp/src/index.ts",
+        "packages/mcp/src/tool/oauth.test.ts",
+        "packages/mcp/src/tool/oauth.ts"
+      ]
+    },
+    {
+      "sha": "158a718734dc18686b04bc9c8337fd279c36eb70",
+      "message": "feat(ai): select and rank eligible deferred tools via 'search()' callback in tool search (#21903)\n\n## Background\n\n#21867 and #21861 \n\npreviously. tool search always used built-in keyword scoring which could\nresult in wasting some tokens and a model turn when it didn't return the\ntools needed\n\n## Summary\n\nadded an optional sync or async search callback to `toolSearch()`,\nallowing apps to select and rank eligible deferred tools\n\n## End-to-End Verification\n\nverified by running the example in\n`examples/ai-functions/src/generate-text/gateway/tool-search-custom-ranking.ts`\n\n## Checklist\n\n- [x] All commits are signed (PRs with unsigned commits cannot be\nmerged)\n- [x] Tests have been added / updated (for bug fixes / features)\n- [x] Documentation has been added / updated (for bug fixes / features)\n- [x] A _patch_ changeset for relevant packages has been added (for bug\nfixes / features - run `pnpm changeset` in the project root)\n- [x] I have reviewed this pull request (self-review)\n\n## Related Issues\n\nfixes #21867 \n\nfixes #21861",
+      "author": "aayush-kapoor",
+      "date": "2026-10-01T17:09:56Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/158a718734dc18686b04bc9c8337fd279c36eb70",
+      "pr_number": 21903,
+      "pr_title": "feat(ai): select and rank eligible deferred tools via 'search()' callback in tool search",
+      "pr_body": "## Background\r\n\r\n#21867 and #21861 \r\n\r\npreviously. tool search always used built-in keyword scoring which could result in wasting some tokens and a model turn when it didn't return the tools needed\r\n\r\n## Summary\r\n\r\nadded an optional sync or async search callback to `toolSearch()`, allowing apps to select and rank eligible deferred tools\r\n\r\n## End-to-End Verification\r\n\r\nverified by running the example in `examples/ai-functions/src/generate-text/gateway/tool-search-custom-ranking.ts`\r\n\r\n## Checklist\r\n\r\n- [x] All commits are signed (PRs with unsigned commits cannot be merged)\r\n- [x] Tests have been added / updated (for bug fixes / features)\r\n- [x] Documentation has been added / updated (for bug fixes / features)\r\n- [x] A _patch_ changeset for relevant packages has been added (for bug fixes / features - run `pnpm changeset` in the project root)\r\n- [x] I have reviewed this pull request (self-review)\r\n\r\n## Related Issues\r\n\r\nfixes #21867 \r\n\r\nfixes #21861 ",
+      "pr_url": "https://github.com/vercel/ai/pull/21903",
+      "labels": [
+        "task-merge-tracking-done",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/bright-tools-search.md",
+        "content/docs/03-ai-sdk-core/19-tool-search.mdx",
+        "content/docs/07-reference/01-ai-sdk-core/23-tool-search.mdx",
+        "examples/ai-functions/src/generate-text/gateway/tool-search-custom-ranking.ts",
+        "packages/ai/src/tool-search/prepare-tool-search.test.ts",
+        "packages/ai/src/tool-search/prepare-tool-search.ts",
+        "packages/ai/src/tool-search/tool-search.test-d.ts",
+        "packages/ai/src/tool-search/tool-search.test.ts",
+        "packages/ai/src/tool-search/tool-search.ts"
+      ]
+    },
+    {
+      "sha": "b6229d7cce06d652d6c95bf79cdf2a7dbe614112",
+      "message": "docs(black-forest-labs): document FLUX.2 image models (#20060)\n\n## Summary\n\nStacked on #20020, which this branch is built on. The FLUX 3 video\ncommit from that PR is included here; only the second commit is new.\n\nThe Black Forest Labs provider page and the AI SDK Core image model\ntable list only FLUX.1 models (`flux-kontext-*`, `flux-pro-1.*`). The\nfive FLUX.2 image models are callable through\n`@ai-sdk/black-forest-labs` today and through AI Gateway as\n`bfl/flux-2-*`, but they are undocumented, so there is no way to\ndiscover them from the docs.\n\nThis PR:\n\n- Adds `flux-2-pro`, `flux-2-max`, `flux-2-flex`, `flux-2-klein-9b`, and\n`flux-2-klein-4b` to the provider page model table and to the image\nmodel table in `ai-sdk-core/image-generation`.\n- Documents that FLUX.2 accepts reference images on the same\n`prompt.images` field as Kontext, so one model ID covers both\ntext-to-image and editing.\n- Documents `steps` and `guidance` on `flux-2-flex`.\n- Notes that FLUX.2 generations can exceed the 60s default polling\ntimeout and that `pollTimeoutMillis` should be raised.\n- Adds an Image Models section to the AI Gateway provider page, which\npreviously documented video generation but not image generation.\n\nDocumentation only. No SDK, provider, or test changes.\n\n## Verification\n\nEvery model ID and behavior was confirmed against the live API using the\nexisting provider code, not inferred from docs:\n\n- `bfl/flux-2-pro`, `bfl/flux-2-max`, `bfl/flux-2-flex`,\n`bfl/flux-2-klein-9b`, `bfl/flux-2-klein-4b` all appear in `GET\nhttps://ai-gateway.vercel.sh/v1/models` with `type: image`.\n- `generateImage` with `blackForestLabs.image(flux-2-pro | flux-2-flex |\nflux-2-klein-9b | flux-2-klein-4b)` returned image bytes with no\nwarnings.\n- Reference-image editing verified on `flux-2-pro` (one and two\nreferences) and `flux-2-klein-9b` via `prompt.images`.\n- `steps: 50, guidance: 4` accepted on `flux-2-flex`; `aspectRatio:\n21:9` accepted on `flux-2-pro`.\n- The polling note comes from observed `Black Forest Labs generation\ntimed out.` failures at the 60s default that succeeded at 240000ms.\n\nLocal checks: `oxfmt --check` on all three files, `pnpm validate:docs`,\n`pnpm --filter ai-sdk-docs test:site` (9/9), `pnpm --filter ai-sdk-docs\ntype-check:site`, `git diff --check`. All passed.\n\n---------\n\nCo-authored-by: Aayush Kapoor <aayushkapoor34@gmail.com>",
+      "author": "MaanavD",
+      "date": "2026-10-01T17:22:29Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/b6229d7cce06d652d6c95bf79cdf2a7dbe614112",
+      "pr_number": 20060,
+      "pr_title": "docs(black-forest-labs): document FLUX.2 image models",
+      "pr_body": "## Summary\n\nStacked on #20020, which this branch is built on. The FLUX 3 video commit from that PR is included here; only the second commit is new.\n\nThe Black Forest Labs provider page and the AI SDK Core image model table list only FLUX.1 models (`flux-kontext-*`, `flux-pro-1.*`). The five FLUX.2 image models are callable through `@ai-sdk/black-forest-labs` today and through AI Gateway as `bfl/flux-2-*`, but they are undocumented, so there is no way to discover them from the docs.\n\nThis PR:\n\n- Adds `flux-2-pro`, `flux-2-max`, `flux-2-flex`, `flux-2-klein-9b`, and `flux-2-klein-4b` to the provider page model table and to the image model table in `ai-sdk-core/image-generation`.\n- Documents that FLUX.2 accepts reference images on the same `prompt.images` field as Kontext, so one model ID covers both text-to-image and editing.\n- Documents `steps` and `guidance` on `flux-2-flex`.\n- Notes that FLUX.2 generations can exceed the 60s default polling timeout and that `pollTimeoutMillis` should be raised.\n- Adds an Image Models section to the AI Gateway provider page, which previously documented video generation but not image generation.\n\nDocumentation only. No SDK, provider, or test changes.\n\n## Verification\n\nEvery model ID and behavior was confirmed against the live API using the existing provider code, not inferred from docs:\n\n- `bfl/flux-2-pro`, `bfl/flux-2-max`, `bfl/flux-2-flex`, `bfl/flux-2-klein-9b`, `bfl/flux-2-klein-4b` all appear in `GET https://ai-gateway.vercel.sh/v1/models` with `type: image`.\n- `generateImage` with `blackForestLabs.image(flux-2-pro | flux-2-flex | flux-2-klein-9b | flux-2-klein-4b)` returned image bytes with no warnings.\n- Reference-image editing verified on `flux-2-pro` (one and two references) and `flux-2-klein-9b` via `prompt.images`.\n- `steps: 50, guidance: 4` accepted on `flux-2-flex`; `aspectRatio: 21:9` accepted on `flux-2-pro`.\n- The polling note comes from observed `Black Forest Labs generation timed out.` failures at the 60s default t",
+      "pr_url": "https://github.com/vercel/ai/pull/20060",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        "content/docs/03-ai-sdk-core/35-image-generation.mdx",
+        "content/providers/01-ai-sdk-providers/12-black-forest-labs.mdx"
+      ]
+    },
+    {
+      "sha": "bb8d33e0f72fa6f903cd62c1b96aa29d904a13c2",
+      "message": "fix: propagate createUIMessageStream consumer cancellation to merged streams (#21728)\n\n## Background\n\nConsumer cancellation of createUIMessageStream did not stop merged\nsources, allowing upstream requests and pending pulls to continue after\ndisconnection.\n\n## Root Cause\n\nwriter.merge() consumed each source through an untracked reader, so the\nreturned stream's cancellation path had no reader to cancel. The\noriginal reproduction confirmed that the source cancel handler was not\ninvoked and its pending pull continued.\n\n## Summary\n\nTrack active merged-stream readers, cancel them with the consumer's\nreason, immediately cancel streams merged after cancellation, and\nrelease reader locks after completion.\n\n## Testing\n\nAdded a regression test confirming that consumer cancellation reaches\nthe merged source and prevents its pending pull from producing another\nchunk.\n\n## End-to-end Validation\n\n- `replay_original_reproduction` restored and ran `pnpm -C\nexamples/ai-functions exec tsx\nsrc/reproduction/issue-21721-merged-stream-cancellation.ts`; it exited\nsuccessfully and reported that issue #21721 no longer reproduced.\n\n## Related Issues\n\nFixes #21721\n\nCloses #21725\n\n---------\n\nCo-authored-by: ai-sdk-factory <308175966+ai-sdk-factory@users.noreply.github.com>\nCo-authored-by: RaphaelFakhri <153192858+RaphaelFakhri@users.noreply.github.com>\nCo-authored-by: Nick Oates <58091943+n1ckoates@users.noreply.github.com>",
+      "author": "ai-sdk-factory[bot]",
+      "date": "2026-10-01T17:35:13Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/bb8d33e0f72fa6f903cd62c1b96aa29d904a13c2",
+      "pr_number": 21728,
+      "pr_title": "fix: propagate createUIMessageStream consumer cancellation to merged streams",
+      "pr_body": "## Background\n\nConsumer cancellation of createUIMessageStream did not stop merged sources, allowing upstream requests and pending pulls to continue after disconnection.\n\n## Root Cause\n\nwriter.merge() consumed each source through an untracked reader, so the returned stream's cancellation path had no reader to cancel. The original reproduction confirmed that the source cancel handler was not invoked and its pending pull continued.\n\n## Summary\n\nTrack active merged-stream readers, cancel them with the consumer's reason, immediately cancel streams merged after cancellation, and release reader locks after completion.\n\n## Testing\n\nAdded a regression test confirming that consumer cancellation reaches the merged source and prevents its pending pull from producing another chunk.\n\n## End-to-end Validation\n\n- `replay_original_reproduction` restored and ran `pnpm -C examples/ai-functions exec tsx src/reproduction/issue-21721-merged-stream-cancellation.ts`; it exited successfully and reported that issue #21721 no longer reproduced.\n\n## Related Issues\n\nFixes #21721\n\nCloses #21725",
+      "pr_url": "https://github.com/vercel/ai/pull/21728",
+      "labels": [
+        "task-bugfix-pull-request",
+        "task-merge-tracking-done",
+        "factory-pr",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/calm-streams-cancel.md",
+        "packages/ai/src/ui-message-stream/create-ui-message-stream.test.ts",
+        "packages/ai/src/ui-message-stream/create-ui-message-stream.ts"
+      ]
+    },
+    {
+      "sha": "8f05086a414bf318be49c403ee4fc39c78bb84c7",
+      "message": "fix: prevent streamed useChat updates from starving App Router navigation (#21874)\n\n## Background\n\nWhile `useChat` streamed a response, synchronous external-store\nnotifications could repeatedly interrupt Next.js App Router navigation\nand delay it by about five seconds.\n\n## Summary\n\n- Store messages, status, and error together in one React state snapshot\nand publish ordinary React state updates. This prevents navigation\nstarvation while allowing streamed text and local edits to render during\nsuspended transitions.\n- Reset the snapshot during render when the Chat instance changes, use\npure snapshot updaters, and resynchronize after subscribing to catch\nchanges between render and subscription.\n- Preserve throttling, shared-chat subscriptions, cleanup, and\nconsistent completion/error/abort snapshots without adding configuration\nor a separate terminal-message cache.\n- Restore coverage for streaming during suspended id changes and add\nregression tests for streamed text and local edits during suspended\nsibling navigation.\n\n## Validation\n\n- The three suspended-transition regression checks failed before the\nlocal follow-up changes and passed afterward.\n- React 18.3.1: all 145 React package tests passed.\n- React 19.2.6: all 54 `useChat` tests passed.\n- Package build, full workspace type-check, lint, formatting, and diff\nchecks passed.\n- Production Next.js 16.3.3 with an unthrottled deterministic stream and\n4× CPU throttling: updated `useChat` navigated in 867 ms versus 5,587 ms\nfor an external-store control (single runs).\n- In a three-second sample with an expensive synthetic chat render under\n4× CPU throttling, the updated hook had a maximum visible-update gap of\n33 ms.\n\nThe latest follow-up implementation changes and validation are local;\nthey have not been committed or pushed.\n\nFixes #21849\nCloses #21854\n\n---------\n\nCo-authored-by: ai-sdk-factory <308175966+ai-sdk-factory@users.noreply.github.com>\nCo-authored-by: adiadd <33589526+adiadd@users.noreply.github.com>\nCo-authored-by: Nick Oates <58091943+n1ckoates@users.noreply.github.com>",
+      "author": "ai-sdk-factory[bot]",
+      "date": "2026-10-01T17:45:34Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/8f05086a414bf318be49c403ee4fc39c78bb84c7",
+      "pr_number": 21874,
+      "pr_title": "fix: prevent streamed useChat updates from starving App Router navigation",
+      "pr_body": "## Background\n\nWhile `useChat` streamed a response, synchronous external-store notifications could repeatedly interrupt Next.js App Router navigation and delay it by about five seconds.\n\n## Summary\n\n- Store messages, status, and error together in one React state snapshot and publish ordinary React state updates. This prevents navigation starvation while allowing streamed text and local edits to render during suspended transitions.\n- Reset the snapshot during render when the Chat instance changes, use pure snapshot updaters, and resynchronize after subscribing to catch changes between render and subscription.\n- Preserve throttling, shared-chat subscriptions, cleanup, and consistent completion/error/abort snapshots without adding configuration or a separate terminal-message cache.\n- Restore coverage for streaming during suspended id changes and add regression tests for streamed text and local edits during suspended sibling navigation.\n\n## Validation\n\n- The three suspended-transition regression checks failed before the local follow-up changes and passed afterward.\n- React 18.3.1: all 145 React package tests passed.\n- React 19.2.6: all 54 `useChat` tests passed.\n- Package build, full workspace type-check, lint, formatting, and diff checks passed.\n- Production Next.js 16.3.3 with an unthrottled deterministic stream and 4× CPU throttling: updated `useChat` navigated in 867 ms versus 5,587 ms for an external-store control (single runs).\n- In a three-second sample with an expensive synthetic chat render under 4× CPU throttling, the updated hook had a maximum visible-update gap of 33 ms.\n\nThe latest follow-up implementation changes and validation are local; they have not been committed or pushed.\n\nFixes #21849\nCloses #21854\n",
+      "pr_url": "https://github.com/vercel/ai/pull/21874",
+      "labels": [
+        "task-bugfix-pull-request",
+        "task-merge-tracking-done",
+        "factory-pr",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/calm-chats-navigate.md",
+        "content/docs/04-ai-sdk-ui/02-chatbot.mdx",
+        "content/docs/07-reference/02-ai-sdk-ui/01-use-chat.mdx",
+        "packages/react/src/use-chat.ts",
+        "packages/react/src/use-chat.ui.test.tsx"
+      ]
+    },
+    {
+      "sha": "168d629ea09fe10be7e52fff1987dc2ecb9b3308",
+      "message": "docs(site): add Black Forest Labs to the model picker (#20063)\n\n## Summary\n\nThe interactive code preview on the docs site allowlists providers per\nmodel kind. Black Forest Labs is absent from both the image and video\nallowlists, so FLUX models never appear in the picker on\n`ai-sdk-core/image-generation` and `ai-sdk-core/video-generation`, even\nthough the models are served by the gateway endpoint the picker itself\nreads from. Black Forest Labs also has no entry in `PROVIDER_LOGOS`, so\nits models would render with the generic placeholder mark.\n\nThis PR:\n\n- Adds `bfl` to the `image` and `video` provider allowlists.\n- Sets `bfl/flux-2-pro` and `bfl/flux-3-video` as the preferred defaults\nwhen a reader selects Black Forest Labs.\n- Adds a `providerSdkMap` entry so the Provider tab generates `import {\nblackForestLabs } from \"@ai-sdk/black-forest-labs\"` rather than the\nincorrect `@ai-sdk/bfl` / `bfl` that the fallback would produce.\n- Adds the provider's logo so its models render with the real mark\ninstead of the generic fallback.\n\nNo behavior changes for any other provider.\n\n## The logo asset\n\n`apps/docs/public/images/icons/black-forest-labs.svg` is the official\nsymbol-only mark from [bfl.ai/brand](https://bfl.ai/brand), which the\nbrand guidelines designate for small applications where the wordmark\nwould be unreadable.\n\n- Path data and `viewBox` are byte-identical to the published\n`symbol-black.svg`.\n- The only changes: `fill` is `currentColor` instead of the fixed\n`#07130e`, and a `clipPath` wrapper was dropped. That clip was a\nfull-canvas `M0 0h196v140H0z` rect, so removing it is a no-op. Using\n`currentColor` lets the existing `invert: true` dark-mode handling work,\nthe same treatment already applied to the Anthropic and xAI marks.\n\n## Verification\n\n- `GET https://ai-gateway.vercel.sh/v1/models` returns\n`bfl/flux-3-video` with `type: video`, and `bfl/flux-2-pro`,\n`bfl/flux-2-max`, `bfl/flux-2-flex`, `bfl/flux-2-klein-9b`,\n`bfl/flux-2-klein-4b` with `type: image`.\n- `parseModels` keys on `owned_by`, not the model ID prefix, so I\nconfirmed `owned_by` is exactly `bfl` for all 11 models rather than\nassuming it from the ID. Replaying the real filter against the live\nresponse with this patch applied yields 10 FLUX models in the image\npicker and `bfl/flux-3-video` in the video picker; without it, zero.\n- `providerTitles` already contains `bfl: 'Black Forest Labs'`, so the\nlabel renders correctly with no further change.\n- The package name and export were confirmed against\n`packages/black-forest-labs` (`@ai-sdk/black-forest-labs`, exports\n`blackForestLabs`), so the Provider tab snippet is copy-pasteable.\n- Verified the committed SVG renders as the complete BFL peak mark, not\na clipped or corrupted path.\n- `oxfmt --check` on the changed file passes.\n\nNote on scope: `FIRST_PARTY_PROVIDERS` is deliberately untouched. It\nfeeds the text-model preview, and this provider exposes no language\nmodel (`languageModel` throws `NoSuchModelError`), so it does not belong\nin that list.\n\nI was not able to visually confirm the rendered dropdown: the local docs\ndev server ran out of memory on this machine before serving a page.\nFlagging that rather than claiming a visual check I did not complete.\nThe logic change is data-only and confined to three lookup tables, and\nthe Docs Site CI job covers the build.\n\nThe same logo asset is added by #20079, which adds the provider index\ncard. Whichever merges first, the other's copy is identical (sha256\n`cf8b6a00ff0752743ea35ec4b61485befc355d7d2469b6f417ea9c30037ed899`), so\nthe overlap resolves cleanly.\n\n---------\n\nCo-authored-by: Aayush Kapoor <aayushkapoor34@gmail.com>",
+      "author": "MaanavD",
+      "date": "2026-10-01T18:02:13Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/168d629ea09fe10be7e52fff1987dc2ecb9b3308",
+      "pr_number": 20063,
+      "pr_title": "docs(site): add Black Forest Labs to the model picker",
+      "pr_body": "## Summary\n\nThe interactive code preview on the docs site allowlists providers per model kind. Black Forest Labs is absent from both the image and video allowlists, so FLUX models never appear in the picker on `ai-sdk-core/image-generation` and `ai-sdk-core/video-generation`, even though the models are served by the gateway endpoint the picker itself reads from. Black Forest Labs also has no entry in `PROVIDER_LOGOS`, so its models would render with the generic placeholder mark.\n\nThis PR:\n\n- Adds `bfl` to the `image` and `video` provider allowlists.\n- Sets `bfl/flux-2-pro` and `bfl/flux-3-video` as the preferred defaults when a reader selects Black Forest Labs.\n- Adds a `providerSdkMap` entry so the Provider tab generates `import { blackForestLabs } from \"@ai-sdk/black-forest-labs\"` rather than the incorrect `@ai-sdk/bfl` / `bfl` that the fallback would produce.\n- Adds the provider's logo so its models render with the real mark instead of the generic fallback.\n\nNo behavior changes for any other provider.\n\n## The logo asset\n\n`apps/docs/public/images/icons/black-forest-labs.svg` is the official symbol-only mark from [bfl.ai/brand](https://bfl.ai/brand), which the brand guidelines designate for small applications where the wordmark would be unreadable.\n\n- Path data and `viewBox` are byte-identical to the published `symbol-black.svg`.\n- The only changes: `fill` is `currentColor` instead of the fixed `#07130e`, and a `clipPath` wrapper was dropped. That clip was a full-canvas `M0 0h196v140H0z` rect, so removing it is a no-op. Using `currentColor` lets the existing `invert: true` dark-mode handling work, the same treatment already applied to the Anthropic and xAI marks.\n\n## Verification\n\n- `GET https://ai-gateway.vercel.sh/v1/models` returns `bfl/flux-3-video` with `type: video`, and `bfl/flux-2-pro`, `bfl/flux-2-max`, `bfl/flux-2-flex`, `bfl/flux-2-klein-9b`, `bfl/flux-2-klein-4b` with `type: image`.\n- `parseModels` keys on `owned_by`, not the model ID prefix, so I confi",
+      "pr_url": "https://github.com/vercel/ai/pull/20063",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        "apps/docs/components/docs/interactive-code-preview.tsx",
+        "apps/docs/public/images/icons/black-forest-labs.svg"
+      ]
+    },
+    {
+      "sha": "8952233c584b57261e6de7706c58946942a4acb3",
+      "message": "feat(azure): support MAI-Voice-2.1 speech and MAI-Transcribe-2-Streaming (#21910)\n\n## Background\n\nMicrosoft AI launched MAI-Voice-2.1, MAI-Voice-2.1-Flash, and\nMAI-Transcribe-2-Streaming on Azure. #21851 and #21850 added MAI-Voice-2\nand MAI-Transcribe-1.5 to `@ai-sdk/azure`. This PR adds the new models\non top of that work.\n\n- **MAI-Voice-2.1 and MAI-Voice-2.1-Flash** use the same Azure Speech\n(SSML) path as MAI-Voice-2. They only need their Azure model names.\n- **MAI-Transcribe-2-Streaming** is a different API: the MAI realtime\nWebSocket\n(`wss://{resourceName}.services.ai.azure.com/mai/v1/realtime?intent=transcription`).\nIt's OpenAI-realtime-compatible, but it doesn't detect pauses on the\nserver. Its `transcription.model` is the Foundry deployment name, not\nthe model name.\n\n## Summary\n\n**Speech**\n- `mai-voice-2.1` and `mai-voice-2.1-flash` (case-insensitive) use Azure\nSpeech by default and send `MAI-Voice-2.1` / `MAI-Voice-2.1-Flash` as\nthe SSML voice-name suffix. The existing per-language default voices are\navailable on both models.\n- Azure Speech resets the connection for an unknown voice or style (an\nEnvoy 502 with `reset reason: protocol error`). That case now fails with\na descriptive, non-retryable error. All other 502s stay retryable, as\nbefore.\n\n**Streaming transcription**\n- `azure.transcription('mai-transcribe-2-streaming')` streams to the MAI\nrealtime API with `experimental_streamTranscribe`. The model ID is sent\nas the deployment name. For a deployment with a different name, set\n`providerOptions.azure.api: 'mai'`.\n- **Input:** 16-bit mono PCM (`audio/pcm`) at 16000 or 24000 Hz; the\ndefault is 24000. Other formats and rates are rejected with\n`InvalidArgumentError`.\n- **Output:** `transcript-delta` parts carry finalized text and\n`transcript-partial` parts carry the provisional text after the latest\ndelta. The stream commits once when the input audio ends, then emits\n`transcript-final`. `durationInSeconds` is computed from the streamed\naudio.\n- **Options:** `providerOptions.azure.language` is a language hint.\nFile-transcription options such as `timestamps` produce warnings when\nstreaming.\n- **Not supported:** `doGenerate` on this model throws\n`UnsupportedFunctionalityError` (no file transcription), and `api:\n'speech'` can't stream.\n\n**Provider settings**\n- `maiBaseURL` overrides the MAI realtime URL prefix (default\n`https://{resourceName}.services.ai.azure.com/mai/v1`).\n- `webSocket` takes a custom WebSocket implementation such as `ws`. With\none, the API key is sent in the `api-key` header; with the native\n`WebSocket` it's sent as the `api-key` query parameter. Microsoft Entra\nID (`tokenProvider`) needs a custom implementation.\n\n**Docs and examples**\n- The Azure provider page gains the 2.1 models, a\nMAI-Transcribe-2-Streaming section, the new settings, and capability\nrows. The core speech and transcription model tables are updated too.\n- New examples:\n`examples/ai-functions/src/generate-speech/azure/mai-voice-2-1.ts` and\n`examples/ai-functions/src/stream-transcribe/azure/basic.ts`.\n\n## End-to-End Verification\n\nAll runs used a Microsoft Foundry resource with the models available:\n\n- **Voices:** `generate-speech/azure/mai-voice-2-1.ts` with both 2.1\nmodels. Voices tested: `en-US-Harper`, `en-US-Grant`, `en-US-Sage`,\n`de-DE-Harper`, `fr-FR-Harper`, `en-GB-Emily`. Styles tested:\n`narrator`, `agent`, `educational`, `joyful`. All 15 per-language\ndefault voices return audio on both models.\n- **Unknown voice or style:** returns the new descriptive error once,\nwith no client retries.\n- **Streaming:** `stream-transcribe/azure/basic.ts` streamed PCM\ngenerated by MAI-Voice-2.1-Flash and returned the expected transcript at\n24 kHz and 16 kHz, with `ws` and the native `WebSocket`.\n`durationInSeconds` matched the audio length.\n- **Through AI Gateway:** the same models run in production, using a\nbuild of this branch.\n\n## Checklist\n\n- [x] All commits are signed (PRs with unsigned commits cannot be\nmerged)\n- [x] Tests have been added / updated (for bug fixes / features)\n- [x] Documentation has been added / updated (for bug fixes / features)\n- [x] A _patch_ changeset for relevant packages has been added (for bug\nfixes / features - run `pnpm changeset` in the project root)\n- [x] I have reviewed this pull request (self-review)\n\n## Future Work\n\n- Backport MAI-Voice-2.1 / 2.1-Flash to `release-v6.0`. The v6 provider\nspec has no streaming transcription, so the backport is voice-only.\n\n## Related Issues\n\nFollows #21851 (MAI-Voice-2) and #21850 (MAI-Transcribe-1.5).",
+      "author": "kkdawkins",
+      "date": "2026-10-01T18:02:22Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/8952233c584b57261e6de7706c58946942a4acb3",
+      "pr_number": 21910,
+      "pr_title": "feat(azure): support MAI-Voice-2.1 speech and MAI-Transcribe-2-Streaming",
+      "pr_body": "## Background\n\nMicrosoft AI launched MAI-Voice-2.1, MAI-Voice-2.1-Flash, and MAI-Transcribe-2-Streaming on Azure. #21851 and #21850 added MAI-Voice-2 and MAI-Transcribe-1.5 to `@ai-sdk/azure`. This PR adds the new models on top of that work.\n\n- **MAI-Voice-2.1 and MAI-Voice-2.1-Flash** use the same Azure Speech (SSML) path as MAI-Voice-2. They only need their Azure model names.\n- **MAI-Transcribe-2-Streaming** is a different API: the MAI realtime WebSocket (`wss://{resourceName}.services.ai.azure.com/mai/v1/realtime?intent=transcription`). It's OpenAI-realtime-compatible, but it doesn't detect pauses on the server. Its `transcription.model` is the Foundry deployment name, not the model name.\n\n## Summary\n\n**Speech**\n- `mai-voice-2.1` and `mai-voice-2.1-flash` (case-insensitive) use Azure Speech by default and send `MAI-Voice-2.1` / `MAI-Voice-2.1-Flash` as the SSML voice-name suffix. The existing per-language default voices are available on both models.\n- Azure Speech resets the connection for an unknown voice or style (an Envoy 502 with `reset reason: protocol error`). That case now fails with a descriptive, non-retryable error. All other 502s stay retryable, as before.\n\n**Streaming transcription**\n- `azure.transcription('mai-transcribe-2-streaming')` streams to the MAI realtime API with `experimental_streamTranscribe`. The model ID is sent as the deployment name. For a deployment with a different name, set `providerOptions.azure.api: 'mai'`.\n- **Input:** 16-bit mono PCM (`audio/pcm`) at 16000 or 24000 Hz; the default is 24000. Other formats and rates are rejected with `InvalidArgumentError`.\n- **Output:** `transcript-delta` parts carry finalized text and `transcript-partial` parts carry the provisional text after the latest delta. The stream commits once when the input audio ends, then emits `transcript-final`. `durationInSeconds` is computed from the streamed audio.\n- **Options:** `providerOptions.azure.language` is a language hint. File-transcription options such",
+      "pr_url": "https://github.com/vercel/ai/pull/21910",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/azure-mai-voice-streaming.md",
+        "content/docs/03-ai-sdk-core/36-transcription.mdx",
+        "content/docs/03-ai-sdk-core/37-speech.mdx",
+        "content/providers/01-ai-sdk-providers/04-azure.mdx",
+        "examples/ai-functions/src/generate-speech/azure/mai-voice-2-1.ts",
+        "examples/ai-functions/src/stream-transcribe/azure/basic.ts",
+        "packages/azure/src/azure-mai-transcription-model-options.ts",
+        "packages/azure/src/azure-mai-transcription-model.test.ts",
+        "packages/azure/src/azure-mai-transcription-model.ts",
+        "packages/azure/src/azure-openai-provider.ts",
+        "packages/azure/src/azure-speech-model-options.ts",
+        "packages/azure/src/azure-speech-model.test.ts",
+        "packages/azure/src/azure-speech-speech-model.ts",
+        "packages/azure/src/azure-transcription-model-options.ts"
+      ]
+    },
+    {
+      "sha": "284dc11c56f2db50b32be6784df36b19d5421d83",
+      "message": "fix: accept structurally identical cross-realm tool approval inputs (#21810)\n\n## Background\n\nManual tool approvals with unchanged, schema-valid JSON from another\nJavaScript realm were rejected, preventing approved tools from executing\nin workflow environments.\n\n## Root Cause\n\nisDeepEqualData compared constructor identity before JSON fields; Zod\nproduced a current-realm object whose constructor differed from the\ncross-realm approved input, despite identical data.\n\n## Summary\n\nUpdated deep JSON comparison to treat Object prototypes and arrays from\ndifferent realms as equivalent while retaining prototype checks for\nnon-JSON objects. Added an ai package patch changeset.\n\n## Testing\n\nAdded a Node regression test covering tool approval validation for\ncross-realm objects with nested arrays.\n\n## End-to-end Validation\n\n- `pnpm -C examples/ai-functions exec tsx\nsrc/reproduction/issue-21805-cross-realm-tool-approval.ts` completed\nsuccessfully through immutable replay; the approval remained valid and\nthe tool executed.\n\n## Related Issues\n\nFixes #21805\n\nCloses #21806\n\n---------\n\nCo-authored-by: ai-sdk-factory <308175966+ai-sdk-factory@users.noreply.github.com>\nCo-authored-by: Christophevvv <11215537+Christophevvv@users.noreply.github.com>\nCo-authored-by: Nick Oates <58091943+n1ckoates@users.noreply.github.com>",
+      "author": "ai-sdk-factory[bot]",
+      "date": "2026-10-01T18:05:49Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/284dc11c56f2db50b32be6784df36b19d5421d83",
+      "pr_number": 21810,
+      "pr_title": "fix: accept structurally identical cross-realm tool approval inputs",
+      "pr_body": "## Background\n\nManual tool approvals with unchanged, schema-valid JSON from another JavaScript realm were rejected, preventing approved tools from executing in workflow environments.\n\n## Root Cause\n\nisDeepEqualData compared constructor identity before JSON fields; Zod produced a current-realm object whose constructor differed from the cross-realm approved input, despite identical data.\n\n## Summary\n\nUpdated deep JSON comparison to treat Object prototypes and arrays from different realms as equivalent while retaining prototype checks for non-JSON objects. Added an ai package patch changeset.\n\n## Testing\n\nAdded a Node regression test covering tool approval validation for cross-realm objects with nested arrays.\n\n## End-to-end Validation\n\n- `pnpm -C examples/ai-functions exec tsx src/reproduction/issue-21805-cross-realm-tool-approval.ts` completed successfully through immutable replay; the approval remained valid and the tool executed.\n\n## Related Issues\n\nFixes #21805\n\nCloses #21806",
+      "pr_url": "https://github.com/vercel/ai/pull/21810",
+      "labels": [
+        "task-bugfix-pull-request",
+        "task-merge-tracking-done",
+        "factory-pr",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/tidy-tools-agree.md",
+        "packages/ai/src/generate-text/validate-tool-approvals.node.test.ts",
+        "packages/ai/src/generate-text/validate-tool-approvals.ts"
+      ]
+    },
+    {
+      "sha": "2850ad8a8b2c089c07bd90edd3705cd184eee2bd",
+      "message": "feat(amazon-bedrock): add requestMetadata support for Converse and ConverseStream (#20415)\n\n## Background\n\nBedrock supports a requestMetadata property that is stored in invocation\nlogs. It can be used with cloudwatch to query for cost attribution.\n\nThe current provider options/body don't allow passing it (that I can\nsee).\n\n## Summary\n\nAdds `requestMetadata` to `providerOptions.amazonBedrock` for the\nConverse and ConverseStream APIs. The field maps directly to the\n[Bedrock `requestMetadata` request body\nparameter](https://docs.aws.amazon.com/bedrock/latest/userguide/cost-mgmt-request-metadata.html)\nand is recorded in invocation logs for cost attribution.\n\n## Usage\n\n```ts\nawait generateText({\n  model: bedrock('us.anthropic.claude-sonnet-4-20250514-v1:0'),\n  providerOptions: {\n    amazonBedrock: {\n      requestMetadata: { team: 'search', environment: 'prod' },\n    },\n  },\n  prompt: '...',\n});\n```\n\nChanges\n- `amazon-bedrock-chat-language-model-options.ts` — adds\n`requestMetadata: z.record(z.string(), z.string()).optional()` to the\nprovider options schema\n- `amazon-bedrock-api-types.ts` — adds `requestMetadata?: Record<string,\nstring> to AmazonBedrockConverseInput`\n- `amazon-bedrock-chat-language-model.ts` — injects the value as a\ntop-level Converse body field; strips it from the\n`filteredAmazonBedrockOptions` spread to prevent double-sending\n\n## End-to-End Verification\n\nI'm running this as a patch and can see the expected values in Bedrock\ninvocation logs.\n\n## Checklist\n\n- [x] All commits are signed (PRs with unsigned commits cannot be\nmerged)\n- [x] Tests have been added / updated (for bug fixes / features)\n- [x] Documentation has been added / updated (for bug fixes / features)\n- [x] A _patch_ changeset for relevant packages has been added (for bug\nfixes / features - run `pnpm changeset` in the project root)\n- [x] I have reviewed this pull request (self-review)\n\n---------\n\nCo-authored-by: Aayush Kapoor <aayushkapoor34@gmail.com>",
+      "author": "larowlan",
+      "date": "2026-10-01T18:21:34Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/2850ad8a8b2c089c07bd90edd3705cd184eee2bd",
+      "pr_number": 20415,
+      "pr_title": "feat(amazon-bedrock): add requestMetadata support for Converse and ConverseStream",
+      "pr_body": "## Background\r\n\r\nBedrock supports a requestMetadata property that is stored in invocation logs. It can be used with cloudwatch to query for cost attribution.\r\n\r\nThe current provider options/body don't allow passing it (that I can see).\r\n\r\n## Summary\r\n\r\nAdds `requestMetadata` to `providerOptions.amazonBedrock` for the Converse and ConverseStream APIs. The field maps directly to the [Bedrock `requestMetadata` request body parameter](https://docs.aws.amazon.com/bedrock/latest/userguide/cost-mgmt-request-metadata.html) and is recorded in invocation logs for cost attribution.\r\n\r\n## Usage\r\n\r\n```ts\r\nawait generateText({\r\n  model: bedrock('us.anthropic.claude-sonnet-4-20250514-v1:0'),\r\n  providerOptions: {\r\n    amazonBedrock: {\r\n      requestMetadata: { team: 'search', environment: 'prod' },\r\n    },\r\n  },\r\n  prompt: '...',\r\n});\r\n```\r\n\r\nChanges\r\n- `amazon-bedrock-chat-language-model-options.ts` — adds `requestMetadata: z.record(z.string(), z.string()).optional()` to the provider options schema\r\n- `amazon-bedrock-api-types.ts` — adds `requestMetadata?: Record<string, string> to AmazonBedrockConverseInput`\r\n- `amazon-bedrock-chat-language-model.ts` — injects the value as a top-level Converse body field; strips it from the `filteredAmazonBedrockOptions` spread to prevent double-sending\r\n\r\n## End-to-End Verification\r\n\r\nI'm running this as a patch and can see the expected values in Bedrock invocation logs.\r\n\r\n## Checklist\r\n\r\n- [x] All commits are signed (PRs with unsigned commits cannot be merged)\r\n- [x] Tests have been added / updated (for bug fixes / features)\r\n- [x] Documentation has been added / updated (for bug fixes / features)\r\n- [x] A _patch_ changeset for relevant packages has been added (for bug fixes / features - run `pnpm changeset` in the project root)\r\n- [x] I have reviewed this pull request (self-review)\r\n\r\n",
+      "pr_url": "https://github.com/vercel/ai/pull/20415",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/amazon-bedrock-request-metadata.md",
+        "packages/amazon-bedrock/src/amazon-bedrock-api-types.ts",
+        "packages/amazon-bedrock/src/amazon-bedrock-chat-language-model-options.test.ts",
+        "packages/amazon-bedrock/src/amazon-bedrock-chat-language-model-options.ts",
+        "packages/amazon-bedrock/src/amazon-bedrock-chat-language-model.test.ts",
+        "packages/amazon-bedrock/src/amazon-bedrock-chat-language-model.ts"
+      ]
+    },
+    {
+      "sha": "eb77f09e3c06c28e860d92e0de941b143c2eecec",
+      "message": "Version Packages (#21908)\n\nThis PR was opened by the [Changesets\nrelease](https://github.com/changesets/action) GitHub action. When\nyou're ready to do a release, you can merge this and the packages will\nbe published to npm automatically. If you're not ready to do a release\nyet, that's fine, whenever you add more changesets to main, this PR will\nbe updated.\n\n\n# Releases\n## ai@7.0.127\n\n### Patch Changes\n\n- 158a718: feat(ai): select and rank eligible deferred tools via\n'search()' callback in tool search\n- bb8d33e: fix(ai): cancel merged UI message streams when the consumer\ndisconnects\n- 284dc11: fix(ai): accept unchanged tool approval inputs created in\nanother JavaScript realm\n- ba8afe9: feat(ai): add a configurable maxResults for number of tools\nreturned in tool search\n- Updated dependencies [d1bb9e8]\n  - @ai-sdk/gateway@4.0.103\n## @ai-sdk/amazon-bedrock@5.0.105\n\n### Patch Changes\n\n- 2850ad8: Add `requestMetadata` support to the Converse and\nConverseStream APIs via `providerOptions.amazonBedrock.requestMetadata`.\nAccepts a `Record<string, string>` for per-request tagging in Amazon\nBedrock invocation logs for cost attribution.\n## @ai-sdk/angular@3.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/azure@4.0.90\n\n### Patch Changes\n\n- 8952233: feat(azure): support MAI-Voice-2.1 and MAI-Voice-2.1-Flash\nspeech generation, and MAI-Transcribe-2-Streaming streaming\ntranscription through the MAI realtime API. Adds the `maiBaseURL` and\n`webSocket` settings and `providerOptions.azure.api: 'mai'`. Unknown MAI\nvoices or styles now fail with a descriptive, non-retryable error.\n## @ai-sdk/code-mode@1.0.84\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/devtools@1.0.30\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/gateway@4.0.103\n\n### Patch Changes\n\n- d1bb9e8: chore(provider/gateway): update gateway model settings files\n## @ai-sdk/harness@1.0.138\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/harness-acp@1.0.76\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/harness-claude-code@1.0.142\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/harness-cline@1.0.65\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/harness-codex@1.0.140\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/harness-cursor@1.0.51\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n- @ai-sdk/harness-acp@1.0.76\n## @ai-sdk/harness-deepagents@1.0.138\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/harness-fx@1.0.51\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n- @ai-sdk/harness-acp@1.0.76\n## @ai-sdk/harness-github-copilot@1.0.33\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n- @ai-sdk/harness-acp@1.0.76\n## @ai-sdk/harness-grok-build@1.0.75\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n- @ai-sdk/harness-acp@1.0.76\n## @ai-sdk/harness-opencode@1.0.140\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/harness-pi@1.0.140\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/langchain@3.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/llamaindex@3.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/mcp@2.0.66\n\n### Patch Changes\n\n- 3ff0f54: feat(mcp): add AuthorizationServerMismatchError for OAuth\nauthorization server pin mismatches\n## @ai-sdk/otel@1.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/policy-opa@1.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/react@4.0.130\n\n### Patch Changes\n\n- 8f05086: fix(react): prevent streamed chat updates from starving\nnavigation transitions\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [3ff0f54]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n  - @ai-sdk/mcp@2.0.66\n## @ai-sdk/rsc@3.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/sandbox-just-bash@1.0.138\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/sandbox-vercel@1.0.138\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n## @ai-sdk/svelte@5.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/tui@1.0.128\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/vue@4.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/workflow@2.0.58\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/workflow-harness@1.0.138\n\n### Patch Changes\n\n- @ai-sdk/harness@1.0.138\n\nCo-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
+      "author": "github-actions[bot]",
+      "date": "2026-10-01T19:04:49Z",
+      "parents": 1,
+      "html_url": "https://github.com/vercel/ai/commit/eb77f09e3c06c28e860d92e0de941b143c2eecec",
+      "pr_number": 21908,
+      "pr_title": "Version Packages",
+      "pr_body": "This PR was opened by the [Changesets release](https://github.com/changesets/action) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, this PR will be updated.\n\n\n# Releases\n## ai@7.0.127\n\n### Patch Changes\n\n- 158a718: feat(ai): select and rank eligible deferred tools via 'search()' callback in tool search\n- bb8d33e: fix(ai): cancel merged UI message streams when the consumer disconnects\n- 284dc11: fix(ai): accept unchanged tool approval inputs created in another JavaScript realm\n- ba8afe9: feat(ai): add a configurable maxResults for number of tools returned in tool search\n- Updated dependencies [d1bb9e8]\n  - @ai-sdk/gateway@4.0.103\n## @ai-sdk/amazon-bedrock@5.0.105\n\n### Patch Changes\n\n- 2850ad8: Add `requestMetadata` support to the Converse and ConverseStream APIs via `providerOptions.amazonBedrock.requestMetadata`. Accepts a `Record<string, string>` for per-request tagging in Amazon Bedrock invocation logs for cost attribution.\n## @ai-sdk/angular@3.0.127\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/azure@4.0.90\n\n### Patch Changes\n\n- 8952233: feat(azure): support MAI-Voice-2.1 and MAI-Voice-2.1-Flash speech generation, and MAI-Transcribe-2-Streaming streaming transcription through the MAI realtime API. Adds the `maiBaseURL` and `webSocket` settings and `providerOptions.azure.api: 'mai'`. Unknown MAI voices or styles now fail with a descriptive, non-retryable error.\n## @ai-sdk/code-mode@1.0.84\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]\n- Updated dependencies [284dc11]\n- Updated dependencies [ba8afe9]\n  - ai@7.0.127\n## @ai-sdk/devtools@1.0.30\n\n### Patch Changes\n\n- Updated dependencies [158a718]\n- Updated dependencies [bb8d33e]",
+      "pr_url": "https://github.com/vercel/ai/pull/21908",
+      "labels": [
+        "task-merge-tracking-no-issue",
+        "task-identify-harness-labels-done"
+      ],
+      "files": [
+        ".changeset/amazon-bedrock-request-metadata.md",
+        ".changeset/azure-mai-voice-streaming.md",
+        ".changeset/bright-tools-search.md",
+        ".changeset/calm-chats-navigate.md",
+        ".changeset/calm-streams-cancel.md",
+        ".changeset/glcon-ywmtm-zdgod.md",
+        ".changeset/lazy-rivers-argue.md",
+        ".changeset/tidy-tools-agree.md",
+        ".changeset/tidy-tools-discover.md",
+        "packages/ai/CHANGELOG.md",
+        "packages/ai/package.json",
+        "packages/amazon-bedrock/CHANGELOG.md",
+        "packages/amazon-bedrock/package.json",
+        "packages/angular/CHANGELOG.md",
+        "packages/angular/package.json",
+        "packages/azure/CHANGELOG.md",
+        "packages/azure/package.json",
+        "packages/code-mode/CHANGELOG.md",
+        "packages/code-mode/package.json",
+        "packages/devtools/CHANGELOG.md",
+        "packages/devtools/package.json",
+        "packages/gateway/CHANGELOG.md",
+        "packages/gateway/package.json",
+        "packages/harness-acp/CHANGELOG.md",
+        "packages/harness-acp/package.json"
+      ]
+    }
+  ],
+  "collected_at": "2026-10-04T16:56:32.858432Z",
+  "api_calls": 30,
+  "cache_hits": 0
+}

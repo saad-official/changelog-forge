@@ -1,0 +1,228 @@
+{
+  "repo": "pydantic/pydantic",
+  "base": "v2.13.4",
+  "head": "v2.13.5",
+  "compare_url": "https://github.com/pydantic/pydantic/compare/v2.13.4...v2.13.5",
+  "default_branch": "main",
+  "private": false,
+  "total_commits": 12,
+  "commits": [
+    {
+      "sha": "92077fcd71e0f1873acf5e1dc4a504f81483af6e",
+      "message": "Allow reuse of validators when plugins are set\n\nBackport of: #13535",
+      "author": "Viicos",
+      "date": "2026-08-03T18:31:32Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/92077fcd71e0f1873acf5e1dc4a504f81483af6e",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "pydantic-core/src/validators/prebuilt.rs",
+        "pydantic-core/tests/test_prebuilt.py",
+        "pydantic/plugin/_schema_validator.py",
+        "tests/test_plugins.py"
+      ]
+    },
+    {
+      "sha": "b9d7252ed4d3ec0579cddd4628a8ef6565c34b7a",
+      "message": "Fix missing GC traversal on some `pydantic-core` struct fields\n\nBackport of: #13624",
+      "author": "Viicos",
+      "date": "2026-08-11T10:41:31Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/b9d7252ed4d3ec0579cddd4628a8ef6565c34b7a",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "pydantic-core/src/serializers/fields.rs",
+        "pydantic-core/src/serializers/type_serializers/enum_.rs",
+        "pydantic-core/src/validators/enum_.rs",
+        "pydantic-core/tests/test_garbage_collection.py"
+      ]
+    },
+    {
+      "sha": "47a6dbf8ad6216211bd0df6ec5c2c6c6ed905b72",
+      "message": "Fix missing GC traversal in `pydantic-core` for `GeneralFieldsSerializer`\n\nBackport of: #13629",
+      "author": "Viicos",
+      "date": "2026-08-11T11:58:55Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/47a6dbf8ad6216211bd0df6ec5c2c6c6ed905b72",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "pydantic-core/src/serializers/fields.rs"
+      ]
+    },
+    {
+      "sha": "d65e0f96e890ca82f4b66a15d5b3bd65af2c661c",
+      "message": "Workaround circular import error in Mypy\n\nBackport of: #13640",
+      "author": "Viicos",
+      "date": "2026-08-12T08:44:39Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/d65e0f96e890ca82f4b66a15d5b3bd65af2c661c",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "pydantic/mypy.py"
+      ]
+    },
+    {
+      "sha": "a53ec2ed342fda4e6aa3684399d04ea57be9a6e4",
+      "message": "Speed up PyPy CI tests\n\nBackport of: #13724",
+      "author": "Viicos",
+      "date": "2026-08-27T11:21:57Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/a53ec2ed342fda4e6aa3684399d04ea57be9a6e4",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        ".github/workflows/ci.yml",
+        "pydantic-core/tests/test_garbage_collection.py",
+        "pydantic-core/tests/validators/test_dataclasses.py",
+        "pydantic-core/tests/validators/test_model_init.py",
+        "pydantic-core/tests/validators/test_nullable.py",
+        "pydantic-core/tests/validators/test_typed_dict.py",
+        "pydantic-core/tests/validators/test_with_default.py"
+      ]
+    },
+    {
+      "sha": "63d2cccd6e760da6bbc7fe81a53cb2bde3768f5e",
+      "message": "Count validated model fields once in smart unions\n\nBackport of: #13731",
+      "author": "Viicos",
+      "date": "2026-08-28T08:16:03Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/63d2cccd6e760da6bbc7fe81a53cb2bde3768f5e",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "pydantic-core/src/validators/model_fields.rs",
+        "tests/types/test_union.py"
+      ]
+    },
+    {
+      "sha": "b353bbb20a4989b4c033e2be2b4a40d36178b16a",
+      "message": "Prepare release v2.13.5",
+      "author": "Viicos",
+      "date": "2026-08-28T08:20:34Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/b353bbb20a4989b4c033e2be2b4a40d36178b16a",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "CITATION.cff",
+        "HISTORY.md",
+        "pydantic-core/Cargo.lock",
+        "pydantic-core/Cargo.toml",
+        "pydantic/version.py",
+        "pyproject.toml"
+      ]
+    },
+    {
+      "sha": "7eed4a16b87afaced4d0eafae230453de3410d64",
+      "message": "Fix Clippy 0.1.95 warnings\n\nBackport of: #13108",
+      "author": "Viicos",
+      "date": "2026-04-22T14:11:25Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/7eed4a16b87afaced4d0eafae230453de3410d64",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "pydantic-core/src/input/input_abstract.rs",
+        "pydantic-core/src/input/input_python.rs",
+        "pydantic-core/src/input/input_string.rs",
+        "pydantic-core/src/input/return_enums.rs",
+        "pydantic-core/src/validators/mod.rs"
+      ]
+    },
+    {
+      "sha": "a735bee5c64e1fe50785c376adaf1275e752b8ac",
+      "message": "Fix more Clippy lints",
+      "author": "Viicos",
+      "date": "2026-08-28T08:38:51Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/a735bee5c64e1fe50785c376adaf1275e752b8ac",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "pydantic-core/src/lookup_key.rs"
+      ]
+    },
+    {
+      "sha": "2cfd5d3d2ae721ea882c045f83b7f7a4003aab01",
+      "message": "Do not check for docs build",
+      "author": "Viicos",
+      "date": "2026-08-28T09:08:17Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/2cfd5d3d2ae721ea882c045f83b7f7a4003aab01",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        ".github/workflows/ci.yml"
+      ]
+    },
+    {
+      "sha": "558379fee957fad25858e33596146c72d5674843",
+      "message": "Bump twine to v7.0.0\n\nBackport of: #13735",
+      "author": "Viicos",
+      "date": "2026-08-28T12:29:26Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/558379fee957fad25858e33596146c72d5674843",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "uv.lock"
+      ]
+    },
+    {
+      "sha": "001dea020e0809844e5b17666432c9135a976f46",
+      "message": "Bump `pypa/gh-action-pypi-publish` action to v1.14.2\n\nBackport of: #13736",
+      "author": "Viicos",
+      "date": "2026-08-28T13:38:34Z",
+      "parents": 1,
+      "html_url": "https://github.com/pydantic/pydantic/commit/001dea020e0809844e5b17666432c9135a976f46",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        ".github/workflows/ci.yml"
+      ]
+    }
+  ],
+  "collected_at": "2026-10-04T16:55:37.637857Z",
+  "api_calls": 26,
+  "cache_hits": 0
+}

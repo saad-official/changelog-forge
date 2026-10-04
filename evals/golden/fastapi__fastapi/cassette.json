@@ -1,0 +1,216 @@
+{
+  "recorded_at": "2026-10-04T17:38:56.808784+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-16414",
+      "c-12ea7f5",
+      "pr-16415",
+      "pr-16418",
+      "c-2579ed0",
+      "pr-16419"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "openai/gpt-oss-20b"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "fix",
+            "user_summary": "Endpoint wrapping in included routers no longer repeats, avoiding recursion problems.",
+            "dev_summary": "Fixes repeated endpoint wrapping in included routers, preventing recursion issues.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#16414",
+              "ac88f56"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated release notes.",
+            "dev_summary": "Updated release notes.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "12ea7f5"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Released version 0.142.1.",
+            "dev_summary": "Released version 0.142.1.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#16415",
+              "3e33a03"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "FastAPI can start even if OpenTelemetry auto-configuration fails.",
+            "dev_summary": "Allows app startup even when automatic OpenTelemetry configuration fails.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#16418",
+              "1d4953d"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated release notes.",
+            "dev_summary": "Updated release notes.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "2579ed0"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Released version 0.142.2.",
+            "dev_summary": "Released version 0.142.2.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#16419",
+              "78c4324"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:38:53.846687+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 1613,
+          "completion_tokens": 531,
+          "reasoning_tokens": 194,
+          "latency_s": 2.046,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00028027,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release includes fixes for endpoint wrapping recursion and improves startup resilience when OpenTelemetry auto-configuration fails. Internal updates record the new version releases and release notes.",
+        "sections": [
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i1",
+              "i4"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i3",
+              "i6",
+              "i2",
+              "i5"
+            ]
+          }
+        ],
+        "duplicates": []
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:38:55.171825+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 823,
+          "completion_tokens": 226,
+          "reasoning_tokens": 93,
+          "latency_s": 1.329,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00025905,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release fixes an issue where endpoint wrapping in included routers could repeat and cause recursion problems. It also makes FastAPI start reliably even if OpenTelemetry auto-configuration fails.",
+        "sections": [
+          {
+            "section": "fix",
+            "prose": "These fixes improve stability and startup reliability.",
+            "item_ids": [
+              "i1",
+              "i4"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:38:56.808784+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 588,
+          "completion_tokens": 211,
+          "reasoning_tokens": 112,
+          "latency_s": 0.969,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0002148,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

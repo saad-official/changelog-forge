@@ -1,0 +1,601 @@
+{
+  "recorded_at": "2026-10-04T17:42:13.924931+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-11365",
+      "pr-11366",
+      "pr-11367",
+      "pr-11362",
+      "pr-11290",
+      "pr-11218",
+      "pr-11377",
+      "pr-11376",
+      "pr-11378",
+      "pr-11379",
+      "pr-11248",
+      "pr-11221"
+    ],
+    [
+      "pr-11219",
+      "pr-11381",
+      "pr-11301",
+      "pr-11386",
+      "pr-11390",
+      "pr-11392",
+      "pr-11393",
+      "pr-11388",
+      "pr-11360",
+      "pr-11394",
+      "pr-11403"
+    ],
+    [
+      "pr-11401",
+      "pr-11396",
+      "pr-11395",
+      "pr-11364",
+      "pr-11409"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "openai/gpt-oss-20b"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "internal",
+            "user_summary": "Updates AGENTS.md to forbid acting on behalf of operator.",
+            "dev_summary": "Updates AGENTS.md documentation.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11365",
+              "d4faa08"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Delays browser server listening until tests start to avoid optimizer errors.",
+            "dev_summary": "In browser mode, server `listen` is now delayed until tests begin.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11366",
+              "7d8ed3e"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Migrates repository tooling to oxc.",
+            "dev_summary": "Migrates formatting and linting configuration to oxc.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11367",
+              "a029e76"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Corrects mock path resolution boundaries in browser mocks.",
+            "dev_summary": "Adds root boundary check in `resolveMockPath()` for browser mocker.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11362",
+              "1c3888b"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Ignores rrweb-snapshot in Renovate dependency updates.",
+            "dev_summary": "Adds rrweb-snapshot to Renovate ignore list.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11290",
+              "ada2a5e"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Ensures each repeat run has isolated result status, preventing false passes.",
+            "dev_summary": "Resets `result.status` between repeats and collects errors separately.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11218",
+              "5dbebe9"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Suppresses interceptor warning in browser mode for security.",
+            "dev_summary": "Removes interceptor warning output in browser mode.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11377",
+              "15cc006"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "Documents project cwd behavior in common errors guide.",
+            "dev_summary": "Adds documentation on cwd behavior in docs/guide/common-errors.md and projects.md.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11376",
+              "07cd732"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Preserves browser environment config for consumer client environments.",
+            "dev_summary": "Keeps `optimizeDeps` and related settings for environments with `consumer: 'client'` in browser mode.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11378",
+              "aafc099"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Adds Blob support for jsdom 30.1.",
+            "dev_summary": "Enables Blob support in jsdom integration for jsdom 30.1.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11379",
+              "6c49b71"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Removes root temporary directory on Vitest close to avoid leaks.",
+            "dev_summary": "Calls `_clearTmpDir()` in `Vitest.close()` to delete root temp dir.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11248",
+              "7c7119c"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Fixes split-pane handle overlapping iframe in UI.",
+            "dev_summary": "Adjusts BrowserIframe component and styles to prevent handle overlap.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11221",
+              "f91db0d"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:40:06.014694+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 5259,
+          "completion_tokens": 1472,
+          "reasoning_tokens": 706,
+          "latency_s": 3.734,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00083603,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:2",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "fix",
+            "user_summary": "Tests marked to fail no longer trigger retries.",
+            "dev_summary": "`test.fails` now prevents retries by moving status flip earlier in the run.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11219",
+              "b24585f"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Cached modules now update when imports change.",
+            "dev_summary": "Cached module imports are revalidated against resolved URLs before serving, ensuring correct transforms after dependency changes.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11381",
+              "38f9885"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Cache key generators are now scoped per project, preventing cross‑project cache contamination.",
+            "dev_summary": "Cache key generators are now scoped per project, preventing cross‑project cache contamination.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11301",
+              "92ba7fc"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Page crashes during cancellation are ignored, preventing flaky CI failures.",
+            "dev_summary": "Page crashes during cancellation are ignored, preventing flaky CI failures.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11386",
+              "7c36748"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Windows test failures resolved.",
+            "dev_summary": "Windows test failures resolved.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11390",
+              "07ee717"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Pool IDs are now correctly preserved across group orders, avoiding duplicate IDs.",
+            "dev_summary": "Pool IDs are now correctly preserved across group orders, avoiding duplicate IDs.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11392",
+              "50312eb"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "`toMatchScreenshot` now uses the correct reference for retried tests.",
+            "dev_summary": "`toMatchScreenshot` now uses the correct reference for retried tests.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11393",
+              "c22aba9"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Documentation updated for Cloudflare deployment.",
+            "dev_summary": "Documentation updated for Cloudflare deployment.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11388",
+              "a1fd673"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "VM runner now applies dependency optimizer config, preventing failures when index.html imports unbundlable deps.",
+            "dev_summary": "VM runner now applies dependency optimizer config, preventing failures when index.html imports unbundlable deps.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11360",
+              "caf2887"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Standalone docs build fixed and exports maps updated.",
+            "dev_summary": "Standalone docs build fixed and exports maps updated.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11394",
+              "062c75d"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "`why-is-node-running` pinned to 3.2.1 to avoid trust downgrade errors.",
+            "dev_summary": "`why-is-node-running` pinned to 3.2.1 to avoid trust downgrade errors.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11403",
+              "f6c9a49"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:41:09.401181+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:2",
+          "prompt_tokens": 5364,
+          "completion_tokens": 1290,
+          "reasoning_tokens": 577,
+          "latency_s": 3.391,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0007893,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:3",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "fix",
+            "user_summary": "Asymmetric matchers now correctly use the current equality testers when created via `expect.extend`.",
+            "dev_summary": "`expect.extend` asymmetric matchers now forward the current equality testers to the matcher implementation.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11401",
+              "3e794a9"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Removed the obsolete CLAUDE.md file from the repository.",
+            "dev_summary": "Deleted file `CLAUDE.md` from the repository root.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11396",
+              "245f094"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Fixed script reuse across different Vite environments to prevent mock and module instance issues.",
+            "dev_summary": "The VM module cache now keys compiled scripts by code, preventing cross‑environment reuse.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11395",
+              "346d389"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "Updated benchmarking examples to remove unused imports and variables.",
+            "dev_summary": "Removed unused `expect` import and `result` variable from `docs/guide/benchmarking.md`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11364",
+              "62a7fe6"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Released version 5.0.3 of Vitest.",
+            "dev_summary": "Updated package.json files for the v5.0.3 release.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11409",
+              "33cadea"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:42:10.652539+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:3",
+          "prompt_tokens": 2505,
+          "completion_tokens": 438,
+          "reasoning_tokens": 83,
+          "latency_s": 1.25,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00031927,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release adds several fixes for browser mode behavior, improves caching and module isolation, and updates internal tooling and documentation. Notable changes include delayed server listening in browser mode, refined mock path handling, and better cleanup of temporary directories.",
+        "sections": [
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i2",
+              "i4",
+              "i6",
+              "i7",
+              "i9",
+              "i10",
+              "i11",
+              "i12",
+              "i13",
+              "i14",
+              "i15",
+              "i16",
+              "i18",
+              "i19",
+              "i21",
+              "i24",
+              "i26"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i3",
+              "i5",
+              "i17",
+              "i20",
+              "i22",
+              "i23",
+              "i25",
+              "i28",
+              "i1"
+            ]
+          },
+          {
+            "section": "docs",
+            "prose": null,
+            "item_ids": [
+              "i8",
+              "i27"
+            ]
+          }
+        ],
+        "duplicates": []
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:42:12.362424+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 1570,
+          "completion_tokens": 511,
+          "reasoning_tokens": 215,
+          "latency_s": 1.687,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0005421,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release improves the stability of test runs and fixes several issues that could cause unexpected behavior in the browser and UI. It also tightens caching and cleanup to keep your environment tidy.",
+        "sections": [
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i13",
+              "i14",
+              "i15",
+              "i2",
+              "i7",
+              "i9",
+              "i10",
+              "i11",
+              "i12",
+              "i16",
+              "i18",
+              "i19",
+              "i21",
+              "i24",
+              "i26",
+              "i4",
+              "i6"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:42:13.924931+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 1052,
+          "completion_tokens": 357,
+          "reasoning_tokens": 183,
+          "latency_s": 1.25,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.000372,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

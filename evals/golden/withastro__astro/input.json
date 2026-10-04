@@ -1,0 +1,148 @@
+{
+  "repo": "withastro/astro",
+  "base": "astro@7.3.4",
+  "head": "astro@7.3.5",
+  "compare_url": "https://github.com/withastro/astro/compare/astro@7.3.4...astro@7.3.5",
+  "default_branch": "main",
+  "private": false,
+  "total_commits": 5,
+  "commits": [
+    {
+      "sha": "86384c5a56d15dcd1782a8322b4ea937130e65ca",
+      "message": "Update @astrojs/upgrade (#18098)\n\nCo-authored-by: Florian Lefebvre <contact@florian-lefebvre.dev>",
+      "author": "renovate[bot]",
+      "date": "2026-09-23T10:11:42Z",
+      "parents": 1,
+      "html_url": "https://github.com/withastro/astro/commit/86384c5a56d15dcd1782a8322b4ea937130e65ca",
+      "pr_number": 18098,
+      "pr_title": "Update @astrojs/upgrade",
+      "pr_body": "This PR contains the following updates:\n\n| Package | Change | [Age](https://docs.renovatebot.com/merge-confidence/) | [Confidence](https://docs.renovatebot.com/merge-confidence/) |\n|---|---|---|---|\n| [package-manager-detector](https://redirect.github.com/antfu-collective/package-manager-detector) | [`^1.6.0` → `^1.8.0`](https://renovatebot.com/diffs/npm/package-manager-detector/1.8.0/1.8.0) | ![age](https://developer.mend.io/api/mc/badges/age/npm/package-manager-detector/1.8.0?slim=true) | ![confidence](https://developer.mend.io/api/mc/badges/confidence/npm/package-manager-detector/1.8.0/1.8.0?slim=true) |\n| [verkit](https://redirect.github.com/sxzz/verkit) | [`^0.4.0` → `^0.5.0`](https://renovatebot.com/diffs/npm/verkit/0.4.0/0.5.0) | ![age](https://developer.mend.io/api/mc/badges/age/npm/verkit/0.5.0?slim=true) | ![confidence](https://developer.mend.io/api/mc/badges/confidence/npm/verkit/0.4.0/0.5.0?slim=true) |\n\n---\n\n### Release Notes\n\n<details>\n<summary>sxzz/verkit (verkit)</summary>\n\n### [`v0.5.0`](https://redirect.github.com/sxzz/verkit/releases/tag/v0.5.0)\n\n[Compare Source](https://redirect.github.com/sxzz/verkit/compare/v0.4.1...v0.5.0)\n\n#### Migration guide\n\n`v0.5.0` removes the deprecated shorthand aliases for version comparisons.\nReplace any imports of these APIs with their `*Than` equivalents:\n\n| Removed API        | Replacement            |\n| ------------------ | ---------------------- |\n| `isGreater`        | `isGreaterThan`        |\n| `isGreaterOrEqual` | `isGreaterThanOrEqual` |\n| `isLess`           | `isLessThan`           |\n| `isLessOrEqual`    | `isLessThanOrEqual`    |\n\n```ts\n// Before\nimport { isGreater, isLessOrEqual } from 'verkit'\n\n// After\nimport { isGreaterThan, isLessThanOrEqual } from 'verkit'\n```\n\nThe replacement functions have the same behavior and arguments; only their exported names have changed.\n\n#####    🚨 Breaking Changes\n\n- Remove deprecated version comparison aliases  -  by [@&#8203;sxzz](https://redirect.github.com/sxzz) [<samp",
+      "pr_url": "https://github.com/withastro/astro/pull/18098",
+      "labels": [
+        "dependencies"
+      ],
+      "files": [
+        "packages/upgrade/package.json",
+        "packages/upgrade/src/actions/verify.ts",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "2b8b2e80169da0ab19055166438291c46fcfe320",
+      "message": "feat: add render component (#17736)",
+      "author": "ematipico",
+      "date": "2026-09-23T14:35:05Z",
+      "parents": 1,
+      "html_url": "https://github.com/withastro/astro/commit/2b8b2e80169da0ab19055166438291c46fcfe320",
+      "pr_number": 17736,
+      "pr_title": "feat: add render component",
+      "pr_body": "## Changes\r\n\r\nIt needs https://github.com/withastro/compiler-rs/pull/192\r\n\r\nAdds `renderComponent()` to the Astro container APIs. The added feature to this function is that it renders the scripts and styles that are declared in the component. It uses the compiler the runtime to dynamically attach and swap them.\r\n\r\n```ts\r\n\r\nimport Component from \"./components/Footer.astro?container\"\r\n\r\nconst container = await experimental_AstroContainer.create();\r\n\r\nexport const GET: APIRoute = async () => {\r\n\r\n\treturn new Response(\r\n\t\tawait container.renderComponent(Component, {\r\n\t\t\tprops: { message: 'Hello ' },\r\n\t\t\tslots: { default: 'World' },\r\n\t\t}),\r\n\t);\r\n};\r\n\r\n``` \r\n\r\nWhat do you think? \r\n\r\n## Testing\r\n\r\nAdded new tests\r\n\r\n<!-- How was this change tested? -->\r\n<!-- DON'T DELETE THIS SECTION! If no tests added, explain why. -->\r\n\r\n## Docs\r\n\r\nhttps://github.com/withastro/docs/pull/14592\r\n\r\n<!-- Could this affect a user’s behavior? We probably need to update docs! -->\r\n<!-- If docs will be needed or you’re not sure, uncomment the next line: -->\r\n<!-- /cc @withastro/maintainers-docs for feedback! -->\r\n\r\n<!-- DON'T DELETE THIS SECTION! If no docs added, explain why.-->\r\n<!-- https://github.com/withastro/docs -->\r\n",
+      "pr_url": "https://github.com/withastro/astro/pull/17736",
+      "labels": [
+        "pkg: astro"
+      ],
+      "files": [
+        ".changeset/olive-queens-enjoy.md",
+        "packages/astro/package.json",
+        "packages/astro/src/container/index.ts",
+        "packages/astro/src/core/build/plugins/plugin-analyzer.ts",
+        "packages/astro/src/core/compile/compile.ts",
+        "packages/astro/src/vite-plugin-astro/hmr.ts",
+        "packages/astro/src/vite-plugin-astro/index.ts",
+        "packages/astro/src/vite-plugin-astro/query.ts",
+        "packages/astro/test/container.test.ts",
+        "packages/astro/test/fixtures/container-custom-renderers/src/components/Assets.astro",
+        "packages/astro/test/fixtures/container-custom-renderers/src/components/AssetsChild.astro",
+        "packages/astro/test/fixtures/container-custom-renderers/src/pages/assets.ts",
+        "packages/astro/test/units/render/container.test.ts",
+        "packages/astro/test/units/vite-plugin-astro/compile.test.ts",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "da1333a4f6754ee6311e06532030829f2544dde6",
+      "message": "Update dependency chokidar to v5 (#18107)",
+      "author": "renovate[bot]",
+      "date": "2026-09-24T08:41:20Z",
+      "parents": 1,
+      "html_url": "https://github.com/withastro/astro/commit/da1333a4f6754ee6311e06532030829f2544dde6",
+      "pr_number": 18107,
+      "pr_title": "Update dependency chokidar to v5",
+      "pr_body": "This PR contains the following updates:\n\n| Package | Change | [Age](https://docs.renovatebot.com/merge-confidence/) | [Confidence](https://docs.renovatebot.com/merge-confidence/) |\n|---|---|---|---|\n| [chokidar](https://redirect.github.com/paulmillr/chokidar) | [`^4.0.3` → `^5.0.0`](https://renovatebot.com/diffs/npm/chokidar/4.0.3/5.0.0) | ![age](https://developer.mend.io/api/mc/badges/age/npm/chokidar/5.0.0?slim=true) | ![confidence](https://developer.mend.io/api/mc/badges/confidence/npm/chokidar/4.0.3/5.0.0?slim=true) |\n\n---\n\n### Release Notes\n\n<details>\n<summary>paulmillr/chokidar (chokidar)</summary>\n\n### [`v5.0.0`](https://redirect.github.com/paulmillr/chokidar/releases/tag/5.0.0)\n\n[Compare Source](https://redirect.github.com/paulmillr/chokidar/compare/4.0.3...5.0.0)\n\n- Make the package ESM-only. Reduces on-disk package size from \\~150kb to \\~80kb\n- Increase minimum node.js version to v20.19. The versions starting from it support loading esm files from cjs\n- fix: Make types more precise [#&#8203;1424](https://redirect.github.com/paulmillr/chokidar/pull/1424)\n- perf: re-use double slash regex [#&#8203;1435](https://redirect.github.com/paulmillr/chokidar/pull/1435)\n- Update readdirp to ESM-only v5\n- Lots of minor improvements in tests\n- Increase security of NPM releases. Switch to token-less Trusted Publishing, with help of [jsbt](https://redirect.github.com/paulmillr/jsbt)\n- Switch compilation mode to isolatedDeclaration-based typescript for simplified auto-generated docs\n\n#### New Contributors\n\n- [@&#8203;mhkeller](https://redirect.github.com/mhkeller) made their first contribution in [#&#8203;1426](https://redirect.github.com/paulmillr/chokidar/pull/1426)\n- [@&#8203;btea](https://redirect.github.com/btea) made their first contribution in [#&#8203;1432](https://redirect.github.com/paulmillr/chokidar/pull/1432)\n\n**Full Changelog**: <https://github.com/paulmillr/chokidar/compare/4.0.3...5.0.0>\n\n</details>\n\n---\n\n### Configuration\n\n📅 **Schedule**: (UTC)\n\n- Branch c",
+      "pr_url": "https://github.com/withastro/astro/pull/18107",
+      "labels": [
+        "dependencies"
+      ],
+      "files": [
+        "packages/language-tools/astro-check/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "b0d4ab45455a5e05344ffc66ed5fb1c5d999501c",
+      "message": "Update dependency mocha to v12 (#18108)",
+      "author": "renovate[bot]",
+      "date": "2026-09-24T08:42:59Z",
+      "parents": 1,
+      "html_url": "https://github.com/withastro/astro/commit/b0d4ab45455a5e05344ffc66ed5fb1c5d999501c",
+      "pr_number": 18108,
+      "pr_title": "Update dependency mocha to v12",
+      "pr_body": "This PR contains the following updates:\n\n| Package | Change | [Age](https://docs.renovatebot.com/merge-confidence/) | [Confidence](https://docs.renovatebot.com/merge-confidence/) |\n|---|---|---|---|\n| [mocha](https://mochajs.org/) ([source](https://redirect.github.com/mochajs/mocha)) | [`^11.8.0` → `^12.0.2`](https://renovatebot.com/diffs/npm/mocha/11.8.0/12.0.2) | ![age](https://developer.mend.io/api/mc/badges/age/npm/mocha/12.0.2?slim=true) | ![confidence](https://developer.mend.io/api/mc/badges/confidence/npm/mocha/11.8.0/12.0.2?slim=true) |\n\n---\n\n### Release Notes\n\n<details>\n<summary>mochajs/mocha (mocha)</summary>\n\n### [`v12.0.2`](https://redirect.github.com/mochajs/mocha/blob/HEAD/CHANGELOG.md#1202-2026-09-17)\n\n[Compare Source](https://redirect.github.com/mochajs/mocha/compare/v12.0.1...v12.0.2)\n\n##### 🩹 Fixes\n\n- fail nested tests on beforeEach failure ([#&#8203;6292](https://redirect.github.com/mochajs/mocha/issues/6292)) ([a75b43b](https://redirect.github.com/mochajs/mocha/commit/a75b43b0d69fb0529945bc71aaca9a1a5dc24188))\n- give CLI reporter-option precedence over config file ([#&#8203;6331](https://redirect.github.com/mochajs/mocha/issues/6331)) ([571110f](https://redirect.github.com/mochajs/mocha/commit/571110f0e87a3871b7ae6cea3eb4f19101a39f2c))\n- propagate spec file path on parallel worker death ([#&#8203;6268](https://redirect.github.com/mochajs/mocha/issues/6268)) ([55a544a](https://redirect.github.com/mochajs/mocha/commit/55a544a409cc1dc8171b715ab4010c705ab53027))\n- use find-up-simple to workaround ERR\\_PACKAGE\\_PATH\\_NOT\\_EXPORTED ([#&#8203;6342](https://redirect.github.com/mochajs/mocha/issues/6342)) ([a652ff5](https://redirect.github.com/mochajs/mocha/commit/a652ff5c1b14e2476a0e81ddabf5992fb7de5c12))\n- watch existing dirs so first run starts armed ([#&#8203;6263](https://redirect.github.com/mochajs/mocha/issues/6263)) ([f5c8aca](https://redirect.github.com/mochajs/mocha/commit/f5c8acac5f556e58d6d7327e660070684b8d06bb))\n\n##### 📚 Documentation\n\n- add ",
+      "pr_url": "https://github.com/withastro/astro/pull/18108",
+      "labels": [
+        "dependencies"
+      ],
+      "files": [
+        "packages/language-tools/ts-plugin/package.json",
+        "packages/language-tools/vscode/package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "c2e01642af5f3919e4951b277a01d2de0ba1322f",
+      "message": "[ci] release (#18113)",
+      "author": "astrobot-houston",
+      "date": "2026-09-24T09:08:10Z",
+      "parents": 1,
+      "html_url": "https://github.com/withastro/astro/commit/c2e01642af5f3919e4951b277a01d2de0ba1322f",
+      "pr_number": 18113,
+      "pr_title": "[ci] release",
+      "pr_body": "This PR was opened by the [Changesets release](https://github.com/changesets/action) GitHub action. When you're ready to do a release, you can merge this and the packages will be published to npm automatically. If you're not ready to do a release yet, that's fine, whenever you add more changesets to main, this PR will be updated.\n\n\n# Releases\n## astro@7.3.5\n\n### Patch Changes\n\n- [#17736](https://github.com/withastro/astro/pull/17736) [`2b8b2e8`](https://github.com/withastro/astro/commit/2b8b2e80169da0ab19055166438291c46fcfe320) Thanks [@ematipico](https://github.com/ematipico)! - Adds a new container function called `renderComponent()`, which renders Astro components with inlined styles and scripts.\n  \n  Users must import the component with the new `?container` query string:\n  \n  ```js\n  import { experimental_AstroContainer } from \"astro/container\";\n  import TodoList from \"../components/TodoList.astro?container\";\n  \n  const container = await experimental_AstroContainer.create();\n  \n  const _string = container.renderComponent(TodoList);\n  ```",
+      "pr_url": "https://github.com/withastro/astro/pull/18113",
+      "labels": [
+        "pkg: example",
+        "pkg: astro"
+      ],
+      "files": [
+        ".changeset/olive-queens-enjoy.md",
+        "examples/advanced-routing/package.json",
+        "examples/basics/package.json",
+        "examples/blog/package.json",
+        "examples/component/package.json",
+        "examples/container-with-vitest/package.json",
+        "examples/framework-alpine/package.json",
+        "examples/framework-multiple/package.json",
+        "examples/framework-preact/package.json",
+        "examples/framework-react/package.json",
+        "examples/framework-solid/package.json",
+        "examples/framework-svelte/package.json",
+        "examples/framework-vue/package.json",
+        "examples/hackernews/package.json",
+        "examples/integration/package.json",
+        "examples/minimal/package.json",
+        "examples/portfolio/package.json",
+        "examples/ssr/package.json",
+        "examples/starlog/package.json",
+        "examples/toolbar-app/package.json",
+        "examples/with-markdoc/package.json",
+        "examples/with-mdx/package.json",
+        "examples/with-nanostores/package.json",
+        "examples/with-tailwindcss/package.json",
+        "examples/with-vitest/package.json"
+      ]
+    }
+  ],
+  "collected_at": "2026-10-04T16:57:05.590910Z",
+  "api_calls": 12,
+  "cache_hits": 0
+}

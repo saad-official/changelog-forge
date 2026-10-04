@@ -1,0 +1,64 @@
+# Model routing: which model does which job, and what happens when it cannot.
+# Why this shape: docs/decisions/0001-model-routing.md. Prices: llm_kit.pricing (paid rates).
+# Changing a model here is a behaviour change: re-run `uv run evals --live` and compare.
+
+version = "2026-10-04"
+
+[budget]
+# Hard ceiling per run, enforced by llm-kit's Ledger BEFORE each call.
+max_usd_per_run = 0.05
+
+[retry]
+# Shorter than llm-kit's defaults: a serverless request has ~250 s, and a stuck primary
+# should hand over to the fallback rather than spend 90 s backing off.
+max_attempts = 3
+max_delay_s = 20.0
+deadline_s = 45.0
+
+[chunk]
+# Map group size, counted with tiktoken o200k_base. The spec said 6,000; the first live
+# eval showed why not: 6,000 tokens of items + the ~900-token system prompt reached Groq as
+# 8,040 tokens, and a single request over the free tier's 8,000 TPM is rejected outright
+# (413, not retryable), forcing the 8x more expensive fallback. 4,500 leaves headroom.
+target_tokens = 4500
+
+[prompts]
+map = "v1"
+reduce_user = "v1"
+reduce_dev = "v1"
+
+# ---------------------------------------------------------------------------- map
+# Many small, structured, low-stakes calls: classify + one-sentence summaries. The cheapest
+# model that reliably follows a strict schema.
+[tiers.map]
+provider = "groq"
+model = "openai/gpt-oss-20b"
+max_tokens = 8192          # reasoning model: hidden thinking counts against this
+temperature = 0.2
+reasoning_effort = "low"
+tpm_limit = 8000           # Groq free tier, tokens per minute per model
+schema_retries = 1         # Groq rejects off-schema output with a 400; one resample first
+
+[[tiers.map.fallbacks]]
+provider = "gemini"
+model = "gemini-3.5-flash-lite"
+max_tokens = 8192
+temperature = 0.2
+
+# ---------------------------------------------------------------------------- reduce
+# Two calls per run (dev, user) over the whole verified item list: ordering, dedupe and
+# the prose a human reads first. Worth a better model; still cents per thousand runs.
+[tiers.reduce]
+provider = "groq"
+model = "openai/gpt-oss-120b"
+max_tokens = 6144
+temperature = 0.2
+reasoning_effort = "low"
+tpm_limit = 8000
+schema_retries = 1
+
+[[tiers.reduce.fallbacks]]
+provider = "gemini"
+model = "gemini-3.5-flash-lite"
+max_tokens = 6144
+temperature = 0.2

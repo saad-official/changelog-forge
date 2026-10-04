@@ -1,0 +1,876 @@
+{
+  "recorded_at": "2026-10-04T18:00:37.815750+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-11764",
+      "pr-11765",
+      "pr-11753",
+      "pr-11807",
+      "c-afda008",
+      "c-ec76284",
+      "c-3ba91b1",
+      "pr-11861",
+      "pr-11862",
+      "c-949bcd3",
+      "c-92d1c42",
+      "c-9b13df1",
+      "c-293f64f",
+      "pr-11863",
+      "c-2bf0398",
+      "pr-11880"
+    ],
+    [
+      "pr-11868",
+      "pr-11886",
+      "pr-11885",
+      "pr-11884",
+      "pr-11876",
+      "pr-11875",
+      "c-2b3e6d4",
+      "pr-11915",
+      "pr-11924"
+    ],
+    [
+      "pr-11925",
+      "pr-11977",
+      "pr-11976",
+      "pr-11972",
+      "pr-12037",
+      "pr-12033",
+      "pr-12052",
+      "pr-12057",
+      "pr-12058",
+      "pr-12059",
+      "pr-12054",
+      "pr-12034",
+      "pr-12017",
+      "pr-12044"
+    ],
+    [
+      "pr-12061",
+      "pr-12062",
+      "pr-12087",
+      "pr-12063"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "gemini-3.5-flash-lite",
+      "openai/gpt-oss-20b"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "feature",
+            "user_summary": "You can now view the updated Sona UI registry domain.",
+            "dev_summary": "Updated the Sona UI registry domain in `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11764",
+              "c2a25d4"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated the author reference in the registry directory.",
+            "dev_summary": "Replaced `@aliimam` with `@designali` in `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11765",
+              "eb7a585"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "You can now use the new Quiz UI registry for building unstyled quiz funnels.",
+            "dev_summary": "Added `@quiz-ui` to the registry directory in `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11753",
+              "4dbe072"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Fixed logo quote formatting issues in the registry directory to ensure proper parsing.",
+            "dev_summary": "Corrected SVG viewBox quotes in `apps/v4/registry/directory.json` and `packages/shadcn/src/utils/updaters/update-css.ts` for namespace and validation checks.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11807",
+              "5c7072d"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Added OIDC support to the application.",
+            "dev_summary": "Added OIDC configuration in `apps/v4/next.config.mjs`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "afda008"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Added an entry to the registry directory.",
+            "dev_summary": "Updated `apps/v4/next.config.mjs` and `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "ec76284"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Server payloads for OIDC are now served correctly via forwarded headers.",
+            "dev_summary": "Updated `apps/v4/next.config.mjs` to serve OIDC home RSC payloads using forwarded headers.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "3ba91b1"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "You can now discover multiple new community registries in the directory.",
+            "dev_summary": "Added multiple new community registry entries to `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11861",
+              "1e4fbdc"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated third-party dependencies across templates and packages.",
+            "dev_summary": "Bumped Next, Astro, Postcss, Undici, and other packages, and updated test snapshots and lockfiles.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11862",
+              "7bc5604"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Grouped Dependabot minor and patch updates configuration.",
+            "dev_summary": "Updated `.github/dependabot.yml` to group minor and patch updates.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "949bcd3"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated dependency packages for React Router app templates.",
+            "dev_summary": "Bumped packages including `react`, `react-dom`, `vite`, and `tailwindcss` in `templates/react-router-app/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "92d1c42"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated dependencies for the start app template.",
+            "dev_summary": "Bumped packages like `cn`, `react`, and `prettier` in `templates/start-app/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "9b13df1"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated various dependencies for the Vite monorepo template.",
+            "dev_summary": "Bumped packages including `turbo`, `react`, `vite`, and `eslint` in `templates/vite-monorepo/package.json` and related files.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "293f64f"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated dependencies for the Vite app template.",
+            "dev_summary": "Bumped `react`, `react-dom`, and build tools in `templates/vite-app/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11863",
+              "24978aa"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Configured Dependabot to ignore major bumps for `@types/node`.",
+            "dev_summary": "Updated `.github/dependabot.yml` to ignore major version bumps for `@types/node`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "2bf0398"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated `@types/node` dependency in the Vite app template.",
+            "dev_summary": "Bumped `@types/node` in `templates/vite-app/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11880",
+              "01951ae"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:58:39.119206+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "reasoning_tokens": 0,
+          "latency_s": 44.141,
+          "finish_reason": null,
+          "attempts": 1,
+          "cost_usd": 0.0,
+          "price_known": true,
+          "error": "LLMTransientError: all 3 attempts failed. Last error: 429 from provider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01m1rrqct2e14tb3dkpwbmm4p9` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195793, Requested 6734. Please try again in 18m11.664s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+        },
+        {
+          "started_at": "2026-10-04T17:58:48.175511+00:00",
+          "provider": "gemini",
+          "model": "gemini-3.5-flash-lite",
+          "label": "map:1",
+          "prompt_tokens": 5970,
+          "completion_tokens": 1905,
+          "reasoning_tokens": 0,
+          "latency_s": 9.047,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0065535,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:2",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "internal",
+            "user_summary": "Update dependencies across templates.",
+            "dev_summary": "Bump dependencies including `next`, `react`, and tools in `templates/next-app/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11868",
+              "bcc5f70"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Update type definitions for Node in the start-app template.",
+            "dev_summary": "Bump `@types/node` from `20.19.10` to `20.19.43` in `templates/start-app/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11886",
+              "de853c7"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Update type definitions for Node in the vite-monorepo template.",
+            "dev_summary": "Bump `@types/node` from `24.12.4` to `24.13.3` in `templates/vite-monorepo/pnpm-lock.yaml`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11885",
+              "febbe30"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Update type definitions for Node in the react-router-app template.",
+            "dev_summary": "Bump `@types/node` from `22.19.19` to `22.20.1` in `templates/react-router-app/pnpm-lock.yaml`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11884",
+              "f87f4e9"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Update ESLint in the next-app template.",
+            "dev_summary": "Bump `eslint` from `9.26.0` to `10.10.0` in `templates/next-app/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11876",
+              "64f40c2"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Update JSDOM in the start-app template.",
+            "dev_summary": "Bump `jsdom` from `28.1.0` to `30.0.1` in `templates/start-app/package.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11875",
+              "60bb22c"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Split Dependabot root configuration into stable and framework groups.",
+            "dev_summary": "Update `.github/dependabot.yml` to split the root dependency group.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "2b3e6d4"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Add new community registries to the directory.",
+            "dev_summary": "Add community registry entries to `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11915",
+              "f5bb039"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Add more community registries to the directory.",
+            "dev_summary": "Add additional community registry entries to `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11924",
+              "ec6490f"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:59:32.311328+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:2",
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "reasoning_tokens": 0,
+          "latency_s": 44.14,
+          "finish_reason": null,
+          "attempts": 1,
+          "cost_usd": 0.0,
+          "price_known": true,
+          "error": "LLMTransientError: all 3 attempts failed. Last error: 429 from provider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01m1rrqct2e14tb3dkpwbmm4p9` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195669, Requested 5523. Please try again in 8m34.943999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+        },
+        {
+          "started_at": "2026-10-04T17:59:40.926971+00:00",
+          "provider": "gemini",
+          "model": "gemini-3.5-flash-lite",
+          "label": "map:2",
+          "prompt_tokens": 5552,
+          "completion_tokens": 1131,
+          "reasoning_tokens": 0,
+          "latency_s": 8.61,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0044931,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:3",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "feature",
+            "user_summary": "You can now discover and use new community registries added to the directory.",
+            "dev_summary": "Added community registries including `@slidecn`, `@emailcn`, `@amap`, `@ark-cn`, `@styleui`, `@buzzform`, `@ratneshc`, `@nostalgia-ui`, and `@bits-ui` to `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11925"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Pull requests with unverified commits are automatically closed after 14 days.",
+            "dev_summary": "Added `.github/workflows/signed-commits-close.yml` and updated `.github/workflows/signed-commits.yml` to automatically close pull requests carrying unverified commits after two weeks.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11977"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "You can browse additional community registries in the directory.",
+            "dev_summary": "Added community registries including `@tween-ui`, `@gridcn`, `@iandefined`, `@keyline`, `@catalogs`, `@nekode`, `@starck`, `@emstein-ui`, `@herocn`, and `@avertra-ui` to `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11976"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "The description for the @7ovr registry has been updated.",
+            "dev_summary": "Updated the `@7ovr` description in `apps/v4/registry/directory.json` to accurately reflect the current project state.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#11972"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "New community registries have been added to the directory.",
+            "dev_summary": "Added community registries including `@fibo`, `@tweenly`, `@dashboardblocks`, `@dgit`, `@ecomcn`, `@sekei`, `@reactframe`, `@tablecn`, and `@opaline` to `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12037"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "The Corsair UI copy-and-own component registry is now available.",
+            "dev_summary": "Added `@corsair-ui` to the registry directory in `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12033"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "More community registries are now accessible in the directory.",
+            "dev_summary": "Added community registries including `@watermelon`, `@velora`, `@notra`, `@balick`, `@sureui`, `@aayurt`, `@stacklyui`, `@neobrutal-ui`, `@videocn`, and `@soldevelo` to `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12052"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Chat component registry entries and documentation have been corrected to prevent drift.",
+            "dev_summary": "Updated chat component dependencies in registry files, fixed base style references in `message-scroller.mdx` files, and added chat components to `UI_COMPONENTS` in `apps/v4/lib/components.ts`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12057"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "The registry directory is now ranked by health and catalog size.",
+            "dev_summary": "Added ranking logic based on health and catalog size in `apps/v4/lib/registry-health/rank.ts` and updated related monitoring and documentation.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12058"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Additional community registries have been added to the directory.",
+            "dev_summary": "Added community registries including `@uiarc`, `@jpmarques`, `@stealth`, `@pastaui`, `@skrewww`, and `@json-view-cn` to `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12059"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "The @notra logo in the registry directory now displays correctly with an unfilled stroke.",
+            "dev_summary": "Set `fill='none'` directly on the stroke path for the `@notra` logo entry in `apps/v4/registry/directory.json` to prevent it from rendering as a solid fill.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12054"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "The @voraui logo arcs in the directory now display correctly without unwanted fills.",
+            "dev_summary": "Set `fill='none'` on paths and adjusted the `viewBox` for the `@voraui` logo in `apps/v4/registry/directory.json` so arcs stay outlined.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12034"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "The description for the @snapcn registry has been updated.",
+            "dev_summary": "Updated the `@snapcn` description in `apps/v4/registry/directory.json` to specify animation and motion graphics for product demo videos.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12017"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "The @sekei registry URL has been updated to sekei.design to avoid ISP blocking issues.",
+            "dev_summary": "Updated the homepage and URL of the `@sekei` entry from `sekei.xyz` to `sekei.design` in `apps/v4/registry/directory.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#12044"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T18:00:23.041918+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:3",
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "reasoning_tokens": 0,
+          "latency_s": 42.125,
+          "finish_reason": null,
+          "attempts": 1,
+          "cost_usd": 0.0,
+          "price_known": true,
+          "error": "LLMTransientError: all 3 attempts failed. Last error: 429 from provider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01m1rrqct2e14tb3dkpwbmm4p9` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195551, Requested 6140. Please try again in 12m10.512s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+        },
+        {
+          "started_at": "2026-10-04T18:00:31.959947+00:00",
+          "provider": "gemini",
+          "model": "gemini-3.5-flash-lite",
+          "label": "map:3",
+          "prompt_tokens": 5993,
+          "completion_tokens": 1864,
+          "reasoning_tokens": 0,
+          "latency_s": 8.921,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0064579,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:4",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "fix",
+            "user_summary": "Shimmer animations now respect reduced motion settings for variant-prefixed usage.",
+            "dev_summary": "The shimmer reduced-motion handling was moved into the utility, so `hover:shimmer` no longer animates when reduced motion is enabled.",
+            "breaking": false,
+            "breaking_confidence": 0.2,
+            "migration_note": null,
+            "refs": [
+              "#12061",
+              "a9c1da4"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Starter templates updated to current framework scaffolds and dependency versions.",
+            "dev_summary": "All shadcn starter templates were refreshed with latest framework scaffolds, dependency versions, lockfiles, and Node requirements.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#12062",
+              "b0fcb58"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "A new package `@shadcn/registry` provides the registry API for external use.",
+            "dev_summary": "The registry code was extracted into a new package `@shadcn/registry`, which `shadcn` now depends on; existing exports remain unchanged.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#12087",
+              "bf6646b"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Packages were versioned and prepared for publishing.",
+            "dev_summary": "Release PR updated package versions and changelogs for `@shadcn/registry` and `shadcn`.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#12063",
+              "3502dbc"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T18:00:33.564610+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:4",
+          "prompt_tokens": 2832,
+          "completion_tokens": 397,
+          "reasoning_tokens": 58,
+          "latency_s": 1.594,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0003315,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release extracts the registry code into a new @shadcn/registry package and adds extensive community registry entries. It also introduces OIDC configuration, updates next.js handling for forwarded headers, and improves reduced‑motion behavior. Several fixes address SVG viewBox handling, logo rendering, and component dependencies.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": "Key functional additions and restructuring.",
+            "item_ids": [
+              "i42",
+              "i5",
+              "i34",
+              "i31",
+              "i1",
+              "i3",
+              "i26"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": "Corrections to SVG handling, component behavior, and configuration.",
+            "item_ids": [
+              "i40",
+              "i4",
+              "i7",
+              "i36",
+              "i37",
+              "i39",
+              "i33"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i41",
+              "i43",
+              "i9",
+              "i10",
+              "i15",
+              "i23",
+              "i27",
+              "i2",
+              "i6",
+              "i11",
+              "i12",
+              "i13",
+              "i14",
+              "i16",
+              "i17",
+              "i18",
+              "i19",
+              "i20",
+              "i21",
+              "i22"
+            ]
+          },
+          {
+            "section": "docs",
+            "prose": null,
+            "item_ids": [
+              "i29",
+              "i38"
+            ]
+          }
+        ],
+        "duplicates": [
+          {
+            "keep": "i26",
+            "merge": [
+              "i8",
+              "i24",
+              "i25",
+              "i28",
+              "i30",
+              "i32",
+              "i35"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T18:00:36.222407+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 2802,
+          "completion_tokens": 750,
+          "reasoning_tokens": 360,
+          "latency_s": 2.64,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0008703,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release adds support for OIDC authentication and introduces a new registry API package. It also expands the list of available UI registries and improves visual and accessibility details.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i5",
+              "i42",
+              "i26",
+              "i31",
+              "i34",
+              "i3",
+              "i1"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i7",
+              "i40",
+              "i4",
+              "i36",
+              "i37",
+              "i33",
+              "i39"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T18:00:37.800034+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 988,
+          "completion_tokens": 396,
+          "reasoning_tokens": 214,
+          "latency_s": 1.579,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0003858,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

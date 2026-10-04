@@ -1,0 +1,30 @@
+{
+  "repo": "drizzle-team/drizzle-orm",
+  "base": "0.44.7",
+  "head": "0.45.0",
+  "must_mention": [
+    "#1674",
+    "#1708",
+    "#1676",
+    "#5034"
+  ],
+  "must_flag_breaking": [
+    "#1676"
+  ],
+  "may_flag_breaking": [],
+  "forbidden_claims": [
+    "drizzle-orm 1\\.0",
+    "\\bv1\\.0\\b"
+  ],
+  "categories": {
+    "#1674": "feature",
+    "#1708": "fix",
+    "#5034": "fix",
+    "#5035": "internal",
+    "#5036": "internal",
+    "#5087": "internal",
+    "#5095": "internal",
+    "4e61887": "internal"
+  },
+  "notes": "#1676 renames the MySQL/SingleStore index option `algorythm` to `algorithm` in drizzle-orm's public index builder: existing code using the misspelled option breaks. Title says 'typo', which is exactly why it is a good test."
+}

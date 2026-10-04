@@ -1,0 +1,40 @@
+{
+  "repo": "vercel/ai",
+  "base": "ai@7.0.126",
+  "head": "ai@7.0.127",
+  "must_mention": [
+    "#21897",
+    "#20560",
+    "#21903",
+    "#21728",
+    "#21874",
+    "#21910",
+    "#21810",
+    "#20415"
+  ],
+  "must_flag_breaking": [],
+  "may_flag_breaking": [
+    "#20560"
+  ],
+  "forbidden_claims": [
+    "\\bai@8",
+    "grok (model )?(is|was) removed"
+  ],
+  "categories": {
+    "#21897": "feature",
+    "#20560": "feature",
+    "#21903": "feature",
+    "#21910": "feature",
+    "#20415": "feature",
+    "#21728": "fix",
+    "#21874": "fix",
+    "#21810": "fix",
+    "#21882": "docs",
+    "#21904": "docs",
+    "#20060": "docs",
+    "#20063": "docs",
+    "#21907": "internal",
+    "#21908": "internal"
+  },
+  "notes": "Monorepo patch: tool-search options, MCP OAuth error type, provider additions."
+}

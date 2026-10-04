@@ -1,0 +1,435 @@
+{
+  "recorded_at": "2026-10-04T17:46:31.175234+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-5468",
+      "c-ae93026",
+      "pr-5469",
+      "c-6cd583b",
+      "c-18331a9",
+      "c-8b05c77",
+      "pr-5479",
+      "c-37ce069",
+      "pr-5485",
+      "pr-5486",
+      "pr-5475",
+      "pr-5487",
+      "pr-5391",
+      "pr-5464",
+      "c-6abd35b",
+      "pr-5439",
+      "pr-5445",
+      "pr-5476",
+      "pr-5221",
+      "c-08a023c"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "openai/gpt-oss-20b"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "feature",
+            "user_summary": "Netlify adapter can now be published to JSR.",
+            "dev_summary": "The Netlify adapter is now publishable to JSR via adapters/netlify.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5468",
+              "72f0d8d"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Deno adapter version 1.0.1 released.",
+            "dev_summary": "adapters/deno/package.json updated to 1.0.1.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "ae93026"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Tag version written into deno.json before publishing to JSR.",
+            "dev_summary": "deno.json updated with tag version in release workflow.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5469",
+              "271dd0b"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Deno adapter version 1.0.2 released.",
+            "dev_summary": "adapters/deno/package.json updated to 1.0.2.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "6cd583b"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Netlify adapter version 1.0.1 released.",
+            "dev_summary": "adapters/netlify/package.json updated to 1.0.1.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "18331a9"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Percent signs in routed request paths are now rejected by default, with an option to allow them.",
+            "dev_summary": "serve-static middleware now rejects percent signs unless allowPercentInPath is true.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "8b05c77"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "serve-static test fixed.",
+            "dev_summary": "test for serve-static updated.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5479",
+              "1e1207c"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Version bumped to 4.13.11.",
+            "dev_summary": "package.json updated to 4.13.11.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "37ce069"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Bundled declarations no longer expose internal types or self‑referencing JSX.IntrinsicElements.",
+            "dev_summary": "build/dts-plugins.ts and related config now hide internal types in bundled d.ts.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5485",
+              "be1f749"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Build declarations type‑check tests added.",
+            "dev_summary": "test/build/declaration-emit.test.ts added.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5486",
+              "c437d75"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "ETag middleware now correctly retains headers with mixed‑case names.",
+            "dev_summary": "etag middleware normalizes retainedHeader names to lowercase.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5475",
+              "c3053cc"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Numeric gridGap, gridRowGap, gridColumnGap now have px units in JSX.",
+            "dev_summary": "jsx/utils.ts now appends 'px' to numeric gridGap, gridRowGap, gridColumnGap.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5487",
+              "e5bb206"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "some() middleware now returns a Response correctly when short‑circuiting.",
+            "dev_summary": "combine/some now preserves Response returned by middleware.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5391",
+              "afb2068"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "vite-plus upgraded to 1.0.0.",
+            "dev_summary": "package.json and pnpm-lock.yaml updated.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5464",
+              "95eb860"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Version bumped to 4.13.12.",
+            "dev_summary": "package.json updated to 4.13.12.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "6abd35b"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "client parseResponse test now simulates network error deterministically.",
+            "dev_summary": "test/client/utils.test.ts updated to use MSW error handler.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5439",
+              "deff529"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "JSDoc comments for request getters cleaned.",
+            "dev_summary": "src/request.ts jsdoc parentheses removed.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5445",
+              "6d73a74"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "JSX function components can now return JSXNode directly or via promise.",
+            "dev_summary": "jsx/base.ts now accepts function component results as JSXNode or Promise.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#5476",
+              "f23b146"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Mount middleware introduced, replacing app.mount.",
+            "dev_summary": "mount middleware added; app.mount removed from hono-base.ts.",
+            "breaking": true,
+            "breaking_confidence": 0.9,
+            "migration_note": "Replace app.mount calls with mount(ittyRouter.handle) and remove app.mount import.",
+            "refs": [
+              "#5221",
+              "ae595de"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Version bumped to 4.13.13.",
+            "dev_summary": "package.json updated to 4.13.13.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "08a023c"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:46:27.803746+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 4470,
+          "completion_tokens": 2381,
+          "reasoning_tokens": 1140,
+          "latency_s": 3.812,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00104955,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release adds a publishable Netlify adapter and introduces a breaking change by removing the app.mount API in favor of a new mount middleware. Several fixes improve middleware handling, JSX utilities, and type declarations, while internal updates include version bumps and stricter serve-static path handling.",
+        "sections": [
+          {
+            "section": "breaking",
+            "prose": null,
+            "item_ids": [
+              "i19"
+            ]
+          },
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i1"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i13",
+              "i11",
+              "i12",
+              "i18",
+              "i9"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i6",
+              "i5",
+              "i2",
+              "i4",
+              "i3",
+              "i8",
+              "i10",
+              "i14",
+              "i15",
+              "i16",
+              "i17",
+              "i20"
+            ]
+          }
+        ],
+        "duplicates": []
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:46:30.185355+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 1311,
+          "completion_tokens": 469,
+          "reasoning_tokens": 214,
+          "latency_s": 2.359,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00047805,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release adds a new way to publish the Netlify adapter and improves several middleware behaviors. It also introduces a breaking change to how mounting works.",
+        "sections": [
+          {
+            "section": "breaking",
+            "prose": null,
+            "item_ids": [
+              "i19"
+            ]
+          },
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i1"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i13",
+              "i11",
+              "i9",
+              "i12",
+              "i18"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:46:31.175234+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 750,
+          "completion_tokens": 276,
+          "reasoning_tokens": 123,
+          "latency_s": 0.985,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0002781,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

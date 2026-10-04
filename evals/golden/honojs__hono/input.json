@@ -1,0 +1,367 @@
+{
+  "repo": "honojs/hono",
+  "base": "v4.13.10",
+  "head": "v4.13.13",
+  "compare_url": "https://github.com/honojs/hono/compare/v4.13.10...v4.13.13",
+  "default_branch": "main",
+  "private": false,
+  "total_commits": 20,
+  "commits": [
+    {
+      "sha": "72f0d8d58e20547c25370a97191765a9ca0e1d9b",
+      "message": "feat(adapters/netlify): publish to JSR (#5468)",
+      "author": "yusukebe",
+      "date": "2026-09-28T08:38:04Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/72f0d8d58e20547c25370a97191765a9ca0e1d9b",
+      "pr_number": 5468,
+      "pr_title": "feat(adapters/netlify): publish to JSR",
+      "pr_body": "### The author should do the following, if applicable\r\n\r\n- [ ] Add tests\r\n- [ ] Run tests\r\n- [ ] `pnpm run check:fix` to format and lint the code\r\n- [ ] Add [TSDoc](https://tsdoc.org/)/[JSDoc](https://jsdoc.app/about-getting-started) to document the code\r\n",
+      "pr_url": "https://github.com/honojs/hono/pull/5468",
+      "labels": [],
+      "files": [
+        "adapters/netlify/README.md",
+        "adapters/netlify/deno.json",
+        "adapters/netlify/src/conninfo.test.ts",
+        "adapters/netlify/src/conninfo.ts",
+        "adapters/netlify/src/index.ts",
+        "adapters/netlify/src/mod.ts",
+        "adapters/netlify/tsconfig.json",
+        "docs/MAINTAINING.md"
+      ]
+    },
+    {
+      "sha": "ae93026fe5f23adaa807874934f5097b5bfd6b6c",
+      "message": "chore(adapters): release @hono/deno@1.0.1",
+      "author": "yusukebe",
+      "date": "2026-09-28T08:38:36Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/ae93026fe5f23adaa807874934f5097b5bfd6b6c",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "adapters/deno/package.json"
+      ]
+    },
+    {
+      "sha": "271dd0b1e83d04763fbec7b9de9c8ffb870e6c6d",
+      "message": "ci: write the tag version into deno.json before publishing to JSR (#5469)",
+      "author": "yusukebe",
+      "date": "2026-09-28T08:45:47Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/271dd0b1e83d04763fbec7b9de9c8ffb870e6c6d",
+      "pr_number": 5469,
+      "pr_title": "ci: write the tag version into deno.json before publishing to JSR",
+      "pr_body": "### The author should do the following, if applicable\r\n\r\n- [ ] Add tests\r\n- [ ] Run tests\r\n- [ ] `pnpm run check:fix` to format and lint the code\r\n- [ ] Add [TSDoc](https://tsdoc.org/)/[JSDoc](https://jsdoc.app/about-getting-started) to document the code\r\n",
+      "pr_url": "https://github.com/honojs/hono/pull/5469",
+      "labels": [],
+      "files": [
+        ".github/workflows/release.yml",
+        "docs/MAINTAINING.md"
+      ]
+    },
+    {
+      "sha": "6cd583bd481a86aecb34a7e3164cee16f2ce7f07",
+      "message": "chore(adapters): release @hono/deno@1.0.2",
+      "author": "yusukebe",
+      "date": "2026-09-28T08:46:32Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/6cd583bd481a86aecb34a7e3164cee16f2ce7f07",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "adapters/deno/package.json"
+      ]
+    },
+    {
+      "sha": "18331a905e2415f7f73038357f2eec354123f7a6",
+      "message": "chore(adapters): release @hono/netlify@1.0.1",
+      "author": "yusukebe",
+      "date": "2026-09-28T08:48:06Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/18331a905e2415f7f73038357f2eec354123f7a6",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "adapters/netlify/package.json"
+      ]
+    },
+    {
+      "sha": "8b05c774ef1555c70f5ba5e2991b7e77cc3635cc",
+      "message": "Merge commit from fork\n\nReject percent signs in routed request paths before additional decoding. Add allowPercentInPath to preserve the existing behavior when explicitly enabled.\n\nCover the double-decoding authorization bypass, default rejection, and the opt-in while preserving encoded spaces and Unicode paths.",
+      "author": "usualoma",
+      "date": "2026-09-29T06:01:54Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/8b05c774ef1555c70f5ba5e2991b7e77cc3635cc",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "src/middleware/serve-static/index.test.ts",
+        "src/middleware/serve-static/index.ts"
+      ]
+    },
+    {
+      "sha": "1e1207cabfcd154146bf6ac9fd6a0b646f7fc484",
+      "message": "test(serve-static): fix the test (#5479)\n\n* test(serve-static): fix the test\n\n* use app.get",
+      "author": "yusukebe",
+      "date": "2026-09-29T06:10:14Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/1e1207cabfcd154146bf6ac9fd6a0b646f7fc484",
+      "pr_number": 5479,
+      "pr_title": "test(serve-static): fix the test",
+      "pr_body": "### The author should do the following, if applicable\r\n\r\n- [ ] Add tests\r\n- [ ] Run tests\r\n- [ ] `pnpm run check:fix` to format and lint the code\r\n- [ ] Add [TSDoc](https://tsdoc.org/)/[JSDoc](https://jsdoc.app/about-getting-started) to document the code\r\n",
+      "pr_url": "https://github.com/honojs/hono/pull/5479",
+      "labels": [],
+      "files": [
+        "src/middleware/serve-static/index.test.ts"
+      ]
+    },
+    {
+      "sha": "37ce06904e732d4bc11c9075adf362c76049a594",
+      "message": "4.13.11",
+      "author": "yusukebe",
+      "date": "2026-09-29T06:12:47Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/37ce06904e732d4bc11c9075adf362c76049a594",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "package.json"
+      ]
+    },
+    {
+      "sha": "be1f7498fed269544a3c544db0a5a727048462a8",
+      "message": "fix(build): keep internal types private in bundled d.ts and avoid a self-referencing JSX.IntrinsicElements (#5485)",
+      "author": "yusukebe",
+      "date": "2026-09-30T06:31:54Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/be1f7498fed269544a3c544db0a5a727048462a8",
+      "pr_number": 5485,
+      "pr_title": "fix(build): keep internal types private in bundled d.ts and avoid a self-referencing JSX.IntrinsicElements",
+      "pr_body": "Fixes #5484\r\n\r\n### The author should do the following, if applicable\r\n\r\n- [ ] Add tests\r\n- [ ] Run tests\r\n- [ ] `pnpm run check:fix` to format and lint the code\r\n- [ ] Add [TSDoc](https://tsdoc.org/)/[JSDoc](https://jsdoc.app/about-getting-started) to document the code\r\n",
+      "pr_url": "https://github.com/honojs/hono/pull/5485",
+      "labels": [],
+      "files": [
+        "adapters/aws-lambda/vite.config.ts",
+        "adapters/bun/vite.config.ts",
+        "adapters/cloudflare-workers/vite.config.ts",
+        "adapters/deno/vite.config.ts",
+        "adapters/lambda-edge/vite.config.ts",
+        "adapters/netlify/vite.config.ts",
+        "adapters/service-worker/vite.config.ts",
+        "adapters/vercel/vite.config.ts",
+        "build/dts-plugins.ts",
+        "src/jsx/base.ts",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "sha": "c437d7569219a21e45fa81797749e8f34fe19dcc",
+      "message": "test(build): type-check the bundled declarations from a consumer project (#5486)\n\nRun tsc against dist/types the way a consumer does, so regressions in the\nbundled declarations are caught in CI: JSX attribute checking for both\nruntimes (#5480) and declaration emit for inferred hono types (#5484).\n\nCo-authored-by: Jeremy Banka <hello@jeremybanka.com>",
+      "author": "yusukebe",
+      "date": "2026-09-30T06:45:12Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/c437d7569219a21e45fa81797749e8f34fe19dcc",
+      "pr_number": 5486,
+      "pr_title": "test(build): type-check the bundled declarations from a consumer project",
+      "pr_body": "Adds consumer-style type checks against the built `dist/types`, so regressions in the bundled declarations fail CI.\r\n\r\nThis PR refers to #5482",
+      "pr_url": "https://github.com/honojs/hono/pull/5486",
+      "labels": [],
+      "files": [
+        "build/declaration-emit.test.ts",
+        "build/fixtures/declaration-emit/index.ts",
+        "build/fixtures/declaration-emit/tsconfig.json",
+        "build/fixtures/jsx-types/index.tsx",
+        "build/fixtures/jsx-types/tsconfig.json",
+        "build/jsx-types.test.ts"
+      ]
+    },
+    {
+      "sha": "c3053ccf14f1c4c70a0c2888eed6121b9f6c8f95",
+      "message": "fix(etag): correctly match mixed-case header name in retainedHeader option (#5475)\n\n* fix(etag): correctly match mixed-case header name in retainedHeader option\n\n* refactor(etag): use Set for retainedHeaders\n\nCo-authored-by: Taku Amano <taku@taaas.jp>\n\n---------\n\nCo-authored-by: Taku Amano <taku@taaas.jp>",
+      "author": "na-trium-144",
+      "date": "2026-09-30T08:36:40Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/c3053ccf14f1c4c70a0c2888eed6121b9f6c8f95",
+      "pr_number": 5475,
+      "pr_title": "fix(etag): correctly match mixed-case header name in retainedHeader option",
+      "pr_body": "Since the etag middleware compares header name converted to lower case, it did not match mixed-case header names specified in `retainedHeader` option, thus they were never retained.\r\nFixed by converting all header names in the option to lowercase beforehand.\r\n\r\n### The author should do the following, if applicable\r\n\r\n- [x] Add tests\r\n- [x] Run tests\r\n- [x] `pnpm run check:fix` to format and lint the code\r\n- [ ] Add [TSDoc](https://tsdoc.org/)/[JSDoc](https://jsdoc.app/about-getting-started) to document the code\r\n",
+      "pr_url": "https://github.com/honojs/hono/pull/5475",
+      "labels": [],
+      "files": [
+        "src/middleware/etag/index.test.ts",
+        "src/middleware/etag/index.ts"
+      ]
+    },
+    {
+      "sha": "e5bb2062a3ddd645e3a16d1300bd76d6c9af33a5",
+      "message": "fix(jsx): add px to numeric gridGap, gridRowGap and gridColumnGap (#5487)",
+      "author": "sarmah-rup",
+      "date": "2026-09-30T08:45:19Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/e5bb2062a3ddd645e3a16d1300bd76d6c9af33a5",
+      "pr_number": 5487,
+      "pr_title": "fix(jsx): add px to numeric gridGap, gridRowGap and gridColumnGap",
+      "pr_body": "style={{ gridGap: 10 }} renders grid-gap:10 in hono/jsx. Browsers ignore it. React renders grid-gap:10px.\r\n\r\nThe unitless regex in src/jsx/utils.ts matches every grid-* prop, so it also catches the gap aliases. Tightened it so gridGap, gridRowGap and gridColumnGap get px. The rest of React's unitless list is unchanged.\r\n\r\nAdded three rows to the existing px test table. They fail on main and pass now. All 41 of React's unitless props still pass.",
+      "pr_url": "https://github.com/honojs/hono/pull/5487",
+      "labels": [],
+      "files": [
+        "src/jsx/utils.test.ts",
+        "src/jsx/utils.ts"
+      ]
+    },
+    {
+      "sha": "afb2068c1c53a530528ac5f237e245793dd03c07",
+      "message": "fix(combine): return a Response from a short-circuiting middleware in some() (#5391)\n\n* fix(combine): return a Response from a short-circuiting middleware in some()\n\nA middleware that short-circuits returns a `Response` without calling\n`next()`, which does not assign `c.res`. `some()` matched the result\nagainst `true` and `false`, then dropped it, so the context was never\nfinalized and hono-base threw \"Context is not finalized\", surfacing as\na 500.\n\n`every()` has handled this since #3441, whose description is the same\nreport for the sibling: validators and `cors()` on OPTIONS return a\nResponse rather than calling `next()`. `some()` was not part of that\nchange.\n\nKeeps the Response and returns it. A `true` that reaches the same branch\nbecause the context is already finalized is excluded, so a Condition is\nstill never used as a response.\n\n* docs(combine): remove redundant comments\n\n---------\n\nCo-authored-by: Taku Amano <taku@taaas.jp>",
+      "author": "harshit-d3v",
+      "date": "2026-09-30T08:48:22Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/afb2068c1c53a530528ac5f237e245793dd03c07",
+      "pr_number": 5391,
+      "pr_title": "fix(combine): return a Response from a short-circuiting middleware in some()",
+      "pr_body": "A middleware that short-circuits returns a `Response` without calling `next()`. Inside `some()` that Response is dropped, so the context is never finalized and the request 500s.\n\n```ts\nimport { some, every } from 'hono/combine'\n\n// a validator-style middleware: returns a Response, never calls next()\nconst validator = async (c) => c.json({ error: 'bad request' }, 400)\n\nconst a = new Hono()\na.use('/', some(validator, async (c, next) => await next()))\na.get('/', (c) => c.text('HANDLER'))\nawait a.request('/')   // 500 Internal Server Error\n\nconst b = new Hono()\nb.use('/', every(validator, async (c, next) => await next()))\nb.get('/', (c) => c.text('HANDLER'))\nawait b.request('/')   // 400 {\"error\":\"bad request\"}\n```\n\nstderr on the `some()` request:\n\n```\nError: Context is not finalized. Did you forget to return a Response object or `await next()`?\n```\n\n`every()` gives the right answer on the identical input.\n\n### Cause\n\n`some()` matches the handler's result against `true` and `false`, then `break`s without keeping it:\n\n```ts\nconst result = await handler(c, wrappedNext)\nif (result === true && !c.finalized) {\n  await wrappedNext()\n} else if (result === false) {\n  lastError = new Error('No successful middleware found')\n  continue\n}\nlastError = undefined\nbreak            // a Response lands here and is lost\n```\n\n`c.json()` and `c.text()` do not assign `c.res`, so nothing finalizes the context.\n\nThis is the same report as #3441, which fixed it for `every()`: *\"When using `every` middleware to compose middlewares that short-circuits the chain (i.e. return a `Response` object, like e.g. `zod-validator`, but I had also issues with e.g. `cors` with OPTIONS requests) and, as a result, don't call `next()`, it was throwing an error `Error: Context is not finalized...`\"*. `some()` was not part of that change.\n\n### Change\n\nKeep the Response and return it. A `true` that reaches the same branch because the context is already finalized is excluded, so a Condition is still never used as a ",
+      "pr_url": "https://github.com/honojs/hono/pull/5391",
+      "labels": [],
+      "files": [
+        "src/middleware/combine/index.test.ts",
+        "src/middleware/combine/index.ts"
+      ]
+    },
+    {
+      "sha": "95eb860473d26bd303a2a29716e61a77c8c5e5f5",
+      "message": "chore(deps): upgrade vite-plus to 1.0.0 (#5464)",
+      "author": "yusukebe",
+      "date": "2026-09-30T08:56:46Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/95eb860473d26bd303a2a29716e61a77c8c5e5f5",
+      "pr_number": 5464,
+      "pr_title": "chore(deps): upgrade vite-plus to 1.0.0",
+      "pr_body": "🎉 \r\n\r\n### The author should do the following, if applicable\r\n\r\n- [ ] Add tests\r\n- [ ] Run tests\r\n- [ ] `pnpm run check:fix` to format and lint the code\r\n- [ ] Add [TSDoc](https://tsdoc.org/)/[JSDoc](https://jsdoc.app/about-getting-started) to document the code\r\n",
+      "pr_url": "https://github.com/honojs/hono/pull/5464",
+      "labels": [],
+      "files": [
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "sha": "6abd35b0a5f35f67b6417627d5b0a6c2d266ac04",
+      "message": "4.13.12",
+      "author": "yusukebe",
+      "date": "2026-09-30T08:59:24Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/6abd35b0a5f35f67b6417627d5b0a6c2d266ac04",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "package.json"
+      ]
+    },
+    {
+      "sha": "deff529656cff775b35956f7f9071388d4eb55ae",
+      "message": "test(client): simulate network error for undefined route in parseResponse test (#5439)",
+      "author": "SambhavJ2004",
+      "date": "2026-10-01T12:26:01Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/deff529656cff775b35956f7f9071388d4eb55ae",
+      "pr_number": 5439,
+      "pr_title": "test(client): simulate network error for undefined route in parseResponse test",
+      "pr_body": "Fixes #5431\r\n\r\n### Problem\r\n\r\nThe third case in `parseResponse > should throw error matching snapshots`\r\nchecks that when `fetch` itself rejects, `parseResponse` passes the original\r\nerror through unwrapped. It produced that rejection by requesting\r\n`http://localhost/noRoute`, which has no MSW handler, so the request escaped\r\nto the real network and relied on nothing listening on port 80.\r\n\r\nOn machines where something does listen on port 80 (in my case IIS 10.0 on\r\nWindows), that request receives a 404 instead, and the test fails with:\r\n\r\n- Expected: `[TypeError: fetch failed]`\r\n- Received: `[DetailedError: 404 Not Found]`\r\n\r\n### Fix\r\n\r\nAdd an explicit MSW handler for that route that returns\r\n`HttpResponse.error()`, so `fetch` rejects deterministically without the\r\nrequest ever reaching the network. The comment above the case is updated to\r\nexplain this.\r\n\r\nThe snapshot message changes from `fetch failed` (Node's fetch, on a real\r\nconnection failure) to `Failed to fetch` (MSW's simulated network error).\r\nIt is still a `TypeError` thrown at the `fetch` call, which is what this\r\ncase verifies.\r\n\r\n### Verification\r\n\r\nOn Windows 11, with vitest 5.0.1 and msw 2.15.0 installed from the lockfile:\r\n\r\n- With IIS running on port 80: all 32 tests in `src/client/utils.test.ts` pass\r\n- With IIS stopped: all 32 tests pass\r\n- The MSW \"intercepted a request without a matching request handler\" warning\r\n  no longer appears in either run\r\n\r\nBefore this change, the same file failed with IIS running and passed with\r\nit stopped.\r\n\r\n### The author should do the following, if applicable\r\n\r\n- [x] Add tests\r\n- [x] Run tests\r\n- [x] `pnpm run format:fix && pnpm run lint:fix` to format the code\r\n- [ ] Add TSDoc/JSDoc to document the code (not applicable, test-only change)",
+      "pr_url": "https://github.com/honojs/hono/pull/5439",
+      "labels": [],
+      "files": [
+        "src/client/utils.test.ts"
+      ]
+    },
+    {
+      "sha": "6d73a74f9757ed65d6103c0e8375097fa20873c4",
+      "message": "docs(request): fix jsdoc comments for some getters (#5445)\n\nRemove extra parentheses.",
+      "author": "ssssota",
+      "date": "2026-10-01T12:43:59Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/6d73a74f9757ed65d6103c0e8375097fa20873c4",
+      "pr_number": 5445,
+      "pr_title": "docs(request): fix jsdoc comments for some getters",
+      "pr_body": "Remove extra parentheses.\r\n\r\n### The author should do the following, if applicable\r\n\r\n- [ ] Add tests\r\n- [x] Run tests\r\n- [x] `pnpm run format:fix && pnpm run lint:fix` to format the code\r\n- [ ] Add [TSDoc](https://tsdoc.org/)/[JSDoc](https://jsdoc.app/about-getting-started) to document the code\r\n",
+      "pr_url": "https://github.com/honojs/hono/pull/5445",
+      "labels": [],
+      "files": [
+        "src/request.ts"
+      ]
+    },
+    {
+      "sha": "f23b146afcec63606144cde50b5fbd360dd60238",
+      "message": "fix(jsx): allow JSXNode function component results (#5476)",
+      "author": "icecold009",
+      "date": "2026-10-01T12:45:07Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/f23b146afcec63606144cde50b5fbd360dd60238",
+      "pr_number": 5476,
+      "pr_title": "fix(jsx): allow JSXNode function component results",
+      "pr_body": "## Summary\r\n\r\n- Allow function components to return a JSXNode directly or through a promise, matching the existing renderer behavior.\r\n- Add a TSX regression case for a component created with jsx() and used as JSX.\r\n\r\nCloses #5467.\r\n\r\n## Verification\r\n\r\n- `tsc -p tsconfig.spec.json`\r\n- `vitest run src/jsx/base.test.tsx` (9 tests passed)\r\n- Prettier check for the changed files",
+      "pr_url": "https://github.com/honojs/hono/pull/5476",
+      "labels": [],
+      "files": [
+        "src/jsx/base.test.tsx",
+        "src/jsx/base.ts"
+      ]
+    },
+    {
+      "sha": "ae595de8ae05ea548560da93140ee1d53e5a8202",
+      "message": "feat(mount): introduce Mount Middleware and deprecate `app.mount` (#5221)\n\n* feat(mount)!: introduce Mount Middleware and obsolete `app.mount`\n\n* mark `app.mount()` deprecated\n\n* format\n\n* refactored",
+      "author": "yusukebe",
+      "date": "2026-10-04T03:41:51Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/ae595de8ae05ea548560da93140ee1d53e5a8202",
+      "pr_number": 5221,
+      "pr_title": "feat(mount): introduce Mount Middleware and deprecate `app.mount`",
+      "pr_body": "I realized that `app.mount()` doesn't need to be placed in `hono-base.ts`. The codebase of `app.mount()` is a little bit fat compared to other methods in `hono-base.ts`, though the lines are very few in the real world. Anyway, the unnecessary should be removed from `hono-base.ts`.\r\n\r\nSo, we can make it a middleware called Mount Middleware. The usage is below:\r\n\r\n```ts\r\nimport { Router as IttyRouter } from 'itty-router'\r\nimport { Hono } from 'hono'\r\nimport { mount } from 'hono/mount'\r\n\r\nconst ittyRouter = IttyRouter()\r\nittyRouter.get('/hello', () => new Response('Hello from itty-router'))\r\n\r\nconst app = new Hono()\r\napp.all('/itty-router/*', mount(ittyRouter.handle))\r\n```\r\n\r\nI think the API syntax is very Hono-like and love it.\r\n\r\nAs a result, the bundle size will be `501B` smaller (vs current main):\r\n\r\n<img width=\"1174\" height=\"366\" alt=\"CleanShot 2026-08-12 at 21 31 59@2x\" src=\"https://github.com/user-attachments/assets/304821c2-da85-4a3e-ab5e-6614cf385e73\" />\r\n\r\nThis PR will obsolete `app.mount()` completely, so this is a breaking change. Should be introduced in the next major release v5.\r\n\r\n### The author should do the following, if applicable\r\n\r\n- [x] Add tests\r\n- [x] Run tests\r\n- [x] `bun run format:fix && bun run lint:fix` to format the code\r\n- [x] Add [TSDoc](https://tsdoc.org/)/[JSDoc](https://jsdoc.app/about-getting-started) to document the code\r\n",
+      "pr_url": "https://github.com/honojs/hono/pull/5221",
+      "labels": [],
+      "files": [
+        "jsr.json",
+        "package.json",
+        "src/hono-base.ts",
+        "src/middleware/mount/index.test.ts",
+        "src/middleware/mount/index.ts"
+      ]
+    },
+    {
+      "sha": "08a023cbfde55b434fb0fb30fae35d42e4bf20aa",
+      "message": "4.13.13",
+      "author": "yusukebe",
+      "date": "2026-10-04T03:47:45Z",
+      "parents": 1,
+      "html_url": "https://github.com/honojs/hono/commit/08a023cbfde55b434fb0fb30fae35d42e4bf20aa",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        "package.json"
+      ]
+    }
+  ],
+  "collected_at": "2026-10-04T16:56:15.027494Z",
+  "api_calls": 42,
+  "cache_hits": 0
+}

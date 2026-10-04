@@ -1,0 +1,317 @@
+{
+  "recorded_at": "2026-10-04T17:39:05.535848+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "c-92077fc",
+      "c-b9d7252",
+      "c-47a6dbf",
+      "c-d65e0f9",
+      "c-a53ec2e",
+      "c-63d2ccc",
+      "c-b353bbb",
+      "c-7eed4a1",
+      "c-a735bee",
+      "c-2cfd5d3",
+      "c-558379f",
+      "c-001dea0"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "openai/gpt-oss-20b"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "feature",
+            "user_summary": "Validators can now be reused when plugins are enabled.",
+            "dev_summary": "Adds support for reusing validators in plugin mode via `pydantic.plugin._schema_validator`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "92077fc"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Memory leaks from missing GC traversal are fixed for certain struct fields.",
+            "dev_summary": "Adds GC traversal for struct fields in `pydantic-core` serializers and validators.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "b9d7252"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Garbage collection now correctly traverses `GeneralFieldsSerializer` fields.",
+            "dev_summary": "Adds GC traversal in `GeneralFieldsSerializer` implementation.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "47a6dbf"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Mypy integration now avoids circular import errors.",
+            "dev_summary": "Adds import guard in `pydantic/mypy.py` to prevent circular imports.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "d65e0f9"
+            ]
+          },
+          {
+            "category": "performance",
+            "user_summary": "PyPy CI tests run faster thanks to optimizations.",
+            "dev_summary": "Optimizes test execution paths in `pydantic-core` test suite for PyPy.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "a53ec2e"
+            ]
+          },
+          {
+            "category": "performance",
+            "user_summary": "Smart unions now count validated fields only once, improving speed.",
+            "dev_summary": "Changes smart union validation to count fields once in `pydantic-core`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "63d2ccc"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Release v2.13.5 prepared with updated metadata.",
+            "dev_summary": "Updates version files and lockfiles for v2.13.5 release.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "b353bbb"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Clippy warnings fixed in core source.",
+            "dev_summary": "Suppresses Clippy 0.1.95 warnings in `pydantic-core`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "7eed4a1"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Additional Clippy lints fixed.",
+            "dev_summary": "Fixes Clippy lints in `pydantic-core/src/lookup_key.rs`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "a735bee"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Docs build check removed from CI workflow.",
+            "dev_summary": "Disables docs build check in `.github/workflows/ci.yml`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "2cfd5d3"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Twine upgraded to v7.0.0 for publishing.",
+            "dev_summary": "Bumps `twine` dependency to v7.0.0 in `uv.lock`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "558379f"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "GitHub Action for PyPI publishing updated to v1.14.2.",
+            "dev_summary": "Updates `pypa/gh-action-pypi-publish` action to v1.14.2 in CI workflow.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "001dea0"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:39:02.285880+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 1972,
+          "completion_tokens": 1550,
+          "reasoning_tokens": 787,
+          "latency_s": 2.531,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0006129,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release adds a new plugin mode feature for reusing validators and includes several memory‑management fixes in pydantic-core serializers and validators. Performance improvements and internal maintenance updates are also included.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i1"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i2",
+              "i3"
+            ]
+          },
+          {
+            "section": "performance",
+            "prose": null,
+            "item_ids": [
+              "i6",
+              "i5"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i7",
+              "i4",
+              "i10",
+              "i8",
+              "i9",
+              "i11",
+              "i12"
+            ]
+          }
+        ],
+        "duplicates": []
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:39:04.097829+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 1096,
+          "completion_tokens": 370,
+          "reasoning_tokens": 160,
+          "latency_s": 1.812,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0003864,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release adds the ability to reuse validators when plugins are turned on, fixes several memory‑related issues, and includes performance improvements for smart unions and PyPy testing.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i1"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i2",
+              "i3"
+            ]
+          },
+          {
+            "section": "performance",
+            "prose": null,
+            "item_ids": [
+              "i6",
+              "i5"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:39:05.532562+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 678,
+          "completion_tokens": 257,
+          "reasoning_tokens": 108,
+          "latency_s": 1.234,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0002559,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

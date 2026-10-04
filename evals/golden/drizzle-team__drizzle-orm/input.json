@@ -1,0 +1,782 @@
+{
+  "repo": "drizzle-team/drizzle-orm",
+  "base": "0.44.7",
+  "head": "0.45.0",
+  "compare_url": "https://github.com/drizzle-team/drizzle-orm/compare/0.44.7...0.45.0",
+  "default_branch": "main",
+  "private": false,
+  "total_commits": 41,
+  "commits": [
+    {
+      "sha": "ad4ddd444d066b339ffd5765cb6ec3bf49380189",
+      "message": "[Drizzle Kit]: Extend api (#4999)\n\n* feat: Add external kit api to start Drizzle Studio\n\n* feat: Separate API build process and fix ESM dynamic require handling\n\n* fix: Update import paths for Relations in api.ts, pgImports.ts, and studio.ts\n\n* dprint\n\n* fix: Remove '-pooler' suffix from NEON_CONNECTION_STRING in Vercel client tests\n\n* dprint\n\n* chore: update version to 0.31.6 and add changelog for bug fixes",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-10-28T12:28:45Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/ad4ddd444d066b339ffd5765cb6ec3bf49380189",
+      "pr_number": 4999,
+      "pr_title": "[Drizzle Kit]: Extend api",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/4999",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-kit/0.31.6.md",
+        "drizzle-kit/build.ts",
+        "drizzle-kit/package.json",
+        "drizzle-kit/src/api.ts",
+        "drizzle-kit/src/cli/connections.ts",
+        "drizzle-kit/src/migrationPreparator.ts",
+        "drizzle-kit/src/serializer/pgImports.ts",
+        "drizzle-kit/src/serializer/studio.ts",
+        "integration-tests/tests/utils/is-config.test.ts"
+      ]
+    },
+    {
+      "sha": "2bf1a0adf61a49dedcd17aa6f9db3198696099f9",
+      "message": "Fix pg-native Pool transactions (#1708)\n\nCo-authored-by: Andrii Sherman <andreysherman11@gmail.com>\nCo-authored-by: Sukairo-02 <sreka9056@gmail.com>",
+      "author": "NickKelly1",
+      "date": "2025-10-29T14:37:34Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/2bf1a0adf61a49dedcd17aa6f9db3198696099f9",
+      "pr_number": 1708,
+      "pr_title": "[Pg] Fix pg-native Pool transactions",
+      "pr_body": "Fixes issue #1707\r\n\r\n`pg-native` connection `Pool`s were not working properly with transactions. Drizzle was deciding how to handle transactions based on whether a client is an `instanceof` `pg` `Pool`, but not considering whether the client is an `instanceof` `pg-native` `Pool`.\r\n\r\nThis PR fixes that by also checking whether the client is a `pg-native` `Pool`.\r\n",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/1708",
+      "labels": [
+        "ready-to-be-merged"
+      ],
+      "files": [
+        "drizzle-orm/src/node-postgres/session.ts"
+      ]
+    },
+    {
+      "sha": "ce85ad2b0cc22b829ec35bacd32163746c110453",
+      "message": "Build fix",
+      "author": "Sukairo-02",
+      "date": "2025-10-29T17:22:36Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/ce85ad2b0cc22b829ec35bacd32163746c110453",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        "drizzle-orm/src/node-postgres/session.ts"
+      ]
+    },
+    {
+      "sha": "01c8043b4eceb4df68e310e4c502d1171b56d9b8",
+      "message": "Feat: Allow subqueries in select fields (#1674)\n\n---------\n\nCo-authored-by: Sukairo-02 <sreka9056@gmail.com>",
+      "author": "Angelelz",
+      "date": "2025-10-29T20:52:10Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/01c8043b4eceb4df68e310e4c502d1171b56d9b8",
+      "pr_number": 1674,
+      "pr_title": "Feat: Allow subqueries in select fields",
+      "pr_body": "close #361 \r\n\r\n- [All] Implemented the types inference for subqueries in SelectFields\r\n- [All] Implemented type tests\r\n- [All] Implemented correct handling of subqueries in selected fields\r\n- [All] Added integration tests\r\n\r\nWith this PR, a user will be able to select using subqueries. The following query will be possible with proper types and mapping:\r\n```ts\r\nconst res = await db.select({\r\n\tpopulation: db.select({ count: count().as('count') }).from(users).where(\r\n\t\teq(users.cityId, cities.id),\r\n\t).as('population'),\r\n\tname: cities.name,\r\n}).from(cities);\r\n\r\n// And the resulting type will be:\r\ntype Res = {\r\n\tpopulation: number;\r\n\tname: string;\r\n}[]\r\n```\r\n\r\nSince the subquery can only contain one column, I moved the mapping from the column to the whole subquery.\r\nThat means that if the field in the subquery is a `Date` the user can expect a date in the types and the runtime value.",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/1674",
+      "labels": [],
+      "files": [
+        "drizzle-orm/src/gel-core/dialect.ts",
+        "drizzle-orm/src/mysql-core/dialect.ts",
+        "drizzle-orm/src/operations.ts",
+        "drizzle-orm/src/pg-core/dialect.ts",
+        "drizzle-orm/src/query-builders/select.types.ts",
+        "drizzle-orm/src/singlestore-core/dialect.ts",
+        "drizzle-orm/src/sqlite-core/dialect.ts",
+        "drizzle-orm/src/utils.ts",
+        "drizzle-orm/type-tests/mysql/subquery.ts",
+        "drizzle-orm/type-tests/pg/subquery.ts",
+        "drizzle-orm/type-tests/sqlite/subquery.ts",
+        "integration-tests/tests/gel/gel.test.ts",
+        "integration-tests/tests/mysql/mysql-common.ts",
+        "integration-tests/tests/pg/pg-common.ts",
+        "integration-tests/tests/singlestore/singlestore-common.ts",
+        "integration-tests/tests/sqlite/sqlite-common.ts"
+      ]
+    },
+    {
+      "sha": "22e1986c4f86b2ab3cc184551f9417dba6be0d39",
+      "message": "Fix: Updated algorithm typo (#1676)\n\n* Fix: Updated algorithm typo (fixes #1601)\n\n---------\n\nCo-authored-by: Andrii Sherman <andreysherman11@gmail.com>\nCo-authored-by: Sukairo-02 <sreka9056@gmail.com>",
+      "author": "jakeleventhal",
+      "date": "2025-10-30T17:38:23Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/22e1986c4f86b2ab3cc184551f9417dba6be0d39",
+      "pr_number": 1676,
+      "pr_title": "Fix: Updated algorithm typo",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/1676",
+      "labels": [],
+      "files": [
+        "drizzle-kit/src/serializer/mysqlSerializer.ts",
+        "drizzle-kit/src/serializer/singlestoreSerializer.ts",
+        "drizzle-orm/src/mysql-core/indexes.ts",
+        "drizzle-orm/src/singlestore-core/indexes.ts",
+        "drizzle-orm/type-tests/mysql/tables.ts",
+        "drizzle-orm/type-tests/singlestore/tables.ts"
+      ]
+    },
+    {
+      "sha": "7722bd52ed7fb8f73c8dc5e12e17802cae7c76df",
+      "message": "Version bump, added changelogs",
+      "author": "Sukairo-02",
+      "date": "2025-10-31T16:06:18Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/7722bd52ed7fb8f73c8dc5e12e17802cae7c76df",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-kit/0.31.7.md",
+        "changelogs/drizzle-orm/0.44.8.md",
+        "drizzle-kit/package.json",
+        "drizzle-orm/package.json"
+      ]
+    },
+    {
+      "sha": "82993ae8428a1a865505a87328be981d86d484a3",
+      "message": "Version fix",
+      "author": "Sukairo-02",
+      "date": "2025-10-31T16:09:24Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/82993ae8428a1a865505a87328be981d86d484a3",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-orm/0.45.0.md",
+        "drizzle-orm/package.json"
+      ]
+    },
+    {
+      "sha": "d99bf7cf5924d222710bb28f231d35157192b1f9",
+      "message": "fix: Refine CHECK constraint query in pgSerializer",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-12T10:04:04Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/d99bf7cf5924d222710bb28f231d35157192b1f9",
+      "pr_number": 5034,
+      "pr_title": "[Drizzle Kit]: Fix postgresql introspect",
+      "pr_body": "### Bug fixes\r\n\r\n- [[BUG]: Drizzle Kit push to Postgres 18 produces unecessary DROP SQL when the schema was NOT changed](https://github.com/drizzle-team/drizzle-orm/issues/4944)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5034",
+      "labels": [],
+      "files": [
+        "drizzle-kit/src/serializer/pgSerializer.ts"
+      ]
+    },
+    {
+      "sha": "572d2a5c9d4b68079064fa7be9130eefb53e736c",
+      "message": "fix: Update version to 0.31.7 and add changelog for bug fixes",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-12T10:05:45Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/572d2a5c9d4b68079064fa7be9130eefb53e736c",
+      "pr_number": 5034,
+      "pr_title": "[Drizzle Kit]: Fix postgresql introspect",
+      "pr_body": "### Bug fixes\r\n\r\n- [[BUG]: Drizzle Kit push to Postgres 18 produces unecessary DROP SQL when the schema was NOT changed](https://github.com/drizzle-team/drizzle-orm/issues/4944)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5034",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-kit/0.31.7.md",
+        "drizzle-kit/package.json"
+      ]
+    },
+    {
+      "sha": "67cf3bba0dc54ca4eee155df4acf1e02ec73806f",
+      "message": "fix: Update Docker image tag from 'latest' to '6' in createDockerDB function",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-12T14:43:44Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/67cf3bba0dc54ca4eee155df4acf1e02ec73806f",
+      "pr_number": 5034,
+      "pr_title": "[Drizzle Kit]: Fix postgresql introspect",
+      "pr_body": "### Bug fixes\r\n\r\n- [[BUG]: Drizzle Kit push to Postgres 18 produces unecessary DROP SQL when the schema was NOT changed](https://github.com/drizzle-team/drizzle-orm/issues/4944)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5034",
+      "labels": [],
+      "files": [
+        "drizzle-kit/tests/introspect/gel.ext.test.ts",
+        "integration-tests/tests/gel/createInstance.ts"
+      ]
+    },
+    {
+      "sha": "c3ecf62d54216dba481e6246e8d0719adcc9758c",
+      "message": "fix npm release",
+      "author": "AlexBlokh",
+      "date": "2025-11-12T15:28:04Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/c3ecf62d54216dba481e6246e8d0719adcc9758c",
+      "pr_number": 5034,
+      "pr_title": "[Drizzle Kit]: Fix postgresql introspect",
+      "pr_body": "### Bug fixes\r\n\r\n- [[BUG]: Drizzle Kit push to Postgres 18 produces unecessary DROP SQL when the schema was NOT changed](https://github.com/drizzle-team/drizzle-orm/issues/4944)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5034",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "6f12d4570f668ee6b0fa4f9496856d79f588c957",
+      "message": "fix npm release",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-12T16:31:51Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/6f12d4570f668ee6b0fa4f9496856d79f588c957",
+      "pr_number": 5034,
+      "pr_title": "[Drizzle Kit]: Fix postgresql introspect",
+      "pr_body": "### Bug fixes\r\n\r\n- [[BUG]: Drizzle Kit push to Postgres 18 produces unecessary DROP SQL when the schema was NOT changed](https://github.com/drizzle-team/drizzle-orm/issues/4944)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5034",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml"
+      ]
+    },
+    {
+      "sha": "98ab19f0f50ff339733803a90bca2e61fcf6e482",
+      "message": "+",
+      "author": "AlexBlokh",
+      "date": "2025-11-12T20:06:56Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/98ab19f0f50ff339733803a90bca2e61fcf6e482",
+      "pr_number": 5034,
+      "pr_title": "[Drizzle Kit]: Fix postgresql introspect",
+      "pr_body": "### Bug fixes\r\n\r\n- [[BUG]: Drizzle Kit push to Postgres 18 produces unecessary DROP SQL when the schema was NOT changed](https://github.com/drizzle-team/drizzle-orm/issues/4944)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5034",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml"
+      ]
+    },
+    {
+      "sha": "64f4c797c04f8ce74bc82b88eada4cf03eeb869a",
+      "message": "+",
+      "author": "AlexBlokh",
+      "date": "2025-11-12T20:55:44Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/64f4c797c04f8ce74bc82b88eada4cf03eeb869a",
+      "pr_number": 5034,
+      "pr_title": "[Drizzle Kit]: Fix postgresql introspect",
+      "pr_body": "### Bug fixes\r\n\r\n- [[BUG]: Drizzle Kit push to Postgres 18 produces unecessary DROP SQL when the schema was NOT changed](https://github.com/drizzle-team/drizzle-orm/issues/4944)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5034",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml"
+      ]
+    },
+    {
+      "sha": "c314c8d88339a0cce1169147ee99a3a36d46777d",
+      "message": "Merge pull request #5034 from drizzle-team/kit-checks\n\n[Drizzle Kit]: Fix postgresql introspect",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-13T10:00:20Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/c314c8d88339a0cce1169147ee99a3a36d46777d",
+      "pr_number": 5034,
+      "pr_title": "[Drizzle Kit]: Fix postgresql introspect",
+      "pr_body": "### Bug fixes\r\n\r\n- [[BUG]: Drizzle Kit push to Postgres 18 produces unecessary DROP SQL when the schema was NOT changed](https://github.com/drizzle-team/drizzle-orm/issues/4944)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5034",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml",
+        "changelogs/drizzle-kit/0.31.7.md",
+        "drizzle-kit/package.json",
+        "drizzle-kit/src/serializer/pgSerializer.ts",
+        "drizzle-kit/tests/introspect/gel.ext.test.ts",
+        "integration-tests/tests/gel/createInstance.ts"
+      ]
+    },
+    {
+      "sha": "b9d7199a8ed6b21c4a6c9143a2e36989cfbba425",
+      "message": "fix: Fix release-latest",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-13T10:30:22Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/b9d7199a8ed6b21c4a6c9143a2e36989cfbba425",
+      "pr_number": 5035,
+      "pr_title": "Fix release-latest",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5035",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "b6a6aac4078ff6485b39cb5ae29d828e930c21fc",
+      "message": "fix: Add environment variables for npm authentication in release workflow",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-13T11:23:44Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/b6a6aac4078ff6485b39cb5ae29d828e930c21fc",
+      "pr_number": 5035,
+      "pr_title": "Fix release-latest",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5035",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "0dfed1bf09f8fc7eab8df5bc458e69e96659a71b",
+      "message": "Merge pull request #5035 from drizzle-team/kit-checks\n\nFix release-latest",
+      "author": "AlexBlokh",
+      "date": "2025-11-13T11:24:22Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/0dfed1bf09f8fc7eab8df5bc458e69e96659a71b",
+      "pr_number": 5035,
+      "pr_title": "Fix release-latest",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5035",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "97f9a45dcb1e4d3dfc4e1763df6017669e3799a5",
+      "message": "fix: Update permissions and streamline npm configuration in release workflows",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-13T12:36:46Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/97f9a45dcb1e4d3dfc4e1763df6017669e3799a5",
+      "pr_number": 5036,
+      "pr_title": "Fix release-latest",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5036",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "391d33bb619cddb4ef6b629cc03115819a5e78a4",
+      "message": "Merge branch 'main' into kit-checks",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-13T12:44:20Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/391d33bb619cddb4ef6b629cc03115819a5e78a4",
+      "pr_number": 5036,
+      "pr_title": "Fix release-latest",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5036",
+      "labels": [],
+      "files": []
+    },
+    {
+      "sha": "c66862c55abe6cd23e9bf1f07519e3e5c6274cbf",
+      "message": "Merge pull request #5036 from drizzle-team/kit-checks\n\nFix release-latest",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-13T13:48:37Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/c66862c55abe6cd23e9bf1f07519e3e5c6274cbf",
+      "pr_number": 5036,
+      "pr_title": "Fix release-latest",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5036",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "4e61887e20d8ed6585e52db84010ac90d7704f6a",
+      "message": "+",
+      "author": "AlexBlokh",
+      "date": "2025-11-13T16:10:30Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/4e61887e20d8ed6585e52db84010ac90d7704f6a",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml"
+      ]
+    },
+    {
+      "sha": "47ba9c8c0149c3a5aac397962b08cf1cf161ffa1",
+      "message": "Merge remote-tracking branch 'origin/main'",
+      "author": "AlexBlokh",
+      "date": "2025-11-13T16:11:13Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/47ba9c8c0149c3a5aac397962b08cf1cf161ffa1",
+      "pr_number": null,
+      "pr_title": null,
+      "pr_body": null,
+      "pr_url": null,
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml",
+        "README.md",
+        "changelogs/drizzle-kit/0.31.6.md",
+        "changelogs/drizzle-kit/0.31.7.md",
+        "changelogs/drizzle-orm/0.44.7.md",
+        "drizzle-kit/build.ts",
+        "drizzle-kit/package.json",
+        "drizzle-kit/src/api.ts",
+        "drizzle-kit/src/cli/connections.ts",
+        "drizzle-kit/src/migrationPreparator.ts",
+        "drizzle-kit/src/serializer/pgImports.ts",
+        "drizzle-kit/src/serializer/pgSerializer.ts",
+        "drizzle-kit/src/serializer/studio.ts",
+        "drizzle-kit/tests/introspect/gel.ext.test.ts",
+        "drizzle-orm/package.json",
+        "drizzle-orm/src/durable-sqlite/session.ts",
+        "integration-tests/tests/gel/createInstance.ts",
+        "integration-tests/tests/utils/is-config.test.ts"
+      ]
+    },
+    {
+      "sha": "645a6f3e79d84f4f9b9e5498349aaaddfc5e8805",
+      "message": "Removed unneeded lefrover changes",
+      "author": "Sukairo-02",
+      "date": "2025-11-14T10:36:01Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/645a6f3e79d84f4f9b9e5498349aaaddfc5e8805",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        "drizzle-orm/src/sqlite-core/dialect.ts"
+      ]
+    },
+    {
+      "sha": "ef4f2f46084ee7b9aed6b9c862f7abd0e3af9540",
+      "message": "fix: Update external dependencies in build configuration",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-17T11:38:31Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/ef4f2f46084ee7b9aed6b9c862f7abd0e3af9540",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        "drizzle-kit/build.ts"
+      ]
+    },
+    {
+      "sha": "4b82d4011f8517fe986a1cde7fda381752c49578",
+      "message": "chore: Update version to 0.31.8 and add changelog for bug fixes",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-17T11:39:55Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/4b82d4011f8517fe986a1cde7fda381752c49578",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-kit/0.31.8.md",
+        "drizzle-kit/package.json"
+      ]
+    },
+    {
+      "sha": "59e351dfb5d278027280cbc7a81dfdb46b4940cb",
+      "message": "fix: update permissions for GitHub releases in workflow files",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-11-17T11:57:02Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/59e351dfb5d278027280cbc7a81dfdb46b4940cb",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "adf9bf1fb4074ae563024f1acd8a20a1c72136ac",
+      "message": "Fixed `SQL` in `` (fixes #2388, rework of #2911 with handling in proper place)",
+      "author": "Sukairo-02",
+      "date": "2025-11-25T14:57:47Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/adf9bf1fb4074ae563024f1acd8a20a1c72136ac",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        "drizzle-orm/src/gel-core/dialect.ts",
+        "drizzle-orm/src/mysql-core/dialect.ts",
+        "drizzle-orm/src/pg-core/dialect.ts",
+        "drizzle-orm/src/singlestore-core/dialect.ts",
+        "drizzle-orm/src/sqlite-core/dialect.ts",
+        "integration-tests/tests/gel/gel.test.ts",
+        "integration-tests/tests/mysql/mysql-common.ts",
+        "integration-tests/tests/pg/pg-common.ts",
+        "integration-tests/tests/singlestore/singlestore-common.ts",
+        "integration-tests/tests/sqlite/sqlite-common.ts"
+      ]
+    },
+    {
+      "sha": "74b85ae259036cd4f1becc040387df538c2a8e32",
+      "message": "Fixed `bun-sql:postgresql` date, timestamp mappers not accounting for `Date` instances in driver response, updated changelogs",
+      "author": "Sukairo-02",
+      "date": "2025-11-25T16:51:54Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/74b85ae259036cd4f1becc040387df538c2a8e32",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-orm/0.45.0.md",
+        "drizzle-orm/src/pg-core/columns/date.ts",
+        "drizzle-orm/src/pg-core/columns/timestamp.ts",
+        "integration-tests/tests/bun/bun-sql.test.ts"
+      ]
+    },
+    {
+      "sha": "14d1118372816b49728fbe9e7bd440396e5a9774",
+      "message": "Merge branch 'main' of https://github.com/drizzle-team/drizzle-orm into main-next-pack",
+      "author": "Sukairo-02",
+      "date": "2025-11-25T16:56:32Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/14d1118372816b49728fbe9e7bd440396e5a9774",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml",
+        "changelogs/drizzle-kit/0.31.7.md",
+        "changelogs/drizzle-kit/0.31.8.md",
+        "drizzle-kit/package.json",
+        "drizzle-kit/src/serializer/pgSerializer.ts",
+        "drizzle-kit/tests/introspect/gel.ext.test.ts",
+        "integration-tests/tests/gel/createInstance.ts"
+      ]
+    },
+    {
+      "sha": "5abed3dd5c618a0179832b0b34e2ff7c08d69408",
+      "message": "Credited author of copied tests in changelog",
+      "author": "Sukairo-02",
+      "date": "2025-11-25T18:20:07Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/5abed3dd5c618a0179832b0b34e2ff7c08d69408",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-orm/0.45.0.md"
+      ]
+    },
+    {
+      "sha": "378b0432d549441fa61de200589a790f1171b6fe",
+      "message": "Merge pull request #5002 from drizzle-team/main-next-pack\n\nUpdates for `main` branch",
+      "author": "AlexBlokh",
+      "date": "2025-11-25T18:56:40Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/378b0432d549441fa61de200589a790f1171b6fe",
+      "pr_number": 5002,
+      "pr_title": "Updates for `main` branch",
+      "pr_body": "- Fixed `pg-native` Pool detection in `node-postgres` transactions (#1708)\r\n- Allowed subqueries in select fields (#1674)\r\n- Updated typo `algorythm` => `algorithm` (#1676)\r\n- Fixed `$onUpdate` not handling `SQL` values (fixes #2388, tests taken from #2911)\r\n- Fixed `pg` mappers not handling `Date` instances in `bun-sql:postgresql` driver responses for `date`, `timestamp` types (fixes #4493)",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5002",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-kit/0.31.8.md",
+        "changelogs/drizzle-orm/0.45.0.md",
+        "drizzle-kit/package.json",
+        "drizzle-kit/src/serializer/mysqlSerializer.ts",
+        "drizzle-kit/src/serializer/singlestoreSerializer.ts",
+        "drizzle-orm/package.json",
+        "drizzle-orm/src/gel-core/dialect.ts",
+        "drizzle-orm/src/mysql-core/dialect.ts",
+        "drizzle-orm/src/mysql-core/indexes.ts",
+        "drizzle-orm/src/node-postgres/session.ts",
+        "drizzle-orm/src/operations.ts",
+        "drizzle-orm/src/pg-core/columns/date.ts",
+        "drizzle-orm/src/pg-core/columns/timestamp.ts",
+        "drizzle-orm/src/pg-core/dialect.ts",
+        "drizzle-orm/src/query-builders/select.types.ts",
+        "drizzle-orm/src/singlestore-core/dialect.ts",
+        "drizzle-orm/src/singlestore-core/indexes.ts",
+        "drizzle-orm/src/sqlite-core/dialect.ts",
+        "drizzle-orm/src/utils.ts",
+        "drizzle-orm/type-tests/mysql/subquery.ts",
+        "drizzle-orm/type-tests/mysql/tables.ts",
+        "drizzle-orm/type-tests/pg/subquery.ts",
+        "drizzle-orm/type-tests/singlestore/tables.ts",
+        "drizzle-orm/type-tests/sqlite/subquery.ts",
+        "integration-tests/tests/bun/bun-sql.test.ts"
+      ]
+    },
+    {
+      "sha": "73e2ea486f6781bc7bfd2c287590d9c96e319b51",
+      "message": "feat: Add release router workflow to manage feature and latest releases",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-12-03T16:30:15Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/73e2ea486f6781bc7bfd2c287590d9c96e319b51",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml",
+        ".github/workflows/router.yaml"
+      ]
+    },
+    {
+      "sha": "5c8a4c508b36813599e6de891166a6888720a307",
+      "message": "+",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-12-03T16:32:38Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/5c8a4c508b36813599e6de891166a6888720a307",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "ce88a181e03d8b9b3fd0b62c93cc1faa05b0e000",
+      "message": "Merge remote-tracking branch 'origin/ext-deps-kit' into main-workflows",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-12-03T17:04:47Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/ce88a181e03d8b9b3fd0b62c93cc1faa05b0e000",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        "changelogs/drizzle-kit/0.31.8.md",
+        "drizzle-kit/build.ts"
+      ]
+    },
+    {
+      "sha": "53dec98a936f549d0cc2e668f19db3a2df842f51",
+      "message": "refactor: Simplify release router workflow by removing unnecessary switch job and consolidating secret inheritance",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-12-03T20:25:46Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/53dec98a936f549d0cc2e668f19db3a2df842f51",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        ".github/workflows/router.yaml"
+      ]
+    },
+    {
+      "sha": "6357645bd33b1f444e1d081769dd4b71c3de31f8",
+      "message": "chore: Comment out NEON_HTTP_CONNECTION_STRING requirement in release workflows",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-12-03T20:31:44Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/6357645bd33b1f444e1d081769dd4b71c3de31f8",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml"
+      ]
+    },
+    {
+      "sha": "45a1ffbcbfdd96772d0aba7d9e43744db2dce471",
+      "message": "Merge pull request #5087 from drizzle-team/main-workflows\n\nWorkflows",
+      "author": "AlexBlokh",
+      "date": "2025-12-04T14:42:47Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/45a1ffbcbfdd96772d0aba7d9e43744db2dce471",
+      "pr_number": 5087,
+      "pr_title": "Workflows",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5087",
+      "labels": [],
+      "files": [
+        ".github/workflows/release-feature-branch.yaml",
+        ".github/workflows/release-latest.yaml",
+        ".github/workflows/router.yaml",
+        "changelogs/drizzle-kit/0.31.8.md",
+        "drizzle-kit/build.ts"
+      ]
+    },
+    {
+      "sha": "0d885a54ddafd8717f8610cf3d2899f3eef61e65",
+      "message": "refactor: Update condition for run-feature job to improve clarity and functionality",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-12-04T14:52:43Z",
+      "parents": 1,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/0d885a54ddafd8717f8610cf3d2899f3eef61e65",
+      "pr_number": 5095,
+      "pr_title": "fix: Fix condition for run-feature job",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5095",
+      "labels": [],
+      "files": [
+        ".github/workflows/router.yaml"
+      ]
+    },
+    {
+      "sha": "e7b3aaa26456b88cd23a7843ebc95b3bddde1ba4",
+      "message": "Merge branch 'main' into main-workflows",
+      "author": "RomanNabukhotnyi",
+      "date": "2025-12-04T14:54:08Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/e7b3aaa26456b88cd23a7843ebc95b3bddde1ba4",
+      "pr_number": 5095,
+      "pr_title": "fix: Fix condition for run-feature job",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5095",
+      "labels": [],
+      "files": []
+    },
+    {
+      "sha": "c445637df39366bcf47b12601896ce851771c1c2",
+      "message": "Merge pull request #5095 from drizzle-team/main-workflows\n\nfix: Fix condition for run-feature job",
+      "author": "AlexBlokh",
+      "date": "2025-12-04T14:56:27Z",
+      "parents": 2,
+      "html_url": "https://github.com/drizzle-team/drizzle-orm/commit/c445637df39366bcf47b12601896ce851771c1c2",
+      "pr_number": 5095,
+      "pr_title": "fix: Fix condition for run-feature job",
+      "pr_body": "",
+      "pr_url": "https://github.com/drizzle-team/drizzle-orm/pull/5095",
+      "labels": [],
+      "files": [
+        ".github/workflows/router.yaml"
+      ]
+    }
+  ],
+  "collected_at": "2026-10-04T16:56:26.108760Z",
+  "api_calls": 84,
+  "cache_hits": 0
+}

@@ -1,0 +1,385 @@
+{
+  "recorded_at": "2026-10-04T17:49:36.392835+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-21882",
+      "pr-21904",
+      "pr-21897",
+      "pr-21907",
+      "pr-20560",
+      "pr-21903",
+      "pr-20060",
+      "pr-21728",
+      "pr-21874",
+      "pr-20063",
+      "pr-21910"
+    ],
+    [
+      "pr-21810",
+      "pr-20415",
+      "pr-21908"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "openai/gpt-oss-20b"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "docs",
+            "user_summary": "Restores the AI SDK landing page with updated layout and interactive elements.",
+            "dev_summary": "Restores the landing page in the Geistdocs app, aligning it with the new Vercel design language and reintroducing interactive components.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#21882",
+              "eee1954"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "Removes the promotional banner from the homepage.",
+            "dev_summary": "Deletes the promotional Grok banner from the docs homepage component.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#21904",
+              "b9b349b"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds a configurable maximum number of tools returned by tool search.",
+            "dev_summary": "Introduces `toolSearch({ maxResults })` to allow callers to set the maximum number of tools returned; default remains five.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#21897",
+              "ba8afe9"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updates gateway model settings files to include newly released models.",
+            "dev_summary": "Regenerates gateway model settings files via the update-model-settings workflow, exposing new models in IDE autocomplete.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#21907",
+              "d1bb9e8"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds a specific error for OAuth authorization server mismatches.",
+            "dev_summary": "Exports `AuthorizationServerMismatchError` with errorCode 'authorization_server_mismatch' for OAuth pin mismatches.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20560",
+              "3ff0f54"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds a callback to tool search for custom ranking of deferred tools.",
+            "dev_summary": "Adds an optional `search` callback to `toolSearch()` to select and rank eligible deferred tools.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#21903",
+              "158a718"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "Documents the new FLUX.2 image models and their usage.",
+            "dev_summary": "Adds documentation for FLUX.2 image models, including model IDs, reference image support, and polling timeout guidance.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20060",
+              "b6229d7"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Ensures UI message stream cancellation stops all merged sources.",
+            "dev_summary": "Propagates consumer cancellation to merged streams in `createUIMessageStream` and cancels pending pulls.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#21728",
+              "bb8d33e"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Prevents streamed chat updates from blocking navigation in Next.js App Router.",
+            "dev_summary": "Updates `useChat` to batch state updates and avoid navigation starvation during streaming responses.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#21874",
+              "8f05086"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "Adds Black Forest Labs to the model picker and provider logos.",
+            "dev_summary": "Adds BFL to image and video provider allowlists, sets defaults, and includes its logo in the docs site.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#20063",
+              "168d629"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds support for new Azure MAI-Voice and MAI-Transcribe models.",
+            "dev_summary": "Introduces Azure MAI-Voice-2.1, MAI-Voice-2.1-Flash, and MAI-Transcribe-2-Streaming models to the SDK.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#21910",
+              "8952233"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:48:32.285586+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 5571,
+          "completion_tokens": 1264,
+          "reasoning_tokens": 449,
+          "latency_s": 2.375,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00079702,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:2",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "fix",
+            "user_summary": "Tool approvals from other JavaScript realms are now accepted.",
+            "dev_summary": "Updated deep JSON comparison in `validate-tool-approvals.ts` to treat objects and arrays from different realms as equivalent.",
+            "breaking": false,
+            "breaking_confidence": 0.2,
+            "migration_note": null,
+            "refs": [
+              "#21810",
+              "284dc11"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "You can now add request metadata to Bedrock Converse requests for cost attribution.",
+            "dev_summary": "Added `requestMetadata: Record<string,string>` to `providerOptions.amazonBedrock` for Converse and ConverseStream APIs.",
+            "breaking": false,
+            "breaking_confidence": 0.2,
+            "migration_note": null,
+            "refs": [
+              "#20415",
+              "2850ad8"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Versioned and released multiple packages to npm.",
+            "dev_summary": "Released ai@7.0.127, @ai-sdk/amazon-bedrock@5.0.105, @ai-sdk/angular@3.0.127, @ai-sdk/azure@4.0.90 and updated dependencies.",
+            "breaking": false,
+            "breaking_confidence": 0.2,
+            "migration_note": null,
+            "refs": [
+              "#21908",
+              "eb77f09"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:49:33.282919+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:2",
+          "prompt_tokens": 2587,
+          "completion_tokens": 321,
+          "reasoning_tokens": 55,
+          "latency_s": 0.984,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00029032,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release adds configurability to the tool search API, introduces new error types and model support, and includes several documentation updates. It also contains fixes for stream cancellation, chat state batching, and JSON comparison logic.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i3",
+              "i6",
+              "i5",
+              "i11",
+              "i13"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i8",
+              "i9",
+              "i12"
+            ]
+          },
+          {
+            "section": "docs",
+            "prose": null,
+            "item_ids": [
+              "i7",
+              "i10",
+              "i1",
+              "i2"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i14",
+              "i4"
+            ]
+          },
+          {
+            "section": "breaking",
+            "prose": null,
+            "item_ids": []
+          }
+        ],
+        "duplicates": []
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:49:34.917913+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 1267,
+          "completion_tokens": 463,
+          "reasoning_tokens": 217,
+          "latency_s": 1.625,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00046785,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release gives you more control over tool searches and adds support for new Azure voice and transcription models. It also fixes streaming behavior so UI updates and navigation work more smoothly.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i11",
+              "i13",
+              "i3",
+              "i6",
+              "i5"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i9",
+              "i8"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:49:36.392835+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 776,
+          "completion_tokens": 258,
+          "reasoning_tokens": 123,
+          "latency_s": 1.093,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0002712,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

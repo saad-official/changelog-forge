@@ -1,0 +1,22 @@
+{
+  "repo": "fastapi/fastapi",
+  "base": "0.142.0",
+  "head": "0.142.2",
+  "must_mention": [
+    "#16414",
+    "#16418"
+  ],
+  "must_flag_breaking": [],
+  "may_flag_breaking": [],
+  "forbidden_claims": [
+    "0\\.143",
+    "drops? support"
+  ],
+  "categories": {
+    "#16414": "fix",
+    "#16418": "fix",
+    "#16415": "internal",
+    "#16419": "internal"
+  },
+  "notes": "Two bug fixes and two release PRs. Nothing breaking."
+}

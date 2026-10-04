@@ -1,0 +1,1215 @@
+{
+  "recorded_at": "2026-10-04T17:56:49.918708+00:00",
+  "prompt_versions": {
+    "map": "map.v1@e219bc16",
+    "reduce_dev": "reduce_dev.v1@3555a130",
+    "reduce_user": "reduce_user.v1@0aef6d01"
+  },
+  "routing": {
+    "version": "2026-10-04",
+    "tiers": {
+      "map": [
+        "groq:openai/gpt-oss-20b",
+        "gemini:gemini-3.5-flash-lite"
+      ],
+      "reduce": [
+        "groq:openai/gpt-oss-120b",
+        "gemini:gemini-3.5-flash-lite"
+      ]
+    },
+    "budget_usd": 0.05
+  },
+  "groups": [
+    [
+      "pr-50853",
+      "pr-50930",
+      "pr-50928",
+      "pr-50933",
+      "pr-50390",
+      "pr-50307",
+      "pr-50458",
+      "pr-50016",
+      "pr-50391",
+      "pr-50420",
+      "pr-50422"
+    ],
+    [
+      "pr-50423",
+      "pr-50424",
+      "pr-50425",
+      "pr-50426",
+      "pr-50687",
+      "pr-50121",
+      "pr-50945",
+      "pr-50233",
+      "c-9d37bc5",
+      "pr-50942",
+      "pr-50952",
+      "pr-50954",
+      "pr-50817",
+      "pr-50946",
+      "pr-50955"
+    ],
+    [
+      "pr-50950",
+      "pr-50951",
+      "pr-50698",
+      "pr-50443",
+      "pr-50961",
+      "pr-50442",
+      "pr-49305",
+      "pr-50888",
+      "pr-50937",
+      "pr-50957"
+    ],
+    [
+      "pr-50725",
+      "pr-50884",
+      "pr-50968",
+      "pr-50959",
+      "pr-50972",
+      "pr-50883",
+      "pr-50965",
+      "pr-50891",
+      "pr-50927",
+      "pr-47438"
+    ],
+    [
+      "pr-49035",
+      "pr-50427",
+      "pr-50973",
+      "pr-50986",
+      "pr-50974",
+      "pr-50975",
+      "pr-50960",
+      "pr-50354",
+      "pr-50980",
+      "pr-50444"
+    ],
+    [
+      "pr-50931",
+      "pr-50984",
+      "pr-50905",
+      "pr-50964",
+      "pr-50963",
+      "pr-51002",
+      "pr-50970",
+      "pr-50929"
+    ]
+  ],
+  "served_by": {
+    "map": [
+      "openai/gpt-oss-20b",
+      "gemini-3.5-flash-lite"
+    ],
+    "reduce": [
+      "openai/gpt-oss-120b"
+    ]
+  },
+  "calls": [
+    {
+      "label": "map:1",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "internal",
+            "user_summary": "Expo now uses Hermes TextDecoder, removing the custom UTF‑8 polyfill.",
+            "dev_summary": "Removed custom TextDecoder implementation; Expo now relies on Hermes TextDecoder and no longer provides a UTF‑8 polyfill.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50853",
+              "e9cfb52"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "GitHub Actions no longer run EAS/GH workflows on changeset-release branches.",
+            "dev_summary": "Skipped EAS/GH workflows for `changeset-release/*` branches to avoid redundant runs.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50930",
+              "7289b0d"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Version Packages PRs can merge immediately; precompile waits during publish.",
+            "dev_summary": "Allowed early merge of Version Packages PRs, deferring precompile wait to publish tasks.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50928",
+              "2d3eb10"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "SDK 58 documentation data updated.",
+            "dev_summary": "Synced SDK 58 docs data and updated related JSON files.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50933",
+              "4c264c0"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Package.json files cleaned and dependencies reordered.",
+            "dev_summary": "Reordered dependencies alphabetically, removed devDependencies that duplicate dependencies, and moved root dependencies to devDependencies.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50390",
+              "ac4430f"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "EAS update docs now show SDK 58+ default behavior.",
+            "dev_summary": "Updated EAS_UPDATE_UPLOAD_EMBEDDED_BUNDLE documentation for SDK 58+ and added tabs for SDK 57 and below.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50307",
+              "74b7c19"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "react-native-web updated to 0.21.3.",
+            "dev_summary": "Bumped react-native-web to version 0.21.3 across the workspace.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50458",
+              "dec0343"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "CSS assets now preserve order across rendering paths.",
+            "dev_summary": "Unified static and streaming CSS asset handling, preserving Metro order and removing duplicate link generation.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50016",
+              "009d1a2"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Dependency ranges aligned across workspace.",
+            "dev_summary": "Aligned lodash, semver, @types/semver, and @vercel/ncc to the highest ranges present in the repo.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50391",
+              "2501311"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "@types/jest version unified.",
+            "dev_summary": "Aligned @types/jest to ^29.5.12 across the workspace.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50420",
+              "b469af7"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "memfs version unified.",
+            "dev_summary": "Aligned memfs to ^3.6.0 across the workspace.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50422",
+              "b047e6e"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:50:35.831927+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:1",
+          "prompt_tokens": 5445,
+          "completion_tokens": 1404,
+          "reasoning_tokens": 626,
+          "latency_s": 2.547,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00082958,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:2",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "internal",
+            "user_summary": "Aligns dependency versions across the repo.",
+            "dev_summary": "Updates package.json dependencies to a single version range.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50423",
+              "3434a22"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Aligns dependency versions across the repo.",
+            "dev_summary": "Updates package.json dependencies to a single version range.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50424",
+              "196bc35"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Aligns dependency versions across the repo.",
+            "dev_summary": "Updates package.json dependencies to a single version range.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50425",
+              "69452db"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Aligns dependency versions across the repo.",
+            "dev_summary": "Updates package.json dependencies to a single version range.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50426",
+              "92aa04f"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds SwiftUI navigation and toolbar title display mode modifiers.",
+            "dev_summary": "Adds `navigationBarTitleDisplayMode` and `toolbarTitleDisplayMode` modifiers to expo-ui.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50687",
+              "e3b6f8d"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Fixes SQLite statement finalization and failed-close recovery.",
+            "dev_summary": "Corrects SQLite statement handling to preserve connections and invalidate wrappers on cleanup.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50121",
+              "83045cc"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "Removes /preview paths from redirects.",
+            "dev_summary": "Deletes /preview redirects from docs redirect files.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50945",
+              "7842d63"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Adds expo-modules-cli with generate-types command.",
+            "dev_summary": "Introduces `expo-modules-cli` binary with `generate-types` command to generate TypeScript types.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50233",
+              "0fba007"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Fixes changelog entry for expo-ui title display modes.",
+            "dev_summary": "Updates expo-ui CHANGELOG to correct entry.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50942",
+              "d39dda9"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Runs test-suite-macos on main branch.",
+            "dev_summary": "Adds test-suite-macos workflow to run on main.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50952",
+              "24693f0"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Uses YAML anchors in CI workflows to reduce duplication.",
+            "dev_summary": "Introduces YAML anchors in GitHub Actions workflows.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50954",
+              "507a958"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Fixes asset move bug that caused missing media library entries.",
+            "dev_summary": "Changes write permission check to avoid opening files, preventing scan triggers.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50817",
+              "ba9f3f1"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Prevents Pods.xcodeproj UUID collisions during pod install.",
+            "dev_summary": "Adds guard to avoid UUID collisions in CocoaPods post_install.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50946",
+              "d0c089d"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updates external sub-packages to latest versions.",
+            "dev_summary": "Bumps devcert, ws-tunnel, sdk-runtime-versions, xcpretty to latest.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50955",
+              "af8bbe2"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updates lock files for iOS pods.",
+            "dev_summary": "Adds lock files for iOS pods.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "9d37bc5"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:51:38.958376+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:2",
+          "prompt_tokens": 5520,
+          "completion_tokens": 1530,
+          "reasoning_tokens": 628,
+          "latency_s": 3.11,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.000873,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:3",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "fix",
+            "user_summary": "The white window no longer appears when a CameraView unmounts during a shutter animation on Android.",
+            "dev_summary": "The flash now clears the foreground on the same root view that was used to set it, preventing a white overlay after unmounting.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50950",
+              "f706f94"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Apps now request the local network permission on Android 17 and later, enabling network discovery in dev‑launcher builds.",
+            "dev_summary": "Dev‑launcher now asks for the local network permission via a new LocalNetworkPermission helper before launching NSD discovery.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50951",
+              "10f4570"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "JSI framework symbols are preserved, improving crash symbolication on iOS.",
+            "dev_summary": "The build script sets STRIP_SWIFT_SYMBOLS=NO to keep Swift symbol names in the prebuilt JSI framework.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50698",
+              "35a3c78"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "README directory names are corrected in the default template.",
+            "dev_summary": "Updated the README in expo-template-default to use the correct directory names.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50443",
+              "1d606a7"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "expo-image-manipulator now builds correctly with Swift Package Manager.",
+            "dev_summary": "Added missing UIKit imports to Swift files that use UIImage, enabling SwiftPM builds.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50961",
+              "963dcba"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Config plugin option types are now exposed in the Expo Router docs.",
+            "dev_summary": "Exported config plugin types for Expo Router and added a guard to limit their display to the main reference page.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50442",
+              "5fae3f1"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "JS inspector middleware now sends the correct Content‑Length header for non‑ASCII responses.",
+            "dev_summary": "Replaced data.length with Buffer.byteLength(data, 'utf8') when setting the Content‑Length header.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#49305",
+              "b95b6f2"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "JavaScriptRuntime now has a typed per‑runtime cache for faster lookups.",
+            "dev_summary": "Implemented a generic cache in JavaScriptRuntime using typed keys, reducing lookup overhead.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50888",
+              "d33324f"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Host callback results are now moved into the result slot, reducing allocations.",
+            "dev_summary": "Modified JavaScriptValue.write to move values into the result slot and updated related utilities for efficient handling.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50937",
+              "24bd8a3"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "presentCreateForm now opens the create form and returns a boolean on iOS.",
+            "dev_summary": "Replaced ContactsViewController with CNContactViewController(forNewContact:) and fixed the return type to boolean.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50957",
+              "0eefb41"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:52:43.421689+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:3",
+          "prompt_tokens": 5443,
+          "completion_tokens": 1212,
+          "reasoning_tokens": 434,
+          "latency_s": 4.454,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00077182,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:4",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "internal",
+            "user_summary": "Updated router query serialization to use built‑in URLSearchParams.",
+            "dev_summary": "Replaced query-string with URLSearchParams in expo-router, updating stringifySearchParams and related utilities.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50725",
+              "6b2305b"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Improved camera readiness handling on web to avoid premature callbacks.",
+            "dev_summary": "Modified expo-camera web implementation to fire onCameraReady only after video frame is available, and relaxed takePictureAsync frame requirement.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50884",
+              "203d0f9"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Enabled background audio recording on Android without notification permission.",
+            "dev_summary": "Removed POST_NOTIFICATIONS check from AudioRecorder.prepareRecording, allowing background recording on Android 13+ without notification permission.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50968",
+              "44b9b96"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Ensured Expo native views honor aria props for accessibility.",
+            "dev_summary": "Updated NativeViewManagerAdapter to map aria-* props to native accessibility props, fixing SymbolView and other Expo views.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50959",
+              "369a79e"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Handled blocked play() calls in web audio to avoid errors.",
+            "dev_summary": "Modified expo-audio web player to catch play() rejections, reset isPlaying, and emit error status updates.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50972",
+              "3984c0b"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Fixed Android audio recording service binding timeout.",
+            "dev_summary": "Implemented startBindingTimeout and atomic continuation handling in AudioRecordingServiceConnection to prevent hanging promises.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50883",
+              "d357a34"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Restored ./plugin subpath exports for typed config plugins.",
+            "dev_summary": "Added ./plugin to package.json exports for expo-font, expo-image, expo-maps, expo-router, expo-web-browser, and expo-updates to support typed config plugins.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50965",
+              "39cb421"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Allowed disabling APS entitlement for local notifications on iOS.",
+            "dev_summary": "Introduced noApsEntitlement flag in NotificationsPluginProps to skip adding aps-environment entitlement when only local notifications are used.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50891",
+              "68c8102"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Fixed animation chain mutation in expo-ui on iOS.",
+            "dev_summary": "Made delay() and repeat() return new immutable ChainableAnimation instances, preventing side effects on Animation.default and shared animations.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#50927",
+              "db0db5e"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Removed Prettier from Android publish flow.",
+            "dev_summary": "Replaced Prettier with oxfmt in MavenPublicationExtension and removed Prettier from root package.json.",
+            "breaking": false,
+            "breaking_confidence": 0.1,
+            "migration_note": null,
+            "refs": [
+              "#47438",
+              "28c487e"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:53:45.282110+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:4",
+          "prompt_tokens": 5536,
+          "completion_tokens": 853,
+          "reasoning_tokens": 92,
+          "latency_s": 1.859,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0006711,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:5",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "fix",
+            "user_summary": "Expo Router now correctly parses platform-specific routes and loader keys.",
+            "dev_summary": "`getRoutesCore()` and `getContextKey()` now use `getPlatformFromFilePath()` to handle `.web`, `.ios`, etc. correctly.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#49035"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "The workspace has been upgraded to Jest 30 across all packages.",
+            "dev_summary": "Jest 30 is now used throughout the monorepo, with updated configurations and test environments.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50427"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Metro no longer collapses all node_modules stack frames, showing library errors clearly.",
+            "dev_summary": "`INTERNAL_CALLSITES_REGEX` was updated to exclude a catch-all for node_modules, preserving library frames.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50973"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Test utilities were updated to use `toThrow` instead of `toThrowError` for compatibility with Jest 30.",
+            "dev_summary": "`getRoutes.test.ios.ts` now uses `toThrow` in place of `toThrowError`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50986"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "The CLI now keeps node_modules frames when logging server rendering errors.",
+            "dev_summary": "`parseErrorStack` no longer drops frames containing `node_modules`, enabling full stack traces.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50974"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "The CLI now shows the full call stack for thrown errors even when all frames are collapsed.",
+            "dev_summary": "Collapsed stacks are only dropped if they lack an error message; thrown error stacks are always printed.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50975"
+            ]
+          },
+          {
+            "category": "performance",
+            "user_summary": "JSI decoding now defaults to borrowing, reducing allocations for unowned values.",
+            "dev_summary": "`JavaScriptValue.withUnownedValue(in:_:)` and default `decode` now borrow values, avoiding unnecessary copies.",
+            "breaking": false,
+            "breaking_confidence": 0.4,
+            "migration_note": null,
+            "refs": [
+              "#50960"
+            ]
+          },
+          {
+            "category": "performance",
+            "user_summary": "Swift compilation cache keys no longer include checkout paths, improving cache reuse.",
+            "dev_summary": "`build-xcframework.sh` now builds with `SWIFT_SERIALIZE_DEBUGGING_OPTIONS=NO` and `SWIFT_ENABLE_EXPLICIT_MODULES=NO` to omit absolute paths.",
+            "breaking": false,
+            "breaking_confidence": 0.4,
+            "migration_note": null,
+            "refs": [
+              "#50354"
+            ]
+          },
+          {
+            "category": "performance",
+            "user_summary": "JSI array and dictionary elements are now decoded as unowned values, improving performance.",
+            "dev_summary": "`JavaScriptArray.mapUnowned` and `JavaScriptObject.withUnownedProperty` now provide unowned values, and decoders use them.",
+            "breaking": false,
+            "breaking_confidence": 0.4,
+            "migration_note": null,
+            "refs": [
+              "#50980"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Jest‑expo now correctly merges moduleNameMapper entries for web and node presets.",
+            "dev_summary": "`getPlatformPreset()` now merges the base mapper into web and node presets, restoring tsconfig path aliases.",
+            "breaking": false,
+            "breaking_confidence": 0.6,
+            "migration_note": null,
+            "refs": [
+              "#50444"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:54:47.967548+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:5",
+          "prompt_tokens": 5611,
+          "completion_tokens": 1127,
+          "reasoning_tokens": 160,
+          "latency_s": 2.687,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.00075892,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "map:6",
+      "schema": "GroupAnalysis",
+      "response": {
+        "changes": [
+          {
+            "category": "docs",
+            "user_summary": "Release Manager documentation has been updated to reflect that protected channels are now available to everyone.",
+            "dev_summary": "Updated account type and audit log documentation in `docs/pages/accounts/account-types.mdx` and `docs/pages/accounts/audit-logs.mdx` regarding protected channels.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50931"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "You can now use smooth, snappy, and bouncy animation presets in UI components.",
+            "dev_summary": "Added `smooth`, `snappy`, and `bouncy` spring animation presets to `Animation` in `@expo/ui` via `AnimationConfig.swift` and associated TypeScript wrappers.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50984"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Added decodable kinds support to JavaScript decodable elements.",
+            "dev_summary": "Added `decodableKinds` property to `JavaScriptDecodable` in `JavaScriptDecodableKindsTests.swift` and core JSI files.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50905"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Upgraded Vale action in documentation workflows.",
+            "dev_summary": "Upgraded `vale-action` to version `v3.0.0` in `.github/workflows/docs-pr.yml` and `.github/workflows/docs.yml`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50964"
+            ]
+          },
+          {
+            "category": "internal",
+            "user_summary": "Updated Vale version configuration in documentation.",
+            "dev_summary": "Updated Vale version to `3.24.0` in `docs/.vale-version.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50963"
+            ]
+          },
+          {
+            "category": "docs",
+            "user_summary": "Synchronized upstream reference content for the EAS CLI.",
+            "dev_summary": "Synced documentation pages and commands JSON data for EAS CLI in `docs/pages/eas/cli.mdx` and `docs/ui/components/EASCLIReference/data/eas-cli-commands.json`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#51002"
+            ]
+          },
+          {
+            "category": "fix",
+            "user_summary": "Releasing frozen shared objects no longer causes errors on unmount.",
+            "dev_summary": "Made resetting native state in `SharedObject.release()` best effort and added a released flag to `SharedObjectNativeState` to support frozen shared objects.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50970"
+            ]
+          },
+          {
+            "category": "feature",
+            "user_summary": "Added the expo-modules-cli package and new configuration options for remote notifications.",
+            "dev_summary": "Added `expo-modules-cli` with the `generate-types` command and added the `enableRemoteNotifications` option to `expo-notifications`.",
+            "breaking": false,
+            "breaking_confidence": 0.0,
+            "migration_note": null,
+            "refs": [
+              "#50929"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:56:30.513772+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-20b",
+          "label": "map:6",
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "reasoning_tokens": 0,
+          "latency_s": 42.547,
+          "finish_reason": null,
+          "attempts": 1,
+          "cost_usd": 0.0,
+          "price_known": true,
+          "error": "LLMTransientError: all 3 attempts failed. Last error: 429 from provider: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01m1rrqct2e14tb3dkpwbmm4p9` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196090, Requested 5923. Please try again in 14m29.616s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
+        },
+        {
+          "started_at": "2026-10-04T17:56:35.838104+00:00",
+          "provider": "gemini",
+          "model": "gemini-3.5-flash-lite",
+          "label": "map:6",
+          "prompt_tokens": 4583,
+          "completion_tokens": 988,
+          "reasoning_tokens": 0,
+          "latency_s": 5.328,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0038449,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:dev",
+      "schema": "DevDraft",
+      "response": {
+        "intro": "This release adds several new UI modifiers, a CLI tool for generating TypeScript types, and network permission handling for the dev launcher. It also includes numerous bug fixes such as SQLite connection handling, flash overlay removal, and improved stack trace reporting. Internal updates include removal of a custom TextDecoder, refined asset handling, and performance optimizations in JavaScript value handling.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": null,
+            "item_ids": [
+              "i19",
+              "i64",
+              "i16",
+              "i28",
+              "i58"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i17",
+              "i27",
+              "i31",
+              "i33",
+              "i36",
+              "i47",
+              "i56",
+              "i63",
+              "i23",
+              "i24",
+              "i49",
+              "i51",
+              "i52"
+            ]
+          },
+          {
+            "section": "performance",
+            "prose": null,
+            "item_ids": [
+              "i53",
+              "i55",
+              "i54"
+            ]
+          },
+          {
+            "section": "docs",
+            "prose": null,
+            "item_ids": [
+              "i62",
+              "i57",
+              "i18"
+            ]
+          },
+          {
+            "section": "internal",
+            "prose": null,
+            "item_ids": [
+              "i1",
+              "i8",
+              "i34",
+              "i35",
+              "i40",
+              "i41",
+              "i42",
+              "i43",
+              "i44",
+              "i45",
+              "i46",
+              "i48",
+              "i59",
+              "i60",
+              "i61",
+              "i2",
+              "i3",
+              "i5",
+              "i6",
+              "i7",
+              "i9",
+              "i10",
+              "i11",
+              "i12",
+              "i20",
+              "i21",
+              "i22",
+              "i25",
+              "i26",
+              "i29",
+              "i30",
+              "i32",
+              "i37",
+              "i38",
+              "i39"
+            ]
+          }
+        ],
+        "duplicates": [
+          {
+            "keep": "i12",
+            "merge": [
+              "i13",
+              "i14",
+              "i15"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:56:47.645999+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:dev",
+          "prompt_tokens": 3162,
+          "completion_tokens": 1179,
+          "reasoning_tokens": 694,
+          "latency_s": 11.797,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0011817,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "reduce:user",
+      "schema": "UserDraft",
+      "response": {
+        "intro": "This release adds new SwiftUI navigation tools, lets apps request local network access on newer Android devices, and introduces fresh animation presets. It also brings the expo-modules-cli and improves several stability and performance aspects.",
+        "sections": [
+          {
+            "section": "feature",
+            "prose": "New capabilities for UI and development tooling.",
+            "item_ids": [
+              "i28",
+              "i58",
+              "i16",
+              "i19",
+              "i64"
+            ]
+          },
+          {
+            "section": "fix",
+            "prose": null,
+            "item_ids": [
+              "i27",
+              "i23",
+              "i24",
+              "i17",
+              "i33",
+              "i36",
+              "i47",
+              "i49",
+              "i51",
+              "i52",
+              "i31",
+              "i56",
+              "i63"
+            ]
+          },
+          {
+            "section": "performance",
+            "prose": "Under‑the‑hood improvements make JavaScript handling faster and Swift builds more reusable.",
+            "item_ids": [
+              "i55",
+              "i53",
+              "i54"
+            ]
+          }
+        ]
+      },
+      "records": [
+        {
+          "started_at": "2026-10-04T17:56:49.918708+00:00",
+          "provider": "groq",
+          "model": "openai/gpt-oss-120b",
+          "label": "reduce:user",
+          "prompt_tokens": 1218,
+          "completion_tokens": 520,
+          "reasoning_tokens": 275,
+          "latency_s": 2.282,
+          "finish_reason": "stop",
+          "attempts": 1,
+          "cost_usd": 0.0004947,
+          "price_known": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}
