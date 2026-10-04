@@ -325,21 +325,33 @@ export type ProcessOutcome = { outcome: "processed" | "claimed"; status?: RunSta
  */
 export async function processRun(id: string): Promise<ProcessOutcome> {
   if (API_MOCK) return mock.mockProcess(id);
-  let res: Response;
-  try {
-    res = await fetch(`${API_URL}/api/runs/${encodeURIComponent(id)}/process`, {
-      method: "POST",
-      keepalive: true,
-      cache: "no-store",
-    });
-  } catch {
-    throw networkError(API_URL);
+  // A serverless request has a time budget. When the API runs out of time it checkpoints and
+  // answers 202 { resumable: true }; the client asks again until the run finishes.
+  const MAX_SEGMENTS = 12;
+  for (let segment = 0; segment < MAX_SEGMENTS; segment++) {
+    let res: Response;
+    try {
+      res = await fetch(`${API_URL}/api/runs/${encodeURIComponent(id)}/process`, {
+        method: "POST",
+        keepalive: true,
+        cache: "no-store",
+      });
+    } catch {
+      throw networkError(API_URL);
+    }
+    const body = await readBody(res);
+    if (res.status === 409) return { outcome: "claimed" };
+    if (!res.ok) throw parseApiError(res.status, body, res.headers.get("Retry-After"));
+    const resumable =
+      res.status === 202 &&
+      typeof body === "object" &&
+      body !== null &&
+      (body as { resumable?: unknown }).resumable === true;
+    if (resumable) continue;
+    const parsed = CreatedRunSchema.safeParse(body);
+    return { outcome: "processed", status: parsed.success ? parsed.data.status : undefined };
   }
-  const body = await readBody(res);
-  if (res.status === 409) return { outcome: "claimed" };
-  if (!res.ok) throw parseApiError(res.status, body, res.headers.get("Retry-After"));
-  const parsed = CreatedRunSchema.safeParse(body);
-  return { outcome: "processed", status: parsed.success ? parsed.data.status : undefined };
+  return { outcome: "claimed" };
 }
 
 /**

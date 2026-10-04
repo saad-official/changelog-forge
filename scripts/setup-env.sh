@@ -57,8 +57,10 @@ set_env . GITHUB_TOKEN "$GH_TOKEN_VAL" --sensitive
 set_env . QSTASH_TOKEN "$QSTASH" --sensitive
 set_env . LANGFUSE_PUBLIC_KEY "$LF_PUBLIC"
 set_env . LANGFUSE_SECRET_KEY "$LF_SECRET" --sensitive
-set_env . WEB_ORIGIN "$WEB_URL"
+set_env . WEB_ORIGIN "$WEB_URL,http://localhost:3600,http://localhost:3000"
 set_env . PUBLIC_API_URL "$API_URL"
+[ -s "$SECRETS/changelog-forge-ip-hash-salt.txt" ] || openssl rand -hex 16 | tr -d '\r\n' > "$SECRETS/changelog-forge-ip-hash-salt.txt"
+set_env . IP_HASH_SALT "$(read_secret "$SECRETS/changelog-forge-ip-hash-salt.txt")" --sensitive
 
 echo "Pushing web env (project changelog-forge, root dir web/)..."
 set_env web NEXT_PUBLIC_API_URL "$API_URL"
