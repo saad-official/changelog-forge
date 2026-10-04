@@ -105,3 +105,9 @@ A commit is immutable: its message, author and the PR it was merged through do n
 
 **4. Why does the ledger report cost at paid rates when every call runs on a free tier?**
 "Free tier" is a quota, not a price. The number that decides whether a feature can ship is cost per user action at the rate you would pay with real traffic, and measuring it from the first run costs nothing. It also makes regressions visible: a prompt that quietly doubled its tokens, or a fallback silently serving most calls, shows up in dollars before it shows up anywhere else. The ledger is also a control, not just a receipt: its $0.05 ceiling is checked before each call, so a run cannot loop into a bill.
+
+## Live
+
+- Web: https://changelogforge.vercel.app · API: https://changelog-forge-api.vercel.app (`/api/docs` for OpenAPI)
+- Verified on 4 Oct 2026 against production: `vercel/ai ai@5.0.60..ai@5.0.62` (20 commits) finished in 13.4 s, flagged the Azure default API-version change as breaking with a migration note, verified 40 references with nothing dropped, and cost $0.0084 at paid rates (the map step fell back to Gemini because Groq's daily free quota had been spent on the eval suite; on Groq the same run costs about $0.002).
+- Everything runs on free tiers: Vercel Hobby (Python runtime for the API, Next.js for the web), Neon Free, Groq and Gemini free tiers. No accounts; public repositories only; 10 runs per hour per IP.
